@@ -1,0 +1,81 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.3'
+    }
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+group 'pl.khuzzuk'
+version '1.0.0-SNAPSHOT'
+
+sourceCompatibility = 9
+
+repositories {
+    maven { url "http://repo1.maven.org/maven2" }
+    maven { url "https://raw.github.com/khuzzuk/MessageBus/mvn-repo/" }
+}
+
+compileJava {
+    doLast {
+        ant.taskdef(resource: "org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties", classpath: configurations.compile.asPath)
+        ant.iajc(
+                source: "1.9", target: "1.9", maxmem: "512m", fork: "true",
+                inpath: sourceSets.main.output.classesDir.toPath(),
+                destDir: sourceSets.main.output.classesDir.absolutePath,
+                aspectPath: sourceSets.main.output.classesDir.absolutePath, //project.getBuildDir().getAbsolutePath() + "/classes/java/main/net/kyma/initialization",
+                sourceRootCopyFilter: "**/*.java",
+                classpath: "${configurations.compile.asPath}") {
+        }
+    }
+}
+compileTestJava {
+    doLast {
+        ant.taskdef(resource: "org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties", classpath: configurations.compile.asPath)
+        ant.iajc(
+                source: "1.9", target: "1.9", maxmem: "512m", fork: "true",
+                sourceRoots: sourceSets.test.java.srcDirs[0],//'/home/adrabik/java/projects/kyma/src/test/aspect',
+                inpath: sourceSets.main.output.classesDir.toPath(),
+                destDir: sourceSets.test.output.classesDir.absolutePath,
+                aspectPath: sourceSets.test.output.classesDir.absolutePath,
+                sourceRootCopyFilter: "**/*.java",
+                classpath: "${configurations.compile.asPath}") {
+        }
+    }
+}
+
+
+dependencies {
+    compile group: 'org.aspectj', name: 'aspectjrt', version: '1.9.1'
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.1' // -javaagent:lib/aspectjweaver-1.9.1.jar
+    compile group: 'org.aspectj', name: 'aspectjtools', version: '1.9.1'
+    compile group: 'pl.khuzzuk', name: 'message-bus', version:'2.0.1'
+    compile group: 'org.controlsfx', name: 'controlsfx', version:'9.0.0'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.13'
+    testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
+    testCompile group: 'org.awaitility', name: 'awaitility', version: '3.1.0'
+}
+
+task bootJar(type: Jar) {
+    manifest {
+        attributes 'Main-class': 'net.kyma.Manager'
+    }
+}
+
+shadowJar {
+    baseName = 'kyma'
+    classifier = null
+    version = null
+    manifest {
+        inheritFrom project.tasks.bootJar.manifest
+    }
+    mergeServiceFiles()
+}
+
+project.tasks.bootJar.dependsOn project.tasks.shadowJar
