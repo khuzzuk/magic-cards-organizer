@@ -1,10 +1,11 @@
 package pl.khuzzuk.mtg.organizer.extractor
 
 import pl.khuzzuk.mtg.organizer.BusTest
+import pl.khuzzuk.mtg.organizer.PropertyContainer
 import pl.khuzzuk.mtg.organizer.model.Card
+import pl.khuzzuk.mtg.organizer.model.CreatureCard
+import pl.khuzzuk.mtg.organizer.model.type.BasicType
 import spock.lang.Specification
-
-import java.util.concurrent.atomic.AtomicReference
 
 import static java.util.concurrent.TimeUnit.SECONDS
 import static org.awaitility.Awaitility.await
@@ -12,7 +13,7 @@ import static pl.khuzzuk.mtg.organizer.Event.CARD_DATA
 import static pl.khuzzuk.mtg.organizer.Event.CARD_FROM_URL
 
 class ExtractorSpec extends Specification implements BusTest {
-    AtomicReference<Card> card = new AtomicReference<>()
+    PropertyContainer<Card> card = new PropertyContainer<>()
 
     void setupSpec() {
         setupBus()
@@ -20,16 +21,36 @@ class ExtractorSpec extends Specification implements BusTest {
     }
 
     void setup() {
-        card.set(null)
+        card.clear()
     }
 
-    def 'convert basic url to Card'() {
+    def 'convert Legendary Creature url to Card'() {
         given:
-        def url = 'https://scryfall.com/search?q=%21%22Vault+of+the+Archangel%22&utm_source=mediawiki'
-        subscribingFor(CARD_DATA).accept({card.set(it as Card)}).subscribe()
-        message(CARD_FROM_URL).withContent(url).withResponse(CARD_DATA).send()
-        await().atMost(3, SECONDS).until({card.get() != null})
-        card.get().name == 'Vault of the Archangel'
-        card.get().text == '“For centuries my creation kept this world in balance. Now only her shadow remains.” —Sorin Markov'
+        def url = 'https://scryfall.com/card/soi/5'
+
+        when:
+        subscribingFor(CARD_DATA).accept({ card.put(it as Card) }).subscribe()
+        message(CARD_FROM_URL).withContent(url).send()
+        await().atMost(2, SECONDS).until({card.hasValue()})
+
+        then:
+        def result = card.get() as CreatureCard
+        result.name == 'Archangel Avacyn'
+        result.text == '“Wings that once bore hope are now stained with blood. She is our guardian no longer.” —Grete, cathar apostate'
+        result.front.toString() == 'https://img.scryfall.com/cards/large/en/soi/5a.jpg?1518204266'
+        result.attack == 4
+        result.defence == 4
+        def manaCost = result.manaCost
+        manaCost.generic.value == 3
+        manaCost.white.value == 2
+        manaCost.green.value == 0
+        manaCost.blue.value == 0
+        manaCost.red.value == 0
+        manaCost.black.value == 0
+        manaCost.colorless.value == 0
+        def type = result.type
+        type.basicType == BasicType.Creature
+        'Legendary' in type.primaryTypes
+        'Angel' in type.secondaryTypes
     }
 }

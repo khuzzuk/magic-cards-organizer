@@ -20,10 +20,13 @@ class ClearFormUtil {
             if (field.isAnnotationPresent(Clearable) && SETTERS.containsKey(type)) {
                 field.setAccessible(true)
                 BiConsumer<?, String> setter = SETTERS.get(type) as BiConsumer<?, String>
+                def fieldValue = field.get(node) as Node
+                def clearableDefinition = field.getDeclaredAnnotation(Clearable)
                 setter.accept(
-                        field.get(node),
-                        field.getDeclaredAnnotation(Clearable).value()
+                        fieldValue,
+                        clearableDefinition.value()
                 )
+                fieldValue.visible = clearableDefinition.visibleOnClear()
             }
         }
     }
