@@ -1,56 +1,90 @@
 package pl.khuzzuk.mtg.organizer.gui.card
 
 import javafx.scene.control.Label
-import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.GridPane
 import pl.khuzzuk.messaging.Bus
 import pl.khuzzuk.mtg.organizer.Event
-import pl.khuzzuk.mtg.organizer.gui.ClearFormUtil
-import pl.khuzzuk.mtg.organizer.gui.Clearable
+import pl.khuzzuk.mtg.organizer.gui.form.Binder
+import pl.khuzzuk.mtg.organizer.gui.form.FormProperty
+import pl.khuzzuk.mtg.organizer.gui.form.GridField
+import pl.khuzzuk.mtg.organizer.gui.form.GridLayoutController
+import pl.khuzzuk.mtg.organizer.gui.form.HideCheck
 import pl.khuzzuk.mtg.organizer.initialize.Identification
 import pl.khuzzuk.mtg.organizer.initialize.Loadable
 import pl.khuzzuk.mtg.organizer.model.Card
 import pl.khuzzuk.mtg.organizer.model.CreatureCard
-import pl.khuzzuk.mtg.organizer.model.SpellCard
 
 @Identification(Event.CARD_VIEWER)
 class CardViewer extends GridPane implements Loadable {
     private Bus<Event> bus
-    @Clearable
+    private Binder binder
+
+    @FormProperty
+    @GridField(columnSpan = 3)
     private Label name
-    @Clearable
+    @FormProperty
+    @GridField(column = 1, row = 1, columnSpan = 2)
     private Label text
+
+    @HideCheck('generic')
+    @GridField(column = 1, row = 2)
     private ImageView genericIco
-    @Clearable('0')
+    @FormProperty(defaultValue = '0', beanPath = 'manaCost.generic.value')
+    @GridField(column = 2, row = 2)
     private Label generic
+    @HideCheck('white')
+    @GridField(column = 1, row = 3)
     private ImageView whiteIco
-    @Clearable('0')
+    @FormProperty(defaultValue = '0', beanPath = 'manaCost.white.value')
+    @GridField(column = 2, row = 3)
     private Label white
+    @HideCheck('green')
+    @GridField(column = 1, row = 4)
     private ImageView greenIco
-    @Clearable('0')
+    @FormProperty(defaultValue = '0', beanPath = 'manaCost.green.value')
+    @GridField(column = 2, row = 4)
     private Label green
+    @HideCheck('blue')
+    @GridField(column = 1, row = 5)
     private ImageView blueIco
-    @Clearable('0')
+    @FormProperty(defaultValue = '0', beanPath = 'manaCost.blue.value')
+    @GridField(column = 2, row = 5)
     private Label blue
+    @HideCheck('red')
+    @GridField(column = 1, row = 6)
     private ImageView redIco
-    @Clearable('0')
+    @FormProperty(defaultValue = '0', beanPath = 'manaCost.red.value')
+    @GridField(column = 2, row = 6)
     private Label red
+    @HideCheck('black')
+    @GridField(column = 1, row = 7)
     private ImageView blackIco
-    @Clearable('0')
+    @FormProperty(defaultValue = '0', beanPath = 'manaCost.black.value')
+    @GridField(column = 2, row = 7)
     private Label black
+    @HideCheck('colorless')
+    @GridField(column = 1, row = 8)
     private ImageView colorlessIco
-    @Clearable('0')
+    @FormProperty(defaultValue = '0', beanPath = 'manaCost.colorless.value')
+    @GridField(column = 2, row = 8)
     private Label colorless
-    @Clearable(visibleOnClear = false, value = 'Attack')
+
+    @HideCheck('attack')
+    @GridField(column = 1, row = 9)
     private Label attackLabel
-    @Clearable('')
+    @FormProperty(hideAfterClear = true)
+    @GridField(column = 2, row = 9)
     private Label attack
-    @Clearable(visibleOnClear = false, value = 'Defense')
+    @HideCheck('defense')
+    @GridField(column = 1, row = 10)
     private Label defenseLabel
-    @Clearable('')
+    @FormProperty(hideAfterClear = true)
+    @GridField(column = 2, row = 10)
     private Label defense
-    @Clearable
+
+    @FormProperty
+    @GridField(row = 1, rowSpan = 11)
     private ImageView front
 
     CardViewer(Bus<Event> bus) {
@@ -59,7 +93,11 @@ class CardViewer extends GridPane implements Loadable {
 
     @Override
     void load() {
-        bus.subscribingFor(Event.CARD_DATA).onFXThread().accept({loadCard(it as Card)}).subscribe()
+        bus.subscribingFor(Event.BINDER).accept({
+            this.binder = it as Binder
+            binder.bind(CreatureCard.class, this.class)
+            bus.subscribingFor(Event.CARD_DATA).onFXThread().accept({ loadCard(it as Card) }).subscribe()
+        }).subscribe()
 
         styleClass.add('card-viewer')
         setHgap(5)
@@ -93,67 +131,17 @@ class CardViewer extends GridPane implements Loadable {
         colorlessIco = new ImageView('Mana_N.png')
         applyStyleToImageView(colorlessIco)
         colorless = new Label()
-        attackLabel = new Label()
+        attackLabel = new Label('attack')
         attack = new Label()
-        defenseLabel = new Label()
+        defenseLabel = new Label('defense')
         defense = new Label()
 
-        add(name, 0, 0, 3, 1)
-        add(text, 1, 1, 2, 1)
-        add(genericIco, 1, 2)
-        add(generic, 2, 2)
-        add(whiteIco, 1, 3)
-        add(white, 2, 3)
-        add(greenIco, 1, 4)
-        add(green, 2, 4)
-        add(blueIco, 1, 5)
-        add(blue, 2, 5)
-        add(redIco, 1, 6)
-        add(red, 2, 6)
-        add(blackIco, 1, 7)
-        add(black, 2, 7)
-        add(colorlessIco, 1, 8)
-        add(colorless, 2, 8)
-        add(attackLabel, 1, 9)
-        add(attack, 2, 9)
-        add(defenseLabel, 1, 10)
-        add(defense, 2, 10)
-        add(front, 0, 1, 1, 11)
+        GridLayoutController.placeFieldOnGrid(this, this)
     }
 
     private void loadCard(Card card) {
-        ClearFormUtil.clear(this)
-        name.text = card.name
-        text.text = card.text
-
-        if (card instanceof SpellCard) {
-            def manaCost = card.manaCost
-            generic.text = manaCost.generic.value as String
-            white.text = manaCost.white.value as String
-            green.text = manaCost.green.value as String
-            blue.text = manaCost.blue.value as String
-            red.text = manaCost.red.value as String
-            black.text = manaCost.black.value as String
-            colorless.text = manaCost.colorless.value as String
-            genericIco.visible = true
-            whiteIco.visible = true
-            greenIco.visible = true
-            blueIco.visible = true
-            redIco.visible = true
-            blackIco.visible = true
-            colorlessIco.visible = true
-        }
-
-        if (card instanceof CreatureCard) {
-            attackLabel.visible = true
-            attack.text = card.defence as String
-            attack.visible = true
-            defenseLabel.visible = true
-            defense.text = card.defence as String
-            defense.visible = true
-        }
-
-        front.image = new Image(card.front.toString())
+        binder.clearForm(this)
+        binder.fillForm(this, card)
     }
 
     private static void applyStyleToImageView(ImageView imageView) {

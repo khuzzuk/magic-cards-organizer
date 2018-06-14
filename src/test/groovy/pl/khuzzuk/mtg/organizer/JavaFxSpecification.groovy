@@ -3,8 +3,8 @@ package pl.khuzzuk.mtg.organizer
 import javafx.application.Platform
 import spock.lang.Specification
 
-class JavaFxSpecification extends Specification {
-    void setup() {
+abstract class JavaFxSpecification extends Specification {
+    void setupSpec() {
         Platform.startup({})
     }
 }

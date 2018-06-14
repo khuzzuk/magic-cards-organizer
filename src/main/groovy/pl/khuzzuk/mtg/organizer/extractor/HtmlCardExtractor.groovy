@@ -39,7 +39,7 @@ class HtmlCardExtractor implements Loadable {
         populateSpellCardFields(card, profile)
         def stats = profile.getElementsByClass('card-text-stats').get(0).text().split('/')
         card.attack = Integer.parseInt(stats[0])
-        card.defence = Integer.parseInt(stats[1])
+        card.defense = Integer.parseInt(stats[1])
         card
     }
 

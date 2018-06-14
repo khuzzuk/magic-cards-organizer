@@ -55,6 +55,10 @@ dependencies {
     compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.1' // -javaagent:lib/aspectjweaver-1.9.1.jar
     compile group: 'org.aspectj', name: 'aspectjtools', version: '1.9.1'
     compile group: 'pl.khuzzuk', name: 'message-bus', version:'2.0.1'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.5'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
     compile group: 'org.controlsfx', name: 'controlsfx', version:'9.0.0'
     compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
     compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.13'

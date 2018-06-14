@@ -1,0 +1,486 @@
+[
+  {
+    "text": "Deathtouch",
+    "info": "Any amount of damage this deals to a creature is enough to destroy it."
+  },
+  {
+    "text": "Defender",
+    "info": "This creature can't attack."
+  },
+  {
+    "text": "Double Strike",
+    "info": "This creature deals both first-strike and regular combat damage."
+  },
+  {
+    "text": "Enchant",
+    "info": ""
+  },
+  {
+    "text": "Equip",
+    "info": ""
+  },
+  {
+    "text": "First Strike",
+    "info": "This creature deals combat damage before creatures without first strike."
+  },
+  {
+    "text": "Flash",
+    "info": ""
+  },
+  {
+    "text": "Flying",
+    "info": "This creature can't be blocked except by creatures with flying and/or reach."
+  },
+  {
+    "text": "Haste",
+    "info": "This creature can attack and as soon as it comes under your control."
+  },
+  {
+    "text": "Hexproof",
+    "info": "This permanent can't be the target of spells or abilities your opponents control."
+  },
+  {
+    "text": "Indestructible",
+    "info": "Effects that say \"destroy\" don’t destroy this."
+  },
+  {
+    "text": "Intimidate",
+    "info": "This creature can't be blocked except by artifact creatures and/or creatures that share a color with it."
+  },
+  {
+    "text": "Landwalk",
+    "info": "This creature can't be blocked as long as defending player controls a type."
+  },
+  {
+    "text": "Lifelink",
+    "info": "Damage dealt by this creature also causes you to gain that much life."
+  },
+  {
+    "text": "Protection",
+    "info": "This can't be blocked, targeted, dealt damage, or enchanted by anything quality."
+  },
+  {
+    "text": "Reach",
+    "info": "This creature can block creatures with flying."
+  },
+  {
+    "text": "Shroud",
+    "info": "This permanent or player can’t be the target of spells or abilities."
+  },
+  {
+    "text": "Trample",
+    "info": "This creature can deal excess combat damage to player or planeswalker it's attacking."
+  },
+  {
+    "text": "Vigilance",
+    "info": "Attacking doesn't cause this creature to tap."
+  },
+  {
+    "text": "Banding",
+    "info": ""
+  },
+  {
+    "text": "Rampage",
+    "info": ""
+  },
+  {
+    "text": "Cumulative Upkeep",
+    "info": ""
+  },
+  {
+    "text": "Flanking",
+    "info": ""
+  },
+  {
+    "text": "Phasing",
+    "info": ""
+  },
+  {
+    "text": "Buyback",
+    "info": ""
+  },
+  {
+    "text": "Shadow",
+    "info": ""
+  },
+  {
+    "text": "Cycling",
+    "info": ""
+  },
+  {
+    "text": "Echo",
+    "info": ""
+  },
+  {
+    "text": "Horsemanship",
+    "info": ""
+  },
+  {
+    "text": "Fading",
+    "info": ""
+  },
+  {
+    "text": "Kicker",
+    "info": "[1]"
+  },
+  {
+    "text": "Flashback",
+    "info": ""
+  },
+  {
+    "text": "Madness",
+    "info": ""
+  },
+  {
+    "text": "Fear",
+    "info": "This creature can't be blocked except by artifact creatures and/or black creatures."
+  },
+  {
+    "text": "Morph",
+    "info": "[1]"
+  },
+  {
+    "text": "Amplify",
+    "info": ""
+  },
+  {
+    "text": "Provoke",
+    "info": ""
+  },
+  {
+    "text": "Storm",
+    "info": "by definition, see storm scale"
+  },
+  {
+    "text": "Affinity",
+    "info": ""
+  },
+  {
+    "text": "Entwine",
+    "info": ""
+  },
+  {
+    "text": "Modular",
+    "info": ""
+  },
+  {
+    "text": "Sunburst",
+    "info": ""
+  },
+  {
+    "text": "Bushido",
+    "info": ""
+  },
+  {
+    "text": "Soulshift",
+    "info": ""
+  },
+  {
+    "text": "Splice",
+    "info": ""
+  },
+  {
+    "text": "Offering",
+    "info": ""
+  },
+  {
+    "text": "Ninjutsu",
+    "info": ""
+  },
+  {
+    "text": "Epic",
+    "info": "[1]"
+  },
+  {
+    "text": "Convoke",
+    "info": "[1]"
+  },
+  {
+    "text": "Dredge",
+    "info": "[1]"
+  },
+  {
+    "text": "Transmute",
+    "info": "[1]"
+  },
+  {
+    "text": "Bloodthirst",
+    "info": "[1]"
+  },
+  {
+    "text": "Haunt",
+    "info": "[1]"
+  },
+  {
+    "text": "Replicate",
+    "info": "[1]"
+  },
+  {
+    "text": "Forecast",
+    "info": "[1]"
+  },
+  {
+    "text": "Graft",
+    "info": "[1]"
+  },
+  {
+    "text": "Recover",
+    "info": ""
+  },
+  {
+    "text": "Ripple",
+    "info": ""
+  },
+  {
+    "text": "Split Second",
+    "info": ""
+  },
+  {
+    "text": "Suspend",
+    "info": ""
+  },
+  {
+    "text": "Vanishing",
+    "info": ""
+  },
+  {
+    "text": "Absorb",
+    "info": ""
+  },
+  {
+    "text": "Aura Swap",
+    "info": ""
+  },
+  {
+    "text": "Delve",
+    "info": "[1]"
+  },
+  {
+    "text": "Fortify",
+    "info": ""
+  },
+  {
+    "text": "Frenzy",
+    "info": ""
+  },
+  {
+    "text": "Gravestorm",
+    "info": ""
+  },
+  {
+    "text": "Poisonous",
+    "info": ""
+  },
+  {
+    "text": "Transfigure",
+    "info": ""
+  },
+  {
+    "text": "Champion",
+    "info": ""
+  },
+  {
+    "text": "Changeling",
+    "info": ""
+  },
+  {
+    "text": "Evoke",
+    "info": ""
+  },
+  {
+    "text": "Prowl",
+    "info": ""
+  },
+  {
+    "text": "Reinforce",
+    "info": ""
+  },
+  {
+    "text": "Conspire",
+    "info": ""
+  },
+  {
+    "text": "Persist",
+    "info": ""
+  },
+  {
+    "text": "Wither",
+    "info": ""
+  },
+  {
+    "text": "Retrace",
+    "info": ""
+  },
+  {
+    "text": "Devour",
+    "info": ""
+  },
+  {
+    "text": "Exalted",
+    "info": ""
+  },
+  {
+    "text": "Unearth",
+    "info": ""
+  },
+  {
+    "text": "Cascade",
+    "info": ""
+  },
+  {
+    "text": "Annihilator",
+    "info": "[1]"
+  },
+  {
+    "text": "Level Up",
+    "info": "[1]"
+  },
+  {
+    "text": "Rebound",
+    "info": "[1]"
+  },
+  {
+    "text": "Totem Armor",
+    "info": "[1]"
+  },
+  {
+    "text": "Infect",
+    "info": ""
+  },
+  {
+    "text": "Battle Cry",
+    "info": ""
+  },
+  {
+    "text": "Living Weapon",
+    "info": ""
+  },
+  {
+    "text": "Undying",
+    "info": ""
+  },
+  {
+    "text": "Miracle",
+    "info": "[1]"
+  },
+  {
+    "text": "Soulbond",
+    "info": ""
+  },
+  {
+    "text": "Overload",
+    "info": "[1]"
+  },
+  {
+    "text": "Scavenge",
+    "info": "[1]"
+  },
+  {
+    "text": "Unleash",
+    "info": "[1]"
+  },
+  {
+    "text": "Cipher",
+    "info": "[1]"
+  },
+  {
+    "text": "Evolve",
+    "info": "[1]"
+  },
+  {
+    "text": "Extort",
+    "info": "[1]"
+  },
+  {
+    "text": "Fuse",
+    "info": ""
+  },
+  {
+    "text": "Bestow",
+    "info": ""
+  },
+  {
+    "text": "Tribute",
+    "info": ""
+  },
+  {
+    "text": "Dethrone",
+    "info": ""
+  },
+  {
+    "text": "Hidden Agenda",
+    "info": ""
+  },
+  {
+    "text": "Outlast",
+    "info": "[1]"
+  },
+  {
+    "text": "Prowess",
+    "info": "[1]"
+  },
+  {
+    "text": "Dash",
+    "info": "[1]"
+  },
+  {
+    "text": "Exploit",
+    "info": "[1]"
+  },
+  {
+    "text": "Menace",
+    "info": ""
+  },
+  {
+    "text": "Renown",
+    "info": "Whenever this creature deals combat damage to a player, if it isn't renowned, put N +1/+1 counter on it and it becomes renowned."
+  },
+  {
+    "text": "Awaken",
+    "info": "[1]"
+  },
+  {
+    "text": "Devoid",
+    "info": "[1]"
+  },
+  {
+    "text": "Ingest",
+    "info": "[1]"
+  },
+  {
+    "text": "Surge",
+    "info": "[1]"
+  },
+  {
+    "text": "Skulk",
+    "info": ""
+  },
+  {
+    "text": "Emerge",
+    "info": "10 cards"
+  },
+  {
+    "text": "Escalate",
+    "info": "8 cards"
+  },
+  {
+    "text": "Fabricate",
+    "info": "[1]"
+  },
+  {
+    "text": "Partner",
+    "info": ""
+  },
+  {
+    "text": "Embalm",
+    "info": "15 cards"
+  },
+  {
+    "text": "Eternalize",
+    "info": ""
+  },
+  {
+    "text": "Afflict",
+    "info": ""
+  }
+]

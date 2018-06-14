@@ -7,11 +7,13 @@ import pl.khuzzuk.mtg.organizer.extractor.HtmlCardExtractor
 import pl.khuzzuk.mtg.organizer.gui.card.CardViewer
 import pl.khuzzuk.mtg.organizer.gui.filter.LeftPaneFilter
 import pl.khuzzuk.mtg.organizer.gui.MainWindowInitializer
+import pl.khuzzuk.mtg.organizer.gui.form.Binder
 import pl.khuzzuk.mtg.organizer.gui.menu.OrganizerMenuBar
 import pl.khuzzuk.mtg.organizer.gui.popup.ImportPopup
 import pl.khuzzuk.mtg.organizer.gui.selector.MainViewSelector
 import pl.khuzzuk.mtg.organizer.gui.selector.TableSelector
 import pl.khuzzuk.mtg.organizer.initialize.Container
+import pl.khuzzuk.mtg.organizer.serialization.JsonSerializer
 
 class MtgOrganizerApp extends Application {
     private static Bus<Event> bus
@@ -32,6 +34,7 @@ class MtgOrganizerApp extends Application {
     static Container createContainer(Bus<Event> bus) {
         Container container = new Container(bus)
         createHtmlExtraction(container, bus)
+        createSerialization(container, bus)
         createGui(container, bus)
         container
     }
@@ -44,9 +47,14 @@ class MtgOrganizerApp extends Application {
         container.prepare(new TableSelector())
         container.prepare(new OrganizerMenuBar(bus))
         container.prepare(new ImportPopup(bus))
+        container.prepare(new Binder())
     }
 
     static void createHtmlExtraction(Container container, Bus<Event> bus) {
         container.prepare(new HtmlCardExtractor(bus))
+    }
+
+    static void createSerialization(Container container, Bus<Event> bus) {
+        container.prepare(new JsonSerializer(bus))
     }
 }

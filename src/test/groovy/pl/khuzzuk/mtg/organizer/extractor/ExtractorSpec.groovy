@@ -39,7 +39,7 @@ class ExtractorSpec extends Specification implements BusTest {
         result.text == '“Wings that once bore hope are now stained with blood. She is our guardian no longer.” —Grete, cathar apostate'
         result.front.toString() == 'https://img.scryfall.com/cards/large/en/soi/5a.jpg?1518204266'
         result.attack == 4
-        result.defence == 4
+        result.defense == 4
         def manaCost = result.manaCost
         manaCost.generic.value == 3
         manaCost.white.value == 2

@@ -17,6 +17,7 @@ enum Event {
     CARD_VIEWER,
     ORGANIZER_MENU,
     IMPORT_POPUP,
+    BINDER,
 
     CLOSE
 }
