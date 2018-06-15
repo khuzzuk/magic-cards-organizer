@@ -1,12 +1,13 @@
 package pl.khuzzuk.mtg.organizer.gui.form
 
+import javafx.application.Platform
 import javafx.scene.Node
 import javafx.scene.control.Label
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
-import pl.khuzzuk.mtg.organizer.JavaFxSpecification
+import spock.lang.Specification
 
-class BinderSpec extends JavaFxSpecification {
+class BinderSpec extends Specification {
     private Binder binder
 
     private Form form
@@ -19,6 +20,10 @@ class BinderSpec extends JavaFxSpecification {
     private static final int ABSTRACT_INT_FIELD = 2
     private static Image imageFieldValue1
     private static Image imageFieldValue2
+
+    void setupSpec() {
+        Platform.startup({})
+    }
 
     void setup() {
         binder = new Binder()

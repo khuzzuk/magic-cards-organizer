@@ -24,6 +24,10 @@ class ExtractorSpec extends Specification implements BusTest {
         card.clear()
     }
 
+    void closeSpec() {
+        closeBus()
+    }
+
     def 'convert Legendary Creature url to Card'() {
         given:
         def url = 'https://scryfall.com/card/soi/5'

@@ -1,9 +1,10 @@
-package pl.khuzzuk.mtg.organizer
+package pl.khuzzuk.mtg.organizer;
 
-enum Event {
+public enum Event {
     //GUI
     SET_PRIMARY_STAGE,
     FX_THREAD_STARTED,
+    WINDOW_TO_SHOW,
 
     //HTML extraction
     /** accepts {@link String} send CARD_DATA */
@@ -19,5 +20,6 @@ enum Event {
     IMPORT_POPUP,
     BINDER,
 
+    ERROR,
     CLOSE
 }

@@ -4,9 +4,10 @@ import javafx.application.Application
 import javafx.stage.Stage
 import pl.khuzzuk.messaging.Bus
 import pl.khuzzuk.mtg.organizer.extractor.HtmlCardExtractor
+import pl.khuzzuk.mtg.organizer.gui.MainWindow
+import pl.khuzzuk.mtg.organizer.gui.MainWindowInitializer
 import pl.khuzzuk.mtg.organizer.gui.card.CardViewer
 import pl.khuzzuk.mtg.organizer.gui.filter.LeftPaneFilter
-import pl.khuzzuk.mtg.organizer.gui.MainWindowInitializer
 import pl.khuzzuk.mtg.organizer.gui.form.Binder
 import pl.khuzzuk.mtg.organizer.gui.menu.OrganizerMenuBar
 import pl.khuzzuk.mtg.organizer.gui.popup.ImportPopup
@@ -14,6 +15,7 @@ import pl.khuzzuk.mtg.organizer.gui.selector.MainViewSelector
 import pl.khuzzuk.mtg.organizer.gui.selector.TableSelector
 import pl.khuzzuk.mtg.organizer.initialize.Container
 import pl.khuzzuk.mtg.organizer.serialization.JsonSerializer
+import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo
 
 class MtgOrganizerApp extends Application {
     private static Bus<Event> bus
@@ -22,6 +24,7 @@ class MtgOrganizerApp extends Application {
         bus.subscribingFor(Event.CLOSE).then({bus.closeBus()}).subscribe()
         def container = createContainer(bus)
         bus.subscribingFor(Event.FX_THREAD_STARTED).then({container.sealContainer()}).subscribe()
+        bus.subscribingFor(Event.WINDOW_TO_SHOW).accept({ MainWindow window -> window.show()}).subscribe()
         launch(MtgOrganizerApp.class, args)
     }
 
@@ -56,5 +59,6 @@ class MtgOrganizerApp extends Application {
 
     static void createSerialization(Container container, Bus<Event> bus) {
         container.prepare(new JsonSerializer(bus))
+        container.prepare(new PredefinedSkillRepo(bus))
     }
 }

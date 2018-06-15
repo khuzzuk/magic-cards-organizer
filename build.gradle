@@ -19,6 +19,7 @@ sourceCompatibility = 9
 repositories {
     maven { url "http://repo1.maven.org/maven2" }
     maven { url "https://raw.github.com/khuzzuk/MessageBus/mvn-repo/" }
+    maven { url "https://raw.github.com/khuzzuk/functional-logic/mvn-repo/" }
 }
 
 compileJava {
@@ -55,6 +56,7 @@ dependencies {
     compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.1' // -javaagent:lib/aspectjweaver-1.9.1.jar
     compile group: 'org.aspectj', name: 'aspectjtools', version: '1.9.1'
     compile group: 'pl.khuzzuk', name: 'message-bus', version:'2.0.1'
+    compile group: 'pl.khuzzuk', name: 'functional-logic', version:'0.2.0'
     compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.5'
@@ -64,6 +66,8 @@ dependencies {
     compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.13'
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
     testCompile group: 'org.awaitility', name: 'awaitility', version: '3.1.0'
+    testCompile group: 'org.testfx', name: 'testfx-spock', version: '4.0.13-alpha'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version:'1.16.20'
 }
 
 task bootJar(type: Jar) {
