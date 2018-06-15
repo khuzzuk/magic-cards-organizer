@@ -19,6 +19,7 @@ public enum Event {
     ORGANIZER_MENU,
     IMPORT_POPUP,
     BINDER,
+    PREDEFINED_SKILLS,
 
     ERROR,
     CLOSE
