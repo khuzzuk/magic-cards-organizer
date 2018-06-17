@@ -81,7 +81,7 @@ class BinderSpec extends Specification {
         form.intField.text == '0'
         !form.hiddenCheckLabel.visible
         form.noHideLabel.visible
-        form.abstractIntField.text == null
+        form.abstractIntField.text == '0'
         form.abstractIntField.visible
     }
 
@@ -103,7 +103,7 @@ class BinderSpec extends Specification {
         form.intField.text == '0'
         !form.hiddenCheckLabel.visible
         form.noHideLabel.visible
-        form.abstractIntField.text == null
+        form.abstractIntField.text == '0'
         form.abstractIntField.visible
 
         and:
@@ -130,7 +130,7 @@ class BinderSpec extends Specification {
         private ImageView field2 = new ImageView()
         @FormProperty(defaultValue = 'file::default', hideAfterClear = true)
         private ImageView field3 = new ImageView()
-        @FormProperty(defaultValue = '0', beanPath = 'innerBean.intField', hideAfterClear = true)
+        @FormProperty(beanPath = 'innerBean.intField', hideAfterClear = true)
         private Label intField = new Label()
         @HideCheck('intField')
         private Label hiddenCheckLabel = new Label()
