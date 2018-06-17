@@ -1,6 +1,7 @@
 package pl.khuzzuk.mtg.organizer.extractor;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,6 +18,8 @@ import pl.khuzzuk.mtg.organizer.model.type.Type;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class HtmlCardExtractor implements Loadable {
@@ -31,7 +34,7 @@ public class HtmlCardExtractor implements Loadable {
         Document doc = downloadPage(url);
         if (doc != null) {
             Element profile = doc.getElementById("main").getElementsByClass("card-profile").get(0);
-            Type type = determineBasicTypeFrom(profile.getElementsByClass("card-text-type-line").text());
+            Type type = determineBasicTypeFrom(profile.getElementsByClass("card-text-type-line").get(0).text());
 
             Card card = createCreatureCard(profile);
             card.setType(type);
@@ -68,21 +71,22 @@ public class HtmlCardExtractor implements Loadable {
 
     private static Type determineBasicTypeFrom(String text) {
         Type type = new Type();
-        String[] lineElements = text.split(" — ");
-        if (lineElements[0].contains(" ")) {
-            String[] primaryTypes = lineElements[0].split(" ");
-            type.setBasicType(BasicType.valueOf(primaryTypes[1]));
-            type.getPrimaryTypes().add(primaryTypes[0]);
-        } else {
-            type.setBasicType(BasicType.valueOf(lineElements[0]));
+        String[] lineElements = StringUtils.split(text);
+        List<String> left = new LinkedList<>();
+        List<String> currentList = left;
+        for (String lineElement : lineElements) {
+            if (lineElement.length() == 1) {
+                currentList = type.getSecondaryTypes();
+            } else {
+                currentList.add(lineElement);
+            }
         }
 
-        if (lineElements.length > 1) {
-            String[] secondaryTypes = lineElements[1].split(" ");
-            for (String secondaryType : secondaryTypes) {
-                type.getSecondaryTypes().add(secondaryType);
-            }
-
+        if (left.size() > 1) {
+            type.getPrimaryTypes().add(left.get(0));
+            type.setBasicType(BasicType.valueOf(left.get(1)));
+        } else {
+            type.setBasicType(BasicType.valueOf(left.get(0)));
         }
 
         return type;
