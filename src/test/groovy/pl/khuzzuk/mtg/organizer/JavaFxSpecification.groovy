@@ -5,9 +5,9 @@ import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
-import org.testfx.framework.spock.ApplicationSpec
+import spock.lang.Specification
 
-abstract class JavaFxSpecification extends ApplicationSpec {
+abstract class JavaFxSpecification extends Specification {
     void setupSpec() {
         Platform.startup({})
     }
@@ -22,7 +22,7 @@ abstract class JavaFxSpecification extends ApplicationSpec {
 
     void fireEventOn(javafx.scene.Node node, KeyCode keyCode, boolean shift, boolean control, boolean alt) {
         Platform.runLater({
-            javafx.event.Event.fireEvent(node, new KeyEvent(KeyEvent.KEY_RELEASED, '', '', keyCode,
+            javafx.event.Event.fireEvent(node, new KeyEvent(KeyEvent.KEY_PRESSED, '', '', keyCode,
                     shift, control, alt, false))
         })
     }

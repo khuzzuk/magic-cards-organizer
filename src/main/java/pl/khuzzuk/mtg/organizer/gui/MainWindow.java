@@ -30,8 +30,9 @@ public class MainWindow extends Stage {
     public void initialize() {
         setMaximized(true);
         prepareRoot();
-        setScene(new Scene(root));
-        getScene().getStylesheets().add("mtg.css");
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("mtg.css");
+        setScene(scene);
         setOnCloseRequest(event -> bus.message(Event.CLOSE).send());
     }
 
@@ -45,7 +46,7 @@ public class MainWindow extends Stage {
         StatusBar statusBar = new StatusBar();
         url = new TextField();
         url.getStyleClass().add("url-field");
-        url.setOnAction(event -> importFromUrl());
+        url.setOnKeyPressed(event -> importFromUrl());
 
         Button importUrl = new Button("Import");
         importUrl.setId("import");

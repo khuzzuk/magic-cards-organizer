@@ -8,7 +8,7 @@ import java.util.function.Function;
 @UtilityClass
 public class ReflectionUtils {
     @SuppressWarnings("unchecked")
-    public <T> T getValueFormField(Field field, Object owner, Function<IllegalAccessException, T> handler) {
+    public <T> T getValueFromField(Field field, Object owner, Function<IllegalAccessException, T> handler) {
         try {
             return (T) field.get(owner);
         } catch (IllegalAccessException e) {

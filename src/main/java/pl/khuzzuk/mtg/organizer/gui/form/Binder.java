@@ -11,6 +11,7 @@ import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.keyvalue.MultiKey;
 import org.apache.commons.lang3.StringUtils;
 import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.common.ReflectionUtils;
 import pl.khuzzuk.mtg.organizer.common.UrlUtil;
 import pl.khuzzuk.mtg.organizer.initialize.Identification;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
@@ -81,7 +82,7 @@ public class Binder implements Loadable {
     @SuppressWarnings("unchecked")
     public void clearForm(final Node form) {
         controllers.get(form.getClass()).forEach(controller -> {
-            Node formFieldElement = controller.getValueFromFormField(form);
+            Node formFieldElement = ReflectionUtils.getValueFromField(controller.formField, form, this::rethrow);
             if (formFieldElement != null) {
                 formFieldElement.setVisible(!controller.isHide());
                 controller.getHideCheckFields().stream()
@@ -94,9 +95,6 @@ public class Binder implements Loadable {
                 } else {
                     convertedValue = controller.getConverter().getFormDefaultValue();
                 }
-                System.out.print(controller.formField);
-                System.out.print(" ");
-                System.out.println(convertedValue);
                 controller.getFormSetter().accept(formFieldElement, convertedValue);
             }
         });
@@ -107,7 +105,7 @@ public class Binder implements Loadable {
         for (PropertyController controller : controllers.get(form.getClass())) {
             Object beanFieldValue = controller.getBeanGetter().apply(bean);
             if (beanFieldValue != null) {
-                Node formFieldElement = controller.getValueFromFormField(form);
+                Node formFieldElement = ReflectionUtils.getValueFromField(controller.formField, form, this::rethrow);
                 Object formFieldValue = controller.getConverter().getFormConverter().apply(beanFieldValue);
                 controller.getFormSetter().accept(formFieldElement, formFieldValue);
                 formFieldElement.setVisible(true);
@@ -141,15 +139,6 @@ public class Binder implements Loadable {
         private boolean hide;
         private String defaultValue;
         private List<Field> hideCheckFields;
-
-        private Node getValueFromFormField(Node form) {
-            try {
-                return (Node) formField.get(form);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
     }
 
     private static boolean setVisible(Node propOwner, boolean var1) {
@@ -163,6 +152,15 @@ public class Binder implements Loadable {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    private <T> T rethrow(Exception e) {
+        throw new BinderException(e);
+    }
+    private class BinderException extends RuntimeException {
+        private BinderException(Throwable cause) {
+            super(cause);
         }
     }
 }

@@ -24,7 +24,7 @@ class MtgOrganizerApp extends Application {
         bus.subscribingFor(Event.CLOSE).then({bus.closeBus()}).subscribe()
         def container = createContainer(bus)
         bus.subscribingFor(Event.FX_THREAD_STARTED).then({container.sealContainer()}).subscribe()
-        bus.subscribingFor(Event.WINDOW_TO_SHOW).accept({ MainWindow window -> window.show()}).subscribe()
+        bus.subscribingFor(Event.WINDOW_TO_SHOW).onFXThread().accept({ MainWindow window -> window.show()}).subscribe()
         launch(MtgOrganizerApp.class, args)
     }
 

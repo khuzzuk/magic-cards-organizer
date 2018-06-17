@@ -14,7 +14,7 @@ public class GridLayoutController {
                 .filter(field -> field.isAnnotationPresent(GridField.class))
                 .peek(field -> field.setAccessible(true))
                 .forEach(field -> {
-                    Node fieldValue = ReflectionUtils.getValueFormField(field, form, e -> {
+                    Node fieldValue = ReflectionUtils.getValueFromField(field, form, e -> {
                         e.printStackTrace();
                         return null;
                     });
