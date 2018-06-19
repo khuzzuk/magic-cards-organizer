@@ -1,522 +1,524 @@
-[
-  {
-    "text": "Deathtouch",
-    "info": "Deathtouch (Any amount of damage this deals to a creature is enough to destroy it.)"
-  },
-  {
-    "text": "Defender",
-    "info": "Defender (This creature can't attack.)"
-  },
-  {
-    "text": "Double Strike",
-    "info": "Double strike (This creature deals both first-strike and regular combat damage.)"
-  },
-  {
-    "text": "Enchant",
-    "info": "Enchant (object) (This card can only be attached to an (object).)"
-  },
-  {
-    "text": "Equip",
-    "info": "Equip (cost) ((Cost): Attach to target creature you control. Equip only as a sorcery.)"
-  },
-  {
-    "text": "First Strike",
-    "info": "First strike (This creature deals combat damage before creatures without first strike.)"
-  },
-  {
-    "text": "Flash",
-    "info": "Flash (You may cast this spell any time you could cast an instant.)"
-  },
-  {
-    "text": "Flying",
-    "info": "Flying (This creature can't be blocked except by creatures with flying and/or reach.)"
-  },
-  {
-    "text": "Haste",
-    "info": "Haste (This creature can attack and as soon as it comes under your control.)"
-  },
-  {
-    "text": "Hexproof",
-    "info": "Hexproof (This permanent can't be the target of spells or abilities your opponents control.) Hexproof from [quality] (This permanent can't be the target of [quality] spells your opponents control or abilities of [quality] sources your opponents control.)"
-  },
-  {
-    "text": "Indestructible",
-    "info": "Indestructible (Effects that say \"destroy\" don’t destroy this.)"
-  },
-  {
-    "text": "Intimidate",
-    "info": "Intimidate (This creature can't be blocked except by artifact creatures and/or creatures that share a color with it.)"
-  },
-  {
-    "text": "Landwalk",
-    "info": "(type) Landwalk (This creature can't be blocked as long as defending player controls a (type).)"
-  },
-  {
-    "text": "Lifelink",
-    "info": "Lifelink (Damage dealt by this creature also causes you to gain that much life.)"
-  },
-  {
-    "text": "Protection",
-    "info": "Protection from [quality] (This can't be blocked, targeted, dealt damage, or enchanted by anything (quality).)"
-  },
-  {
-    "text": "Reach",
-    "info": "Reach (This creature can block creatures with flying.)"
-  },
-  {
-    "text": "Shroud",
-    "info": "Shroud (This permanent or player can’t be the target of spells or abilities.)"
-  },
-  {
-    "text": "Trample",
-    "info": "Trample (This creature can deal excess combat damage to player or planeswalker it's attacking.) Trample (This spell can deal excess damage to its target's controller.)"
-  },
-  {
-    "text": "Vigilance",
-    "info": "Vigilance (Attacking doesn't cause this creature to tap.)"
-  },
-  {
-    "text": "Banding",
-    "info": "Banding (Any creatures with banding, and up to one without, can attack in a band. Bands are blocked as a group. If any creatures with banding you control are blocking or being blocked by a creature, you divide that creature's combat damage, not its controller, among any of the creatures it's being blocked by or is blocking.)"
-  },
-  {
-    "text": "Rampage",
-    "info": "Rampage N (Whenever this creature becomes blocked, it gets +N/+N until end of turn for each creature blocking it beyond the first.)"
-  },
-  {
-    "text": "Cumulative Upkeep",
-    "info": "Cumulative upkeep (cost) (At the beginning of your upkeep, if this permanent is on the battlefield, put an age counter on this permanent. Then you may pay (cost) for each age counter on it. If you don’t, sacrifice it.)"
-  },
-  {
-    "text": "Flanking",
-    "info": "Flanking (Whenever a creature without flanking blocks this creature, the blocking creature gets -1/-1 until end of turn.)"
-  },
-  {
-    "text": "Phasing",
-    "info": "Phasing (This phases in or out before you untap during each of your untap steps. While it's phased out, it's treated as though it doesn't exist.)"
-  },
-  {
-    "text": "Buyback",
-    "info": "Buyback (cost) (You may pay an additional (cost) as you cast this spell. If the buyback cost was paid, put this spell into its owner’s hand instead of into that player’s graveyard as it resolves.)"
-  },
-  {
-    "text": "Shadow",
-    "info": "Shadow (This creature can block or be blocked by only creatures with shadow.)"
-  },
-  {
-    "text": "Cycling",
-    "info": "Cycling (cost) (Discard this card: Draw a card.) [type]cycling (cost) (Discard this card: Search your library for a [type] card, reveal it, and put it into your hand. Then shuffle your library.)"
-  },
-  {
-    "text": "Echo",
-    "info": "Echo (cost) (At the beginning of your upkeep, if this came under your control since the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)"
-  },
-  {
-    "text": "Horsemanship",
-    "info": "Horsemanship (This creature can't be blocked except by creatures with horsemanship.)"
-  },
-  {
-    "text": "Fading",
-    "info": "Fading N (This creature enters the battlefield with N fade counters on it. At the beginning of your upkeep, remove a fade counter from it. If you can't, sacrifice it.)"
-  },
-  {
-    "text": "Kicker",
-    "info": "Kicker (cost) (You may pay an additional (cost) as you cast this spell.) Multikicker (cost) (You may pay an additional (cost) any number of times as you cast this spell.)"
-  },
-  {
-    "text": "Flashback",
-    "info": "Flashback (cost) (You may cast this card from your graveyard for its flashback cost. Then exile it.)"
-  },
-  {
-    "text": "Madness",
-    "info": "Madness (cost) (If you discard this card, discard it into exile. When you do, cast it for its madness cost or put it into your graveyard.)"
-  },
-  {
-    "text": "Fear",
-    "info": "Fear (This creature can't be blocked except by artifact creatures and/or black creatures.)"
-  },
-  {
-    "text": "Morph",
-    "info": "Morph (cost) (You may cast this face down as a 2/2 creature for . Turn it face up any time for its morph cost.) Megamorph (cost) (You may cast this card face down as a 2/2 creature for . Turn it face up at any time for its megamorph cost and put a +1/+1 counter on it.)"
-  },
-  {
-    "text": "Amplify",
-    "info": "Amplify N (As this object enters the battlefield, reveal any number of cards from your hand that share a creature type with it. This permanent comes into play with N +1/+1 counters on it for each card revealed this way.)"
-  },
-  {
-    "text": "Provoke",
-    "info": "Provoke (Whenever this attacks, you may have target creature defending player controls untap and block it if able.)"
-  },
-  {
-    "text": "Storm",
-    "info": "Storm (When you cast this spell, copy it for each spell cast before it this turn. You may choose new targets for the copies.)"
-  },
-  {
-    "text": "Affinity",
-    "info": "Affinity for (text) (This spell costs you less to cast for each (text) you control.)"
-  },
-  {
-    "text": "Entwine",
-    "info": "Entwine (cost) (Choose both if you pay the entwine cost.) Entwine (cost) (You may choose to use all modes of this spell instead of just one. If you do, you pay an additional (cost).)"
-  },
-  {
-    "text": "Modular",
-    "info": "Modular N (This comes into play with N +1/+1 counters on it. When it's put into a graveyard, you may put its +1/+1 counters on target artifact creature.)"
-  },
-  {
-    "text": "Sunburst",
-    "info": "Sunburst (This enters the battlefield with a (+1/+1 or charge) counter on it for each color of mana spent to cast it.)"
-  },
-  {
-    "text": "Bushido",
-    "info": "Bushido N (Whenever this creature blocks or becomes blocked, it gets +N/+N until end of turn.)"
-  },
-  {
-    "text": "Soulshift",
-    "info": "Soulshift N (When this creature dies, you may return target Spirit card with converted mana cost N or less from your graveyard to your hand.)"
-  },
-  {
-    "text": "Splice",
-    "info": "Splice onto (type) (cost) (As you cast an (type) spell, you may reveal this card from your hand and pay its splice cost. If you do, add this card's effects to that spell.)"
-  },
-  {
-    "text": "Offering",
-    "info": "(Subtype) Offering (You may cast this card any time you could cast an instant by sacrificing a (subtype) permanent. If you do, the total cost to cast this card is reduced by the sacrificed permanent’s mana cost.)"
-  },
-  {
-    "text": "Ninjutsu",
-    "info": "Ninjutsu (cost) ((Cost), Return an unblocked attacker you control to hand: Put this card onto the battlefield from your hand tapped and attacking.)"
-  },
-  {
-    "text": "Epic",
-    "info": "Epic (For the rest of the game, you can't cast spells. At the beginning of each of your upkeeps, copy this spell except for its epic ability. You may choose new targets for the copy.)"
-  },
-  {
-    "text": "Convoke",
-    "info": "Convoke (Your creatures can help cast this spell. Each creature you tap while casting this spell pays for or one mana of that creature's color.)"
-  },
-  {
-    "text": "Dredge",
-    "info": "Dredge N (If you would draw a card, instead you may put exactly N cards from the top of your library into your graveyard. If you do, return this card from your graveyard to your hand. Otherwise, draw a card.)"
-  },
-  {
-    "text": "Transmute",
-    "info": "Transmute (cost) ((cost), Discard this card: Search your library for a card with the same converted mana cost as this card, reveal it, and put it into your hand. Then shuffle your library. Transmute only as a sorcery.)"
-  },
-  {
-    "text": "Bloodthirst",
-    "info": "Bloodthirst N (If an opponent was dealt damage this turn, this permanent enters the battlefield with N +1/+1 counters on it.)"
-  },
-  {
-    "text": "Haunt",
-    "info": "Haunt (When this creature dies, exile it haunting target creature.)"
-  },
-  {
-    "text": "Replicate",
-    "info": "Replicate (cost) (When you cast this spell, copy it for each time you paid its replicate cost. You may choose new targets for the copies.)"
-  },
-  {
-    "text": "Forecast",
-    "info": "Forecast (cost) (Play this ability only during your upkeep and only once each turn.)"
-  },
-  {
-    "text": "Graft",
-    "info": "Graft N (This permanent enters the battlefield with N +1/+1 counters on it. Whenever another creature enters the battlefield, if this permanent has a +1/+1 counter on it, you may move a +1/+1 counter from this permanent onto that creature.)"
-  },
-  {
-    "text": "Recover",
-    "info": "Recover (cost) (When a creature is put into your graveyard from the battlefield, you may pay (cost). If you do, return this card from your graveyard to your hand. Otherwise, exile this card.)"
-  },
-  {
-    "text": "Ripple",
-    "info": "Ripple N (When you cast this spell, you may reveal the top N cards of your library, or, if there are fewer than N cards in your library, you may reveal all the cards in your library. If you reveal cards from your library this way, you may cast any of those cards with the same name as this spell without paying their mana costs, then put all revealed cards not cast this way on the bottom of your library in any order.)"
-  },
-  {
-    "text": "Split Second",
-    "info": "Split second (As long as this spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.)"
-  },
-  {
-    "text": "Suspend",
-    "info": "Suspend N — (cost) (Rather than cast this card from your hand, you may pay (cost) and exile it with N time counters on it. At the beginning of your upkeep, remove a time counter. When the last is removed, cast it without paying its mana cost. It has haste.)"
-  },
-  {
-    "text": "Vanishing",
-    "info": "Vanishing N (This permanent enters the battlefield with N time counters on it. At the beginning of your upkeep, remove a time counter from it. When the last is removed, sacrifice it.)"
-  },
-  {
-    "text": "Absorb",
-    "info": "Absorb N (If a source would deal damage to this creature, prevent N of that damage.)"
-  },
-  {
-    "text": "Aura Swap",
-    "info": "Aura swap (cost) ((Cost): Exchange this Aura with an Aura card in your hand.)"
-  },
-  {
-    "text": "Delve",
-    "info": "Delve (Each card you exile from your graveyard while casting this spell pays for .)"
-  },
-  {
-    "text": "Fortify",
-    "info": "Fortify (Fortify (cost). (Cost): Attach this Fortification to target land you control. Activate this ability only any time you could cast a sorcery.)"
-  },
-  {
-    "text": "Frenzy",
-    "info": "Frenzy N (Whenever this creature attacks and isn't blocked, it gets +N/+0 until end of turn.)"
-  },
-  {
-    "text": "Gravestorm",
-    "info": "Gravestorm (When you cast this spell, copy it for each permanent put into a graveyard this turn. You may choose new targets for the copies.)"
-  },
-  {
-    "text": "Poisonous",
-    "info": "Poisonous N (Whenever this creature deals combat damage to a player, that player gets N poison counters.)"
-  },
-  {
-    "text": "Transfigure",
-    "info": "Transfigure (cost) ((Cost), Sacrifice this permanent: Search your library for a creature card with the same converted mana cost as this permanent and put it onto the battlefield. Then shuffle your library. Activate this ability only any time you could cast a sorcery)"
-  },
-  {
-    "text": "Champion",
-    "info": "Champion an (object) (When this enters the battlefield, sacrifice it unless you exile another (object) you control. When this leaves the battlefield, that card returns to the battlefield.)"
-  },
-  {
-    "text": "Changeling",
-    "info": "Changeling (This card is every creature type.)"
-  },
-  {
-    "text": "Evoke",
-    "info": "Evoke (cost) (You may cast this spell for its evoke cost. If you do, it's sacrificed when it enters the battlefield.)"
-  },
-  {
-    "text": "Hideaway",
-    "info": "Hideaway (This land enters the battlefield tapped. When it does, look at the top four cards of your library, exile one face down, then put the rest on the bottom of your library.)"
-  },
-  {
-    "text": "Prowl",
-    "info": "Prowl (cost) (You may cast this for its prowl cost if you dealt combat damage to a player this turn with a (subtype).)"
-  },
-  {
-    "text": "Reinforce",
-    "info": "Reinforce N — (cost) (Discard this card: Put N +1/+1 counters on target creature.)"
-  },
-  {
-    "text": "Conspire",
-    "info": "Conspire (As you cast this spell, you may tap two untapped creatures you control that share a color with it. When you do, copy it and you may choose a new target for the copy.)"
-  },
-  {
-    "text": "Persist",
-    "info": "Persist (When this permanent is put into a graveyard from the battlefield, if it had no -1/-1 counters on it, return it to the battlefield under its owner's control with a -1/-1 counter on it.)"
-  },
-  {
-    "text": "Wither",
-    "info": "Wither (This deals damage to creatures in the form of -1/-1 counters.)"
-  },
-  {
-    "text": "Retrace",
-    "info": "Retrace (You may cast this card from your graveyard by discarding a land card as an additional cost to cast it.)"
-  },
-  {
-    "text": "Devour",
-    "info": "Devour N (As this object enters the battlefield, you may sacrifice any number of creatures. This permanent enters the battlefield with N +1/+1 counters on it for each creature sacrificed this way.)"
-  },
-  {
-    "text": "Exalted",
-    "info": "Exalted (Whenever a creature you control attacks alone, that creature gets +1/+1 until end of turn.)"
-  },
-  {
-    "text": "Unearth",
-    "info": "Unearth (cost) (Return this card from your graveyard to the battlefield. It gains haste. Exile it at the beginning of the next end step or if it would leave the battlefield. Unearth only as a sorcery.)"
-  },
-  {
-    "text": "Cascade",
-    "info": "Cascade (When you cast this spell, exile cards from the top of your library until you exile a nonland card whose converted mana cost is less than this spell's converted mana cost. You may cast that card without paying its mana cost. Then put all cards exiled this way that weren't cast on the bottom of your library in a random order.)"
-  },
-  {
-    "text": "Annihilator",
-    "info": "Annihilator N (Whenever this creature attacks, defending player sacrifices N permanents.)"
-  },
-  {
-    "text": "Level Up",
-    "info": "Level up (cost) ((Cost): Put a level counter on this permanent. Activate this ability only any time you could cast a sorcery.)"
-  },
-  {
-    "text": "Rebound",
-    "info": "Rebound (If this spell was cast from your hand, instead of putting it into your graveyard as it resolves, exile it and, at the beginning of your next upkeep, you may cast this card from exile without paying its mana cost.)"
-  },
-  {
-    "text": "Totem Armor",
-    "info": "Totem armor (If enchanted permanent would be destroyed, instead remove all damage marked on it and destroy this Aura.)"
-  },
-  {
-    "text": "Infect",
-    "info": "Infect (This creature deals damage to creatures in the form of -1/-1 counters and to players in the form of poison counters.)"
-  },
-  {
-    "text": "Battle Cry",
-    "info": "Battle cry (Whenever this creature attacks, each other attacking creature gets +1/+0 until end of turn.)"
-  },
-  {
-    "text": "Living Weapon",
-    "info": "Living weapon (When this Equipment enters the battlefield, create a 0/0 black Germ creature token, then attach this Equipment to it.)"
-  },
-  {
-    "text": "Undying",
-    "info": "Undying (When this creature dies, if it had no +1/+1 counters on it, return it to the battlefield under its owner's control with a +1/+1 counter on it.)"
-  },
-  {
-    "text": "Miracle",
-    "info": "Miracle (cost) (You may cast this card for its Miracle cost when you draw it if it's the first card you drew this turn.)"
-  },
-  {
-    "text": "Soulbond",
-    "info": "Soulbond (You may pair this creature with another unpaired creature when either enters the battlefield. They remain paired for as long as you control both of them.)"
-  },
-  {
-    "text": "Overload",
-    "info": "Overload (cost) (You may cast this spell for its overload cost. If you do, change its text by replacing all instances of 'target' with 'each'.)"
-  },
-  {
-    "text": "Scavenge",
-    "info": "Scavenge (cost) (Exile this card from your graveyard: Put a number of +1/+1 counters equal to this card's power on target creature. Scavenge only as a sorcery.)"
-  },
-  {
-    "text": "Unleash",
-    "info": "Unleash (You may have this creature enter the battlefield with a +1/+1 counter on it. It can't block as long as it has a +1/+1 counter on it.)"
-  },
-  {
-    "text": "Cipher",
-    "info": "Cipher ((After casting) then you may exile this spell card encoded on a creature you control. Whenever that creature deals combat damage to a player, its controller may cast a copy of this card without paying its mana cost.)"
-  },
-  {
-    "text": "Evolve",
-    "info": "Evolve (Whenever a creature enters the battlefield under your control, if that creature has greater power or toughness than this creature, put a +1/+1 counter on this creature.)"
-  },
-  {
-    "text": "Extort",
-    "info": "Extort (Whenever you cast a spell, you may pay If you do, each opponent loses 1 life and you gain that much life.)"
-  },
-  {
-    "text": "Fuse",
-    "info": "Fuse (You may cast one or both halves of this card from your hand.)"
-  },
-  {
-    "text": "Bestow",
-    "info": "Bestow (cost) (If you cast this card for its bestow cost, it's an Aura spell with enchant creature. It becomes a creature again if it's not attached to a creature.)"
-  },
-  {
-    "text": "Tribute",
-    "info": "Tribute N (As this creature enters the battlefield, an opponent of your choice may place N +1/+1 counters on it.)"
-  },
-  {
-    "text": "Dethrone",
-    "info": "Dethrone (Whenever this creature attacks the player with the most life or tied for most life, put a +1/+1 counter on it.)"
-  },
-  {
-    "text": "Hidden Agenda",
-    "info": "Hidden agenda (Start the game with this conspiracy face down in the command zone and secretly name a card. You may turn this conspiracy face up any time and reveal the chosen name.) Double agenda (Start the game with this conspiracy face down in the command zone and secretly name two different cards. You may turn this conspiracy face up any time and reveal the chosen names.)"
-  },
-  {
-    "text": "Outlast",
-    "info": "Outlast (cost) ((cost), : Put a +1/+1 counter on this creature. Outlast only as a sorcery.)"
-  },
-  {
-    "text": "Prowess",
-    "info": "Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.)"
-  },
-  {
-    "text": "Dash",
-    "info": "Dash (cost) (You may cast this spell for its dash cost. If you do, it gains haste, and it's returned from the battlefield to its owner's hand at the beginning of the next end step.)"
-  },
-  {
-    "text": "Exploit",
-    "info": "Exploit (When this creature enters the battlefield, you may sacrifice a creature.)"
-  },
-  {
-    "text": "Menace",
-    "info": "Menace (This creature can't be blocked except by two or more creatures.)"
-  },
-  {
-    "text": "Renown",
-    "info": "Renown N (Whenever this creature deals combat damage to a player, if it isn't renowned, put N +1/+1 counter on it and it becomes renowned.)"
-  },
-  {
-    "text": "Awaken",
-    "info": "Awaken N — (cost) (If you cast this card for (cost), also put N +1/+1 counters on target land you control and it becomes a 0/0 Elemental creature with haste. It's still a land.)"
-  },
-  {
-    "text": "Devoid",
-    "info": "Devoid (This card has no color.)"
-  },
-  {
-    "text": "Ingest",
-    "info": "Ingest (Whenever this creature deals combat damage to a player, that player exiles the top card of his or her library)"
-  },
-  {
-    "text": "Myriad",
-    "info": "Myriad (Whenever this creature attacks, for each opponent other than defending player, you may create a token that's a copy of this creature that's tapped and attacking that player or a planeswalker he or she controls. If one or more tokens are created this way, exile the tokens at end of combat.)"
-  },
-  {
-    "text": "Surge",
-    "info": "Surge (cost) (You may cast a spell for its surge cost if you or a teammate have cast another spell in the same turn.)"
-  },
-  {
-    "text": "Skulk",
-    "info": "Skulk (This creature can't be blocked by creatures with greater power.)"
-  },
-  {
-    "text": "Emerge",
-    "info": "Emerge (cost) (You may cast this spell by sacrificing a creature and paying the emerge cost reduced by that creature's converted mana cost)"
-  },
-  {
-    "text": "Escalate",
-    "info": "Escalate (cost) (Pay this cost for each mode chosen beyond the first.)"
-  },
-  {
-    "text": "Melee",
-    "info": "Melee (Whenever this creature attacks, it gets +1/+1 until end of turn for each opponent you attacked with a creature this combat.)"
-  },
-  {
-    "text": "Crew",
-    "info": "Crew N (Tap any number of untapped creatures you control with total power N or greater: This permanent becomes an artifact creature until end of turn.)"
-  },
-  {
-    "text": "Fabricate",
-    "info": "Fabricate N (When this permanent enters the battlefield, you may put N +1/+1 counters on it. If you don't, create N 1/1 colorless Servo artifact creature tokens.)"
-  },
-  {
-    "text": "Partner",
-    "info": "Partner (You can have two commanders if both have partner.) Partner with [name] (When this creature enters the battlefield, target player may put [name] into their hand from their library, then shuffle.)"
-  },
-  {
-    "text": "Undaunted",
-    "info": "Undaunted (This spell costs less to cast for each opponent.)"
-  },
-  {
-    "text": "Improvise",
-    "info": "Improvise (Your artifacts can help cast this spell. Each artifact you tap after you're done activating mana abilities pays for .)"
-  },
-  {
-    "text": "Aftermath",
-    "info": "Aftermath (Cast this spell only from your graveyard. Then exile it.)"
-  },
-  {
-    "text": "Embalm",
-    "info": "Embalm (cost) ((Cost), Exile this card from your graveyard: Create a token that's a copy of it, except it's a white Zombie ... with no mana cost. Embalm only as a sorcery.)"
-  },
-  {
-    "text": "Eternalize",
-    "info": "Eternalize (cost) ((Cost), Exile this card from your graveyard: Create a token that's a copy of it, except it's a 4/4 black Zombie ... with no mana cost. Eternalize only as a sorcery.)"
-  },
-  {
-    "text": "Afflict",
-    "info": "Afflict N (Whenever this creature becomes blocked, defending player loses N life.)"
-  },
-  {
-    "text": "Ascend",
-    "info": "On non-permanents (1st ability): Ascend (If you control ten or more permanents and you don’t have the city's blessing, you get the city's blessing for the rest of the game.) On permanents (2nd ability): Ascend (Any time you control ten or more permanents and you don’t have the city’s blessing, you get the city’s blessing for the rest of the game.)"
-  },
-  {
-    "text": "Assist",
-    "info": "Assist (Another player can pay up to of this spell's cost.)"
-  }
-]
+{
+  "predefinedSkills": [
+    {
+      "text": "Deathtouch",
+      "info": "Deathtouch (Any amount of damage this deals to a creature is enough to destroy it.)"
+    },
+    {
+      "text": "Defender",
+      "info": "Defender (This creature can't attack.)"
+    },
+    {
+      "text": "Double Strike",
+      "info": "Double strike (This creature deals both first-strike and regular combat damage.)"
+    },
+    {
+      "text": "Enchant",
+      "info": "Enchant (object) (This card can only be attached to an (object).)"
+    },
+    {
+      "text": "Equip",
+      "info": "Equip (cost) ((Cost): Attach to target creature you control. Equip only as a sorcery.)"
+    },
+    {
+      "text": "First Strike",
+      "info": "First strike (This creature deals combat damage before creatures without first strike.)"
+    },
+    {
+      "text": "Flash",
+      "info": "Flash (You may cast this spell any time you could cast an instant.)"
+    },
+    {
+      "text": "Flying",
+      "info": "Flying (This creature can't be blocked except by creatures with flying and/or reach.)"
+    },
+    {
+      "text": "Haste",
+      "info": "Haste (This creature can attack and as soon as it comes under your control.)"
+    },
+    {
+      "text": "Hexproof",
+      "info": "Hexproof (This permanent can't be the target of spells or abilities your opponents control.) Hexproof from [quality] (This permanent can't be the target of [quality] spells your opponents control or abilities of [quality] sources your opponents control.)"
+    },
+    {
+      "text": "Indestructible",
+      "info": "Indestructible (Effects that say \"destroy\" don’t destroy this.)"
+    },
+    {
+      "text": "Intimidate",
+      "info": "Intimidate (This creature can't be blocked except by artifact creatures and/or creatures that share a color with it.)"
+    },
+    {
+      "text": "Landwalk",
+      "info": "(type) Landwalk (This creature can't be blocked as long as defending player controls a (type).)"
+    },
+    {
+      "text": "Lifelink",
+      "info": "Lifelink (Damage dealt by this creature also causes you to gain that much life.)"
+    },
+    {
+      "text": "Protection",
+      "info": "Protection from [quality] (This can't be blocked, targeted, dealt damage, or enchanted by anything (quality).)"
+    },
+    {
+      "text": "Reach",
+      "info": "Reach (This creature can block creatures with flying.)"
+    },
+    {
+      "text": "Shroud",
+      "info": "Shroud (This permanent or player can’t be the target of spells or abilities.)"
+    },
+    {
+      "text": "Trample",
+      "info": "Trample (This creature can deal excess combat damage to player or planeswalker it's attacking.) Trample (This spell can deal excess damage to its target's controller.)"
+    },
+    {
+      "text": "Vigilance",
+      "info": "Vigilance (Attacking doesn't cause this creature to tap.)"
+    },
+    {
+      "text": "Banding",
+      "info": "Banding (Any creatures with banding, and up to one without, can attack in a band. Bands are blocked as a group. If any creatures with banding you control are blocking or being blocked by a creature, you divide that creature's combat damage, not its controller, among any of the creatures it's being blocked by or is blocking.)"
+    },
+    {
+      "text": "Rampage",
+      "info": "Rampage N (Whenever this creature becomes blocked, it gets +N/+N until end of turn for each creature blocking it beyond the first.)"
+    },
+    {
+      "text": "Cumulative Upkeep",
+      "info": "Cumulative upkeep (cost) (At the beginning of your upkeep, if this permanent is on the battlefield, put an age counter on this permanent. Then you may pay (cost) for each age counter on it. If you don’t, sacrifice it.)"
+    },
+    {
+      "text": "Flanking",
+      "info": "Flanking (Whenever a creature without flanking blocks this creature, the blocking creature gets -1/-1 until end of turn.)"
+    },
+    {
+      "text": "Phasing",
+      "info": "Phasing (This phases in or out before you untap during each of your untap steps. While it's phased out, it's treated as though it doesn't exist.)"
+    },
+    {
+      "text": "Buyback",
+      "info": "Buyback (cost) (You may pay an additional (cost) as you cast this spell. If the buyback cost was paid, put this spell into its owner’s hand instead of into that player’s graveyard as it resolves.)"
+    },
+    {
+      "text": "Shadow",
+      "info": "Shadow (This creature can block or be blocked by only creatures with shadow.)"
+    },
+    {
+      "text": "Cycling",
+      "info": "Cycling (cost) (Discard this card: Draw a card.) [type]cycling (cost) (Discard this card: Search your library for a [type] card, reveal it, and put it into your hand. Then shuffle your library.)"
+    },
+    {
+      "text": "Echo",
+      "info": "Echo (cost) (At the beginning of your upkeep, if this came under your control since the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)"
+    },
+    {
+      "text": "Horsemanship",
+      "info": "Horsemanship (This creature can't be blocked except by creatures with horsemanship.)"
+    },
+    {
+      "text": "Fading",
+      "info": "Fading N (This creature enters the battlefield with N fade counters on it. At the beginning of your upkeep, remove a fade counter from it. If you can't, sacrifice it.)"
+    },
+    {
+      "text": "Kicker",
+      "info": "Kicker (cost) (You may pay an additional (cost) as you cast this spell.) Multikicker (cost) (You may pay an additional (cost) any number of times as you cast this spell.)"
+    },
+    {
+      "text": "Flashback",
+      "info": "Flashback (cost) (You may cast this card from your graveyard for its flashback cost. Then exile it.)"
+    },
+    {
+      "text": "Madness",
+      "info": "Madness (cost) (If you discard this card, discard it into exile. When you do, cast it for its madness cost or put it into your graveyard.)"
+    },
+    {
+      "text": "Fear",
+      "info": "Fear (This creature can't be blocked except by artifact creatures and/or black creatures.)"
+    },
+    {
+      "text": "Morph",
+      "info": "Morph (cost) (You may cast this face down as a 2/2 creature for . Turn it face up any time for its morph cost.) Megamorph (cost) (You may cast this card face down as a 2/2 creature for . Turn it face up at any time for its megamorph cost and put a +1/+1 counter on it.)"
+    },
+    {
+      "text": "Amplify",
+      "info": "Amplify N (As this object enters the battlefield, reveal any number of cards from your hand that share a creature type with it. This permanent comes into play with N +1/+1 counters on it for each card revealed this way.)"
+    },
+    {
+      "text": "Provoke",
+      "info": "Provoke (Whenever this attacks, you may have target creature defending player controls untap and block it if able.)"
+    },
+    {
+      "text": "Storm",
+      "info": "Storm (When you cast this spell, copy it for each spell cast before it this turn. You may choose new targets for the copies.)"
+    },
+    {
+      "text": "Affinity",
+      "info": "Affinity for (text) (This spell costs you less to cast for each (text) you control.)"
+    },
+    {
+      "text": "Entwine",
+      "info": "Entwine (cost) (Choose both if you pay the entwine cost.) Entwine (cost) (You may choose to use all modes of this spell instead of just one. If you do, you pay an additional (cost).)"
+    },
+    {
+      "text": "Modular",
+      "info": "Modular N (This comes into play with N +1/+1 counters on it. When it's put into a graveyard, you may put its +1/+1 counters on target artifact creature.)"
+    },
+    {
+      "text": "Sunburst",
+      "info": "Sunburst (This enters the battlefield with a (+1/+1 or charge) counter on it for each color of mana spent to cast it.)"
+    },
+    {
+      "text": "Bushido",
+      "info": "Bushido N (Whenever this creature blocks or becomes blocked, it gets +N/+N until end of turn.)"
+    },
+    {
+      "text": "Soulshift",
+      "info": "Soulshift N (When this creature dies, you may return target Spirit card with converted mana cost N or less from your graveyard to your hand.)"
+    },
+    {
+      "text": "Splice",
+      "info": "Splice onto (type) (cost) (As you cast an (type) spell, you may reveal this card from your hand and pay its splice cost. If you do, add this card's effects to that spell.)"
+    },
+    {
+      "text": "Offering",
+      "info": "(Subtype) Offering (You may cast this card any time you could cast an instant by sacrificing a (subtype) permanent. If you do, the total cost to cast this card is reduced by the sacrificed permanent’s mana cost.)"
+    },
+    {
+      "text": "Ninjutsu",
+      "info": "Ninjutsu (cost) ((Cost), Return an unblocked attacker you control to hand: Put this card onto the battlefield from your hand tapped and attacking.)"
+    },
+    {
+      "text": "Epic",
+      "info": "Epic (For the rest of the game, you can't cast spells. At the beginning of each of your upkeeps, copy this spell except for its epic ability. You may choose new targets for the copy.)"
+    },
+    {
+      "text": "Convoke",
+      "info": "Convoke (Your creatures can help cast this spell. Each creature you tap while casting this spell pays for or one mana of that creature's color.)"
+    },
+    {
+      "text": "Dredge",
+      "info": "Dredge N (If you would draw a card, instead you may put exactly N cards from the top of your library into your graveyard. If you do, return this card from your graveyard to your hand. Otherwise, draw a card.)"
+    },
+    {
+      "text": "Transmute",
+      "info": "Transmute (cost) ((cost), Discard this card: Search your library for a card with the same converted mana cost as this card, reveal it, and put it into your hand. Then shuffle your library. Transmute only as a sorcery.)"
+    },
+    {
+      "text": "Bloodthirst",
+      "info": "Bloodthirst N (If an opponent was dealt damage this turn, this permanent enters the battlefield with N +1/+1 counters on it.)"
+    },
+    {
+      "text": "Haunt",
+      "info": "Haunt (When this creature dies, exile it haunting target creature.)"
+    },
+    {
+      "text": "Replicate",
+      "info": "Replicate (cost) (When you cast this spell, copy it for each time you paid its replicate cost. You may choose new targets for the copies.)"
+    },
+    {
+      "text": "Forecast",
+      "info": "Forecast (cost) (Play this ability only during your upkeep and only once each turn.)"
+    },
+    {
+      "text": "Graft",
+      "info": "Graft N (This permanent enters the battlefield with N +1/+1 counters on it. Whenever another creature enters the battlefield, if this permanent has a +1/+1 counter on it, you may move a +1/+1 counter from this permanent onto that creature.)"
+    },
+    {
+      "text": "Recover",
+      "info": "Recover (cost) (When a creature is put into your graveyard from the battlefield, you may pay (cost). If you do, return this card from your graveyard to your hand. Otherwise, exile this card.)"
+    },
+    {
+      "text": "Ripple",
+      "info": "Ripple N (When you cast this spell, you may reveal the top N cards of your library, or, if there are fewer than N cards in your library, you may reveal all the cards in your library. If you reveal cards from your library this way, you may cast any of those cards with the same name as this spell without paying their mana costs, then put all revealed cards not cast this way on the bottom of your library in any order.)"
+    },
+    {
+      "text": "Split Second",
+      "info": "Split second (As long as this spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.)"
+    },
+    {
+      "text": "Suspend",
+      "info": "Suspend N — (cost) (Rather than cast this card from your hand, you may pay (cost) and exile it with N time counters on it. At the beginning of your upkeep, remove a time counter. When the last is removed, cast it without paying its mana cost. It has haste.)"
+    },
+    {
+      "text": "Vanishing",
+      "info": "Vanishing N (This permanent enters the battlefield with N time counters on it. At the beginning of your upkeep, remove a time counter from it. When the last is removed, sacrifice it.)"
+    },
+    {
+      "text": "Absorb",
+      "info": "Absorb N (If a source would deal damage to this creature, prevent N of that damage.)"
+    },
+    {
+      "text": "Aura Swap",
+      "info": "Aura swap (cost) ((Cost): Exchange this Aura with an Aura card in your hand.)"
+    },
+    {
+      "text": "Delve",
+      "info": "Delve (Each card you exile from your graveyard while casting this spell pays for .)"
+    },
+    {
+      "text": "Fortify",
+      "info": "Fortify (Fortify (cost). (Cost): Attach this Fortification to target land you control. Activate this ability only any time you could cast a sorcery.)"
+    },
+    {
+      "text": "Frenzy",
+      "info": "Frenzy N (Whenever this creature attacks and isn't blocked, it gets +N/+0 until end of turn.)"
+    },
+    {
+      "text": "Gravestorm",
+      "info": "Gravestorm (When you cast this spell, copy it for each permanent put into a graveyard this turn. You may choose new targets for the copies.)"
+    },
+    {
+      "text": "Poisonous",
+      "info": "Poisonous N (Whenever this creature deals combat damage to a player, that player gets N poison counters.)"
+    },
+    {
+      "text": "Transfigure",
+      "info": "Transfigure (cost) ((Cost), Sacrifice this permanent: Search your library for a creature card with the same converted mana cost as this permanent and put it onto the battlefield. Then shuffle your library. Activate this ability only any time you could cast a sorcery)"
+    },
+    {
+      "text": "Champion",
+      "info": "Champion an (object) (When this enters the battlefield, sacrifice it unless you exile another (object) you control. When this leaves the battlefield, that card returns to the battlefield.)"
+    },
+    {
+      "text": "Changeling",
+      "info": "Changeling (This card is every creature type.)"
+    },
+    {
+      "text": "Evoke",
+      "info": "Evoke (cost) (You may cast this spell for its evoke cost. If you do, it's sacrificed when it enters the battlefield.)"
+    },
+    {
+      "text": "Hideaway",
+      "info": "Hideaway (This land enters the battlefield tapped. When it does, look at the top four cards of your library, exile one face down, then put the rest on the bottom of your library.)"
+    },
+    {
+      "text": "Prowl",
+      "info": "Prowl (cost) (You may cast this for its prowl cost if you dealt combat damage to a player this turn with a (subtype).)"
+    },
+    {
+      "text": "Reinforce",
+      "info": "Reinforce N — (cost) (Discard this card: Put N +1/+1 counters on target creature.)"
+    },
+    {
+      "text": "Conspire",
+      "info": "Conspire (As you cast this spell, you may tap two untapped creatures you control that share a color with it. When you do, copy it and you may choose a new target for the copy.)"
+    },
+    {
+      "text": "Persist",
+      "info": "Persist (When this permanent is put into a graveyard from the battlefield, if it had no -1/-1 counters on it, return it to the battlefield under its owner's control with a -1/-1 counter on it.)"
+    },
+    {
+      "text": "Wither",
+      "info": "Wither (This deals damage to creatures in the form of -1/-1 counters.)"
+    },
+    {
+      "text": "Retrace",
+      "info": "Retrace (You may cast this card from your graveyard by discarding a land card as an additional cost to cast it.)"
+    },
+    {
+      "text": "Devour",
+      "info": "Devour N (As this object enters the battlefield, you may sacrifice any number of creatures. This permanent enters the battlefield with N +1/+1 counters on it for each creature sacrificed this way.)"
+    },
+    {
+      "text": "Exalted",
+      "info": "Exalted (Whenever a creature you control attacks alone, that creature gets +1/+1 until end of turn.)"
+    },
+    {
+      "text": "Unearth",
+      "info": "Unearth (cost) (Return this card from your graveyard to the battlefield. It gains haste. Exile it at the beginning of the next end step or if it would leave the battlefield. Unearth only as a sorcery.)"
+    },
+    {
+      "text": "Cascade",
+      "info": "Cascade (When you cast this spell, exile cards from the top of your library until you exile a nonland card whose converted mana cost is less than this spell's converted mana cost. You may cast that card without paying its mana cost. Then put all cards exiled this way that weren't cast on the bottom of your library in a random order.)"
+    },
+    {
+      "text": "Annihilator",
+      "info": "Annihilator N (Whenever this creature attacks, defending player sacrifices N permanents.)"
+    },
+    {
+      "text": "Level Up",
+      "info": "Level up (cost) ((Cost): Put a level counter on this permanent. Activate this ability only any time you could cast a sorcery.)"
+    },
+    {
+      "text": "Rebound",
+      "info": "Rebound (If this spell was cast from your hand, instead of putting it into your graveyard as it resolves, exile it and, at the beginning of your next upkeep, you may cast this card from exile without paying its mana cost.)"
+    },
+    {
+      "text": "Totem Armor",
+      "info": "Totem armor (If enchanted permanent would be destroyed, instead remove all damage marked on it and destroy this Aura.)"
+    },
+    {
+      "text": "Infect",
+      "info": "Infect (This creature deals damage to creatures in the form of -1/-1 counters and to players in the form of poison counters.)"
+    },
+    {
+      "text": "Battle Cry",
+      "info": "Battle cry (Whenever this creature attacks, each other attacking creature gets +1/+0 until end of turn.)"
+    },
+    {
+      "text": "Living Weapon",
+      "info": "Living weapon (When this Equipment enters the battlefield, create a 0/0 black Germ creature token, then attach this Equipment to it.)"
+    },
+    {
+      "text": "Undying",
+      "info": "Undying (When this creature dies, if it had no +1/+1 counters on it, return it to the battlefield under its owner's control with a +1/+1 counter on it.)"
+    },
+    {
+      "text": "Miracle",
+      "info": "Miracle (cost) (You may cast this card for its Miracle cost when you draw it if it's the first card you drew this turn.)"
+    },
+    {
+      "text": "Soulbond",
+      "info": "Soulbond (You may pair this creature with another unpaired creature when either enters the battlefield. They remain paired for as long as you control both of them.)"
+    },
+    {
+      "text": "Overload",
+      "info": "Overload (cost) (You may cast this spell for its overload cost. If you do, change its text by replacing all instances of 'target' with 'each'.)"
+    },
+    {
+      "text": "Scavenge",
+      "info": "Scavenge (cost) (Exile this card from your graveyard: Put a number of +1/+1 counters equal to this card's power on target creature. Scavenge only as a sorcery.)"
+    },
+    {
+      "text": "Unleash",
+      "info": "Unleash (You may have this creature enter the battlefield with a +1/+1 counter on it. It can't block as long as it has a +1/+1 counter on it.)"
+    },
+    {
+      "text": "Cipher",
+      "info": "Cipher ((After casting) then you may exile this spell card encoded on a creature you control. Whenever that creature deals combat damage to a player, its controller may cast a copy of this card without paying its mana cost.)"
+    },
+    {
+      "text": "Evolve",
+      "info": "Evolve (Whenever a creature enters the battlefield under your control, if that creature has greater power or toughness than this creature, put a +1/+1 counter on this creature.)"
+    },
+    {
+      "text": "Extort",
+      "info": "Extort (Whenever you cast a spell, you may pay If you do, each opponent loses 1 life and you gain that much life.)"
+    },
+    {
+      "text": "Fuse",
+      "info": "Fuse (You may cast one or both halves of this card from your hand.)"
+    },
+    {
+      "text": "Bestow",
+      "info": "Bestow (cost) (If you cast this card for its bestow cost, it's an Aura spell with enchant creature. It becomes a creature again if it's not attached to a creature.)"
+    },
+    {
+      "text": "Tribute",
+      "info": "Tribute N (As this creature enters the battlefield, an opponent of your choice may place N +1/+1 counters on it.)"
+    },
+    {
+      "text": "Dethrone",
+      "info": "Dethrone (Whenever this creature attacks the player with the most life or tied for most life, put a +1/+1 counter on it.)"
+    },
+    {
+      "text": "Hidden Agenda",
+      "info": "Hidden agenda (Start the game with this conspiracy face down in the command zone and secretly name a card. You may turn this conspiracy face up any time and reveal the chosen name.) Double agenda (Start the game with this conspiracy face down in the command zone and secretly name two different cards. You may turn this conspiracy face up any time and reveal the chosen names.)"
+    },
+    {
+      "text": "Outlast",
+      "info": "Outlast (cost) ((cost), : Put a +1/+1 counter on this creature. Outlast only as a sorcery.)"
+    },
+    {
+      "text": "Prowess",
+      "info": "Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.)"
+    },
+    {
+      "text": "Dash",
+      "info": "Dash (cost) (You may cast this spell for its dash cost. If you do, it gains haste, and it's returned from the battlefield to its owner's hand at the beginning of the next end step.)"
+    },
+    {
+      "text": "Exploit",
+      "info": "Exploit (When this creature enters the battlefield, you may sacrifice a creature.)"
+    },
+    {
+      "text": "Menace",
+      "info": "Menace (This creature can't be blocked except by two or more creatures.)"
+    },
+    {
+      "text": "Renown",
+      "info": "Renown N (Whenever this creature deals combat damage to a player, if it isn't renowned, put N +1/+1 counter on it and it becomes renowned.)"
+    },
+    {
+      "text": "Awaken",
+      "info": "Awaken N — (cost) (If you cast this card for (cost), also put N +1/+1 counters on target land you control and it becomes a 0/0 Elemental creature with haste. It's still a land.)"
+    },
+    {
+      "text": "Devoid",
+      "info": "Devoid (This card has no color.)"
+    },
+    {
+      "text": "Ingest",
+      "info": "Ingest (Whenever this creature deals combat damage to a player, that player exiles the top card of his or her library)"
+    },
+    {
+      "text": "Myriad",
+      "info": "Myriad (Whenever this creature attacks, for each opponent other than defending player, you may create a token that's a copy of this creature that's tapped and attacking that player or a planeswalker he or she controls. If one or more tokens are created this way, exile the tokens at end of combat.)"
+    },
+    {
+      "text": "Surge",
+      "info": "Surge (cost) (You may cast a spell for its surge cost if you or a teammate have cast another spell in the same turn.)"
+    },
+    {
+      "text": "Skulk",
+      "info": "Skulk (This creature can't be blocked by creatures with greater power.)"
+    },
+    {
+      "text": "Emerge",
+      "info": "Emerge (cost) (You may cast this spell by sacrificing a creature and paying the emerge cost reduced by that creature's converted mana cost)"
+    },
+    {
+      "text": "Escalate",
+      "info": "Escalate (cost) (Pay this cost for each mode chosen beyond the first.)"
+    },
+    {
+      "text": "Melee",
+      "info": "Melee (Whenever this creature attacks, it gets +1/+1 until end of turn for each opponent you attacked with a creature this combat.)"
+    },
+    {
+      "text": "Crew",
+      "info": "Crew N (Tap any number of untapped creatures you control with total power N or greater: This permanent becomes an artifact creature until end of turn.)"
+    },
+    {
+      "text": "Fabricate",
+      "info": "Fabricate N (When this permanent enters the battlefield, you may put N +1/+1 counters on it. If you don't, create N 1/1 colorless Servo artifact creature tokens.)"
+    },
+    {
+      "text": "Partner",
+      "info": "Partner (You can have two commanders if both have partner.) Partner with [name] (When this creature enters the battlefield, target player may put [name] into their hand from their library, then shuffle.)"
+    },
+    {
+      "text": "Undaunted",
+      "info": "Undaunted (This spell costs less to cast for each opponent.)"
+    },
+    {
+      "text": "Improvise",
+      "info": "Improvise (Your artifacts can help cast this spell. Each artifact you tap after you're done activating mana abilities pays for .)"
+    },
+    {
+      "text": "Aftermath",
+      "info": "Aftermath (Cast this spell only from your graveyard. Then exile it.)"
+    },
+    {
+      "text": "Embalm",
+      "info": "Embalm (cost) ((Cost), Exile this card from your graveyard: Create a token that's a copy of it, except it's a white Zombie ... with no mana cost. Embalm only as a sorcery.)"
+    },
+    {
+      "text": "Eternalize",
+      "info": "Eternalize (cost) ((Cost), Exile this card from your graveyard: Create a token that's a copy of it, except it's a 4/4 black Zombie ... with no mana cost. Eternalize only as a sorcery.)"
+    },
+    {
+      "text": "Afflict",
+      "info": "Afflict N (Whenever this creature becomes blocked, defending player loses N life.)"
+    },
+    {
+      "text": "Ascend",
+      "info": "On non-permanents (1st ability): Ascend (If you control ten or more permanents and you don’t have the city's blessing, you get the city's blessing for the rest of the game.) On permanents (2nd ability): Ascend (Any time you control ten or more permanents and you don’t have the city’s blessing, you get the city’s blessing for the rest of the game.)"
+    },
+    {
+      "text": "Assist",
+      "info": "Assist (Another player can pay up to of this spell's cost.)"
+    }
+  ]
+}

@@ -11,7 +11,7 @@ import pl.khuzzuk.mtg.organizer.model.ManaType;
 @Setter
 public class Type {
     private BasicType basicType;
-    private List<ManaType> colors;
+    private List<ManaType> colors = new ArrayList<>();
     private List<String> primaryTypes = new ArrayList<>();
     private List<String> secondaryTypes = new ArrayList<>();
 }

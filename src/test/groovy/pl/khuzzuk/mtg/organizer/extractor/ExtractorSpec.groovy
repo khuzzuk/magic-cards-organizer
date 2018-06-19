@@ -3,14 +3,16 @@ package pl.khuzzuk.mtg.organizer.extractor
 import pl.khuzzuk.mtg.organizer.BusTest
 import pl.khuzzuk.mtg.organizer.PropertyContainer
 import pl.khuzzuk.mtg.organizer.model.card.Card
-import pl.khuzzuk.mtg.organizer.model.card.CreatureCard
+import pl.khuzzuk.mtg.organizer.model.card.TransformableCreatureCard
 import pl.khuzzuk.mtg.organizer.model.type.BasicType
+import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo
 import spock.lang.Specification
+
+import java.util.concurrent.atomic.AtomicBoolean
 
 import static java.util.concurrent.TimeUnit.SECONDS
 import static org.awaitility.Awaitility.await
-import static pl.khuzzuk.mtg.organizer.Event.CARD_DATA
-import static pl.khuzzuk.mtg.organizer.Event.CARD_FROM_URL
+import static pl.khuzzuk.mtg.organizer.Event.*
 
 class ExtractorSpec extends Specification implements BusTest {
     PropertyContainer<Card> card = new PropertyContainer<>()
@@ -18,6 +20,11 @@ class ExtractorSpec extends Specification implements BusTest {
     void setupSpec() {
         setupBus()
         new HtmlCardExtractor(bus).load()
+        def repo = new PredefinedSkillRepo(bus)
+        repo.load()
+        AtomicBoolean finishedInitialization = new AtomicBoolean()
+        bus.message(PREDEFINED_SKILLS).withContent(repo).onResponse({finishedInitialization.set(true)}).send()
+        await().atMost(2, SECONDS).until({finishedInitialization.get()})
     }
 
     void setup() {
@@ -38,12 +45,18 @@ class ExtractorSpec extends Specification implements BusTest {
         await().atMost(2, SECONDS).until({card.hasValue()})
 
         then:
-        def result = card.get() as CreatureCard
+        def result = card.get() as TransformableCreatureCard
+
+        //front
         result.name == 'Archangel Avacyn'
         result.text == '“Wings that once bore hope are now stained with blood. She is our guardian no longer.” —Grete, cathar apostate'
         result.front.toString() == 'https://img.scryfall.com/cards/large/en/soi/5a.jpg?1518204266'
         result.attack == 4
         result.defense == 4
+
+        //back
+        result.transformedName == 'Avacyn, the Purifier'
+
         def manaCost = result.manaCost
         manaCost.generic.value == 3
         manaCost.white.value == 2
@@ -53,7 +66,7 @@ class ExtractorSpec extends Specification implements BusTest {
         manaCost.black.value == 0
         manaCost.colorless.value == 0
         def type = result.type
-        type.basicType == BasicType.Creature
+        type.basicType == BasicType.TransformableCreature
         'Legendary' in type.primaryTypes
         'Angel' in type.secondaryTypes
     }
