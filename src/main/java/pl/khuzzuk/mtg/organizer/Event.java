@@ -17,7 +17,6 @@ public enum Event {
     TABLE_SELECTOR,
     CARD_VIEWER,
     ORGANIZER_MENU,
-    IMPORT_POPUP,
     BINDER,
     PREDEFINED_SKILLS,
 
