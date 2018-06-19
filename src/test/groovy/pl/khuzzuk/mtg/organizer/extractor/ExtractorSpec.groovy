@@ -58,6 +58,12 @@ class ExtractorSpec extends Specification implements BusTest {
         result.front.toString() == 'https://img.scryfall.com/cards/large/en/soi/5a.jpg?1518204266'
         result.attack == 4
         result.defense == 4
+        result.skills.size() == 5
+        result.skills.get(0).text == 'Flash'
+        result.skills.get(1).text == 'Flying'
+        result.skills.get(2).text == 'Vigilance'
+        result.skills.get(3).text == 'When Archangel Avacyn enters the battlefield, creatures you control gain indestructible until end of turn.'
+        result.skills.get(4).text == 'When a non-Angel creature you control dies, transform Archangel Avacyn at the beginning of the next upkeep.'
 
         def type = result.type
         type.basicType == BasicType.TransformableCreature
@@ -69,6 +75,9 @@ class ExtractorSpec extends Specification implements BusTest {
         result.back.toString() == 'https://img.scryfall.com/cards/large/en/soi/5b.jpg?1518204266'
         result.transformedAttack == 6
         result.transformedDefense == 5
+        result.transformedSkills.size() == 2
+        result.transformedSkills.get(0).text == 'Flying'
+        result.transformedSkills.get(1).text == 'When this creature transforms into Avacyn, the Purifier, it deals 3 damage to each other creature and each opponent.'
 
         def transformedType = result.transformedType
         transformedType.basicType == BasicType.TransformableCreature
