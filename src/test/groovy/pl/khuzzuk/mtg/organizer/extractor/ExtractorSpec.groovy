@@ -2,6 +2,7 @@ package pl.khuzzuk.mtg.organizer.extractor
 
 import pl.khuzzuk.mtg.organizer.BusTest
 import pl.khuzzuk.mtg.organizer.PropertyContainer
+import pl.khuzzuk.mtg.organizer.model.Rarity
 import pl.khuzzuk.mtg.organizer.model.card.Card
 import pl.khuzzuk.mtg.organizer.model.card.TransformableCreatureCard
 import pl.khuzzuk.mtg.organizer.model.type.BasicType
@@ -47,15 +48,32 @@ class ExtractorSpec extends Specification implements BusTest {
         then:
         def result = card.get() as TransformableCreatureCard
 
+        result.printRef == 'Shadows over Innistrad (SOI)'
+        result.printOrder == 5
+
         //front
+        result.rarity == Rarity.MYTHIC_RARE
         result.name == 'Archangel Avacyn'
         result.text == '“Wings that once bore hope are now stained with blood. She is our guardian no longer.” —Grete, cathar apostate'
         result.front.toString() == 'https://img.scryfall.com/cards/large/en/soi/5a.jpg?1518204266'
         result.attack == 4
         result.defense == 4
 
+        def type = result.type
+        type.basicType == BasicType.TransformableCreature
+        'Legendary' in type.primaryTypes
+        'Angel' in type.secondaryTypes
+
         //back
         result.transformedName == 'Avacyn, the Purifier'
+        result.back.toString() == 'https://img.scryfall.com/cards/large/en/soi/5b.jpg?1518204266'
+        result.transformedAttack == 6
+        result.transformedDefense == 5
+
+        def transformedType = result.transformedType
+        transformedType.basicType == BasicType.TransformableCreature
+        'Legendary' in transformedType.primaryTypes
+        'Angel' in transformedType.secondaryTypes
 
         def manaCost = result.manaCost
         manaCost.generic.value == 3
@@ -65,9 +83,6 @@ class ExtractorSpec extends Specification implements BusTest {
         manaCost.red.value == 0
         manaCost.black.value == 0
         manaCost.colorless.value == 0
-        def type = result.type
-        type.basicType == BasicType.TransformableCreature
-        'Legendary' in type.primaryTypes
-        'Angel' in type.secondaryTypes
+
     }
 }

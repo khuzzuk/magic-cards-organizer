@@ -12,7 +12,7 @@ class SimpleCardStrategy<T extends Card> implements CardExtractionStrategy<T> {
    @Override
    public void extractFieldsInto(T card, Element profile) throws MalformedURLException {
       card.setName(getName(profile, 0));
-      card.setFront(getImageUrl(profile, 0));
+      card.setFront(getImageUrl(profile, "card-image-front"));
 
       Element printsCurrent = profile.getElementsByClass("prints-current").get(0);
       card.setPrintRef(printsCurrent.getElementsByClass("prints-current-set-name").get(0).ownText());
@@ -27,8 +27,8 @@ class SimpleCardStrategy<T extends Card> implements CardExtractionStrategy<T> {
       return titleText.text().replace(manaCostElements.text(), "").trim();
    }
 
-   URL getImageUrl(Element profile, int pos) throws MalformedURLException {
-      String imageUrl = profile.getElementsByClass("card-image-front").get(pos)
+   URL getImageUrl(Element profile, String locator) throws MalformedURLException {
+      String imageUrl = profile.getElementsByClass(locator).get(0)
             .getElementsByAttribute("src").get(0).attributes().get("src");
       return new URL(imageUrl);
    }

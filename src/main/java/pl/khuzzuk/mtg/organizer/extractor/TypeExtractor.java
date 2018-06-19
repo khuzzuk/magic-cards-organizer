@@ -21,7 +21,9 @@ class TypeExtractor {
    }
 
    Type extractTransformedTypeFrom(Element profile) {
-      return extractType(profile, 1);
+      Type type = extractType(profile, 1);
+      type.setBasicType(BasicType.TransformableCreature);
+      return type;
    }
 
    private Type extractType(Element profile, int pos) {

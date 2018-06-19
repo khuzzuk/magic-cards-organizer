@@ -18,5 +18,11 @@ class TransformableCreatureCardStrategy extends CreatureCardStrategy<Transformab
       super.extractFieldsInto(card, profile);
       card.setTransformedType(typeExtractor.extractTransformedTypeFrom(profile));
       card.setTransformedName(getName(profile, 1));
+      card.setTransformedSkills(skillExtractor.extractSkillsFrom(profile, 1));
+      card.setBack(getImageUrl(profile, "card-image-back"));
+
+      int[] stats = extractStats(profile, 1);
+      card.setTransformedAttack(stats[0]);
+      card.setTransformedDefense(stats[1]);
    }
 }
