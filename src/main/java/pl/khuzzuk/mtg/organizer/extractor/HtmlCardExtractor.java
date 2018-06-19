@@ -1,5 +1,11 @@
 package pl.khuzzuk.mtg.organizer.extractor;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
@@ -9,17 +15,12 @@ import org.jsoup.select.Elements;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.Event;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
-import pl.khuzzuk.mtg.organizer.model.Card;
-import pl.khuzzuk.mtg.organizer.model.CreatureCard;
-import pl.khuzzuk.mtg.organizer.model.SpellCard;
+import pl.khuzzuk.mtg.organizer.model.card.Card;
+import pl.khuzzuk.mtg.organizer.model.card.CreatureCard;
+import pl.khuzzuk.mtg.organizer.model.card.RegularCard;
+import pl.khuzzuk.mtg.organizer.model.card.SpellCard;
 import pl.khuzzuk.mtg.organizer.model.type.BasicType;
 import pl.khuzzuk.mtg.organizer.model.type.Type;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class HtmlCardExtractor implements Loadable {
@@ -59,7 +60,7 @@ public class HtmlCardExtractor implements Loadable {
         }
     }
 
-    private <T extends Card> void populateBasicFields(T card, Element profile) {
+    private <T extends RegularCard> void populateBasicFields(T card, Element profile) {
         Element titleText = profile.getElementsByClass("card-text-title").get(0);
         Elements manaCostElements = titleText.children();
         String cardName = titleText.text().replace(manaCostElements.text(), "").trim();

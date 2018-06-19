@@ -1,4 +1,4 @@
-package pl.khuzzuk.mtg.organizer.model;
+package pl.khuzzuk.mtg.organizer.model.card;
 
 import lombok.Getter;
 import lombok.Setter;

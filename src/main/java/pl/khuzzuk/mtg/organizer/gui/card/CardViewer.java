@@ -9,8 +9,8 @@ import pl.khuzzuk.mtg.organizer.Event;
 import pl.khuzzuk.mtg.organizer.gui.form.*;
 import pl.khuzzuk.mtg.organizer.initialize.Identification;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
-import pl.khuzzuk.mtg.organizer.model.Card;
-import pl.khuzzuk.mtg.organizer.model.CreatureCard;
+import pl.khuzzuk.mtg.organizer.model.card.Card;
+import pl.khuzzuk.mtg.organizer.model.card.CreatureCard;
 
 import static pl.khuzzuk.mtg.organizer.Event.BINDER;
 import static pl.khuzzuk.mtg.organizer.Event.CARD_DATA;

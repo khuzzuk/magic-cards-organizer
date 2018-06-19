@@ -2,8 +2,8 @@ package pl.khuzzuk.mtg.organizer.extractor
 
 import pl.khuzzuk.mtg.organizer.BusTest
 import pl.khuzzuk.mtg.organizer.PropertyContainer
-import pl.khuzzuk.mtg.organizer.model.Card
-import pl.khuzzuk.mtg.organizer.model.CreatureCard
+import pl.khuzzuk.mtg.organizer.model.card.Card
+import pl.khuzzuk.mtg.organizer.model.card.CreatureCard
 import pl.khuzzuk.mtg.organizer.model.type.BasicType
 import spock.lang.Specification
 

@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.Event;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
-import pl.khuzzuk.mtg.organizer.model.Card;
+import pl.khuzzuk.mtg.organizer.model.card.Card;
 
 @RequiredArgsConstructor
 public class JsonSerializer implements Loadable {
