@@ -34,10 +34,21 @@ class ScryfallClientSpec extends Specification implements BusTest {
 
         when:
         bus.message(Event.CARD_FROM_URL).withContent(uri).send()
-        await().atMost(2, TimeUnit.SECONDS).until({card.hasValue()})
+        await().atMost(3, TimeUnit.SECONDS).until({card.hasValue()})
         CardDTO result = card.get()
 
         then:
         result.name == 'Vault of the Archangel'
+        result.uri.toString() == 'https://api.scryfall.com/cards/md1/17'
+        result.hiResImage
+        result.typeLine == 'Land'
+        result.oracleText == '{T}: Add {C}.\n{2}{W}{B}, {T}: Creatures you control gain deathtouch and lifelink until end of turn.'
+        def imageUris = result.imageUris
+        imageUris.large.toString() == 'https://img.scryfall.com/cards/large/en/md1/17.jpg?1517813031'
+        imageUris.png.toString() == 'https://img.scryfall.com/cards/png/en/md1/17.png?1517813031'
+        imageUris.artCrop.toString() == 'https://img.scryfall.com/cards/art_crop/en/md1/17.jpg?1517813031'
+        result.colors.length == 0
+        result.colorIdentity.length == 2
+        result.colorIdentity == ["B", "W"] as String[]
     }
 }
