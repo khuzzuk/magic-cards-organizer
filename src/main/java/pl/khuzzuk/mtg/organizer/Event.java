@@ -9,6 +9,7 @@ public enum Event {
     //HTML extraction
     /** accepts {@link String} send CARD_DATA */
     CARD_FROM_URL,
+    CARD_DTO_JSON,
     CARD_DATA,
 
     //CONTAINER

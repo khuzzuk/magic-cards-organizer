@@ -44,7 +44,9 @@ public class HtmlCardExtractor implements Loadable {
         );
         extractors = Map.of(
               BasicType.TransformableCreature, new TransformableCreatureCardStrategy(skillExtractor, typeExtractor),
-              BasicType.Creature, new CreatureCardStrategy(skillExtractor)
+              BasicType.Creature, new CreatureCardStrategy(skillExtractor),
+              BasicType.Land, new RegularCardStrategy(skillExtractor),
+              BasicType.BasicLand, new BasicLandStrategy()
         );
         bus.subscribingFor(Event.CARD_FROM_URL).accept(this::cardFrom).subscribe();
     }

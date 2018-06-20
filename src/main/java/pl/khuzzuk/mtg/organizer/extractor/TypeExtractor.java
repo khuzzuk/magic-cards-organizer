@@ -16,6 +16,10 @@ class TypeExtractor {
       Type type = extractType(profile, 0);
       if (type.getBasicType() == BasicType.Creature && typeLine.size() > 1) {
          type.setBasicType(BasicType.TransformableCreature);
+      } else if (type.getBasicType() == BasicType.Land &&
+            !type.getPrimaryTypes().isEmpty() &&
+            "Basic".equalsIgnoreCase(type.getPrimaryTypes().get(0))) {
+         type.setBasicType(BasicType.BasicLand);
       }
       return type;
    }
