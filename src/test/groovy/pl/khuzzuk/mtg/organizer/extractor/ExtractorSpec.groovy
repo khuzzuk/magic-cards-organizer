@@ -2,6 +2,7 @@ package pl.khuzzuk.mtg.organizer.extractor
 
 import pl.khuzzuk.mtg.organizer.BusTest
 import pl.khuzzuk.mtg.organizer.PropertyContainer
+import pl.khuzzuk.mtg.organizer.extractor.html.HtmlCardExtractor
 import pl.khuzzuk.mtg.organizer.model.ManaType
 import pl.khuzzuk.mtg.organizer.model.Rarity
 import pl.khuzzuk.mtg.organizer.model.card.BasicLandCard

@@ -1,9 +1,4 @@
-package pl.khuzzuk.mtg.organizer.extractor;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.Map;
-import java.util.function.Supplier;
+package pl.khuzzuk.mtg.organizer.extractor.html;
 
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
@@ -11,22 +6,24 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.extractor.SkillExtractor;
+import pl.khuzzuk.mtg.organizer.extractor.TypeExtractor;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
-import pl.khuzzuk.mtg.organizer.model.card.BasicLandCard;
-import pl.khuzzuk.mtg.organizer.model.card.Card;
-import pl.khuzzuk.mtg.organizer.model.card.CreatureCard;
-import pl.khuzzuk.mtg.organizer.model.card.LandCard;
-import pl.khuzzuk.mtg.organizer.model.card.TransformableCreatureCard;
+import pl.khuzzuk.mtg.organizer.model.card.*;
 import pl.khuzzuk.mtg.organizer.model.type.BasicType;
 import pl.khuzzuk.mtg.organizer.model.type.Type;
 import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.Map;
+import java.util.function.Supplier;
 
 @RequiredArgsConstructor
 public class HtmlCardExtractor implements Loadable {
     private final Bus<Event> bus;
     private Map<BasicType, Supplier<? extends Card>> cardSuppliers;
     private Map<BasicType, CardExtractionStrategy> extractors;
-    private TypeExtractor typeExtractor;
 
     @Override
     public void load() {
@@ -34,7 +31,6 @@ public class HtmlCardExtractor implements Loadable {
     }
 
     private void afterPredefinedSkillRepoSet(PredefinedSkillRepo predefinedSkillRepo) {
-        typeExtractor = new TypeExtractor();
         SkillExtractor skillExtractor = new SkillExtractor(predefinedSkillRepo);
         cardSuppliers = Map.of(
               BasicType.TransformableCreature, TransformableCreatureCard::new,
@@ -43,7 +39,7 @@ public class HtmlCardExtractor implements Loadable {
               BasicType.BasicLand, BasicLandCard::new
         );
         extractors = Map.of(
-              BasicType.TransformableCreature, new TransformableCreatureCardStrategy(skillExtractor, typeExtractor),
+              BasicType.TransformableCreature, new TransformableCreatureCardStrategy(skillExtractor),
               BasicType.Creature, new CreatureCardStrategy(skillExtractor),
               BasicType.Land, new RegularCardStrategy(skillExtractor),
               BasicType.BasicLand, new BasicLandStrategy()
@@ -57,7 +53,7 @@ public class HtmlCardExtractor implements Loadable {
         if (doc != null) {
             try {
                 Element profile = doc.getElementById("main").getElementsByClass("card-profile").get(0);
-                Type type = typeExtractor.extractTypeFrom(profile);
+                Type type = TypeExtractor.extractTypeFrom(profile);
                 Card card = cardSuppliers.get(type.getBasicType()).get();
                 card.setType(type);
                 extractors.get(type.getBasicType()).extractFieldsInto(card, profile);

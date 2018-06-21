@@ -1,11 +1,11 @@
 package pl.khuzzuk.mtg.organizer.extractor.rest;
 
-import java.net.URI;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.net.URI;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
@@ -39,4 +39,8 @@ public class CardDTO {
    private String rarity;
    @JsonProperty("flavor_text")
    private String flavorText;
+   private int power;
+   private int toughness;
+   @JsonProperty("edhrec_rank")
+   private int edhrecRank;
 }

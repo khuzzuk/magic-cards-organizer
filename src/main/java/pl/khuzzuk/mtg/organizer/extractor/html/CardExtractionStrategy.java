@@ -1,4 +1,4 @@
-package pl.khuzzuk.mtg.organizer.extractor;
+package pl.khuzzuk.mtg.organizer.extractor.html;
 
 import java.net.MalformedURLException;
 

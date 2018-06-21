@@ -1,11 +1,11 @@
 package pl.khuzzuk.mtg.organizer.model.card;
 
-import java.net.URL;
-
 import lombok.Getter;
 import lombok.Setter;
 import pl.khuzzuk.mtg.organizer.model.Rarity;
 import pl.khuzzuk.mtg.organizer.model.type.Type;
+
+import java.net.URL;
 
 @Getter
 @Setter
@@ -19,4 +19,5 @@ public abstract class Card {
     private String printFullName;
     private int printOrder;
     private URL source;
+    private int edhrecRank;
 }

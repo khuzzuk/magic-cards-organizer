@@ -3,7 +3,7 @@ package pl.khuzzuk.mtg.organizer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.mtg.organizer.extractor.HtmlCardExtractor;
+import pl.khuzzuk.mtg.organizer.extractor.rest.CardJSONConverter;
 import pl.khuzzuk.mtg.organizer.gui.MainWindow;
 import pl.khuzzuk.mtg.organizer.gui.MainWindowInitializer;
 import pl.khuzzuk.mtg.organizer.gui.card.CardViewer;
@@ -36,7 +36,7 @@ public class MtgOrganizerApp extends Application {
 
     public static Container createContainer(Bus<Event> bus) {
         Container container = new Container(bus);
-        createHtmlExtraction(container, bus);
+        createCardDownloaders(container, bus);
         createSerialization(container, bus);
         createGui(container, bus);
         return container;
@@ -52,8 +52,8 @@ public class MtgOrganizerApp extends Application {
         container.prepare(new Binder());
     }
 
-    private static void createHtmlExtraction(Container container, Bus<Event> bus) {
-        container.prepare(new HtmlCardExtractor(bus));
+    private static void createCardDownloaders(Container container, Bus<Event> bus) {
+        container.prepare(new CardJSONConverter(bus));
     }
 
     private static void createSerialization(Container container, Bus<Event> bus) {

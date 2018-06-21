@@ -28,7 +28,39 @@ class ScryfallClientSpec extends Specification implements BusTest {
         closeBus()
     }
 
-    def 'download land cardDTO'() {
+    def 'download plains basic land'() {
+        given:
+        URL uri = new URL('https://api.scryfall.com/cards/bbd/250?format=json&pretty=true')
+
+        when:
+        bus.message(Event.CARD_FROM_URL).withContent(uri).send()
+        await().atMost(3, TimeUnit.SECONDS).until({card.hasValue()})
+        CardDTO result = card.get()
+
+        then:
+        result.name == 'Plains'
+        result.uri.toString() == 'https://api.scryfall.com/cards/bbd/250'
+        result.hiResImage
+        result.typeLine == 'Basic Land — Plains'
+        result.oracleText == '({T}: Add {W}.)'
+        def imageUris = result.imageUris
+        imageUris.large.toString() == 'https://img.scryfall.com/cards/large/en/bbd/250.jpg?1529063642'
+        imageUris.png.toString() == 'https://img.scryfall.com/cards/png/en/bbd/250.png?1529063642'
+        imageUris.artCrop.toString() == 'https://img.scryfall.com/cards/art_crop/en/bbd/250.jpg?1529063642'
+        result.colors.length == 0
+        result.colorIdentity.length == 1
+        result.colorIdentity[0] == "W"
+        result.set == 'bbd'
+        result.setName == 'Battlebond'
+        result.setUri.toString() == 'https://api.scryfall.com/sets/bbd'
+        result.rulingsUri.toString() == 'https://api.scryfall.com/cards/bbd/250/rulings'
+        result.collectorNumber == 250
+        !result.digital
+        result.rarity == 'common'
+        result.flavorText == null
+    }
+
+    def 'download land'() {
         given:
         URL uri = new URL('https://api.scryfall.com/cards/md1/17?format=json&pretty=true')
 
