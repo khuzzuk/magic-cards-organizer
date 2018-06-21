@@ -1,4 +1,4 @@
-package pl.khuzzuk.mtg.organizer.rest;
+package pl.khuzzuk.mtg.organizer.extractor.rest;
 
 import java.net.URISyntaxException;
 import java.net.URL;

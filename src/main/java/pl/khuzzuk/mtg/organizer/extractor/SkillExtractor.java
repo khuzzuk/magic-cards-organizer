@@ -11,12 +11,19 @@ import pl.khuzzuk.mtg.organizer.model.skill.Skill;
 import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo;
 
 @AllArgsConstructor
-class SkillExtractor {
+public class SkillExtractor {
    PredefinedSkillRepo predefinedSkillRepo;
 
    List<Skill> extractSkillsFrom(Element profile, int pos) {
       return profile.getElementsByClass("card-text-oracle").get(pos).children().stream()
             .map(Element::text)
+            .map(this::retrieveSkillFrom)
+            .flatMap(List::stream)
+            .collect(Collectors.toList());
+   }
+
+   public List<Skill> extractSkillsFrom(List<String> lines) {
+      return lines.stream()
             .map(this::retrieveSkillFrom)
             .flatMap(List::stream)
             .collect(Collectors.toList());

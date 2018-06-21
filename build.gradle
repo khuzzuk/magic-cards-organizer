@@ -1,15 +1,9 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.3'
-    }
+plugins {
+    id 'net.ltgt.apt' version '0.9'
+    id 'java'
+    id 'groovy'
+    id 'com.github.johnrengelman.shadow' version('2.0.4')
 }
-
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'java'
-apply plugin: 'groovy'
 
 group 'pl.khuzzuk'
 version '1.0.0-SNAPSHOT'
@@ -65,10 +59,13 @@ dependencies {
     compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
     compile group: 'org.springframework', name: 'spring-web', version: '5.0.7.RELEASE'
     compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.13'
+    compile group: 'org.mapstruct', name: 'mapstruct-jdk8', version: '1.2.0.Final'
+    compile group: 'org.projectlombok', name: 'lombok', version:'1.16.20'
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
     testCompile group: 'org.awaitility', name: 'awaitility', version: '3.1.0'
     testCompile group: 'org.testfx', name: 'testfx-spock', version: '4.0.13-alpha'
     compileOnly group: 'org.projectlombok', name: 'lombok', version:'1.16.20'
+    compileOnly 'org.mapstruct:mapstruct-processor:1.2.0.Final'
 }
 
 task bootJar(type: Jar) {

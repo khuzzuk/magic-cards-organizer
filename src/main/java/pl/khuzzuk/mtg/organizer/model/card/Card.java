@@ -13,7 +13,10 @@ public abstract class Card {
     private String name;
     private Rarity rarity;
     private URL front;
+    private URL art;
     private Type type;
     private String printRef;
+    private String printFullName;
     private int printOrder;
+    private URL source;
 }

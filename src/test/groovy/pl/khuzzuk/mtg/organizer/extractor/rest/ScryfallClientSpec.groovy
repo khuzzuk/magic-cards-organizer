@@ -1,4 +1,4 @@
-package pl.khuzzuk.mtg.organizer.rest
+package pl.khuzzuk.mtg.organizer.extractor.rest
 
 import pl.khuzzuk.mtg.organizer.BusTest
 import pl.khuzzuk.mtg.organizer.Event
@@ -49,6 +49,15 @@ class ScryfallClientSpec extends Specification implements BusTest {
         imageUris.artCrop.toString() == 'https://img.scryfall.com/cards/art_crop/en/md1/17.jpg?1517813031'
         result.colors.length == 0
         result.colorIdentity.length == 2
-        result.colorIdentity == ["B", "W"] as String[]
+        result.colorIdentity[0] == "B"
+        result.colorIdentity[1] == "W"
+        result.set == 'md1'
+        result.setName == 'Modern Event Deck 2014'
+        result.setUri.toString() == 'https://api.scryfall.com/sets/md1'
+        result.rulingsUri.toString() == 'https://api.scryfall.com/cards/md1/17/rulings'
+        result.collectorNumber == 17
+        !result.digital
+        result.rarity == 'rare'
+        result.flavorText == '"For centuries my creation kept this world in balance. Now only her shadow remains." —Sorin Markov'
     }
 }
