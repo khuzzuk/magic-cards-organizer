@@ -16,9 +16,13 @@ public class RegularCardMapper<T extends RegularCard> extends CardMapper<T> {
     @SuppressWarnings("unchecked")
     public T toCard(CardDTO cardDTO, Type type) {
         T card = super.toCard(cardDTO, type);
-        card.setSkills(skillsFrom(cardDTO.getOracleText()));
+        applySkills(cardDTO, card);
         card.setText(cardDTO.getFlavorText());
         return card;
+    }
+
+    void applySkills(CardDTO cardDTO, T card) {
+        card.setSkills(skillsFrom(cardDTO.getOracleText()));
     }
 
     List<Skill> skillsFrom(String skillLine) {

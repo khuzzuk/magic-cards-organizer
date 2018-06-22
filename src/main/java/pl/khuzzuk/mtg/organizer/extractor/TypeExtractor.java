@@ -4,6 +4,8 @@ import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import pl.khuzzuk.mtg.organizer.extractor.rest.CardDTO;
+import pl.khuzzuk.mtg.organizer.extractor.rest.CardFaceDTO;
 import pl.khuzzuk.mtg.organizer.model.ManaType;
 import pl.khuzzuk.mtg.organizer.model.type.BasicType;
 import pl.khuzzuk.mtg.organizer.model.type.Type;
@@ -37,6 +39,29 @@ public class TypeExtractor {
         return type;
     }
 
+    public static Type from(CardDTO cardDTO) {
+        Type type;
+        if (cardDTO.getCardFaces().size() > 1) {
+            type = from(cardDTO.getCardFaces().get(0));
+        } else {
+            type = from(cardDTO.getTypeLine());
+            type.getColors().addAll(colorsFrom(cardDTO.getColorIdentity()));
+        }
+        return type;
+    }
+
+    public static Type from(CardFaceDTO cardFaceDTO) {
+        Type type;
+        type = from(cardFaceDTO.getTypeLine());
+        type.getColors().addAll(colorsFrom(cardFaceDTO.getColors()));
+        type.setBasicType(BasicType.TransformableCreature);
+        return type;
+    }
+
+    private Set<ManaType> colorsFrom(String[] colorsIdentity) {
+        return TypeExtractor.getColors(colorsIdentity);
+    }
+
     public static Set<ManaType> getColors(String[] colors) {
         return Arrays.stream(colors).map(TypeExtractor::getManaTypeFromLabel).collect(Collectors.toSet());
     }
@@ -63,7 +88,7 @@ public class TypeExtractor {
         return type;
     }
 
-    public  static Type extractTransformedTypeFrom(Element profile) {
+    public static Type extractTransformedTypeFrom(Element profile) {
         Type type = extractType(profile, 1);
         type.setBasicType(BasicType.TransformableCreature);
         return type;

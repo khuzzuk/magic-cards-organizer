@@ -92,4 +92,59 @@ class ScryfallClientSpec extends Specification implements BusTest {
         result.rarity == 'rare'
         result.flavorText == '"For centuries my creation kept this world in balance. Now only her shadow remains." —Sorin Markov'
     }
+
+    def 'download transformable creature card'() {
+        given:
+        URL url = new URL('https://api.scryfall.com/cards/soi/5?format=json&pretty=true')
+
+        when:
+        bus.message(Event.CARD_FROM_URL).withContent(url).send()
+        await().atMost(3, TimeUnit.SECONDS).until({card.hasValue()})
+        CardDTO result = card.get()
+
+        then:
+        result.name == 'Archangel Avacyn // Avacyn, the Purifier'
+        result.uri.toString() == 'https://api.scryfall.com/cards/soi/5'
+        result.hiResImage
+        result.typeLine == 'Legendary Creature — Angel // Legendary Creature — Angel'
+        result.oracleText == null
+        result.imageUris == null
+        result.colors == null
+        result.colorIdentity.length == 2
+        result.colorIdentity[0] == "R"
+        result.colorIdentity[1] == "W"
+        result.set == 'soi'
+        result.setName == 'Shadows over Innistrad'
+        result.setUri.toString() == 'https://api.scryfall.com/sets/soi'
+        result.rulingsUri.toString() == 'https://api.scryfall.com/cards/soi/5/rulings'
+        result.collectorNumber == 5
+        !result.digital
+        result.rarity == 'mythic'
+        result.flavorText == null
+
+        result.cardFaces.size() == 2
+        CardFaceDTO face1 = result.cardFaces.get(0)
+        face1.name == 'Archangel Avacyn'
+        face1.typeLine == 'Legendary Creature — Angel'
+        face1.manaCost == '{3}{W}{W}'
+        face1.oracleText == 'Flash\nFlying, vigilance\nWhen Archangel Avacyn enters the battlefield, creatures you control gain indestructible until end of turn.\nWhen a non-Angel creature you control dies, transform Archangel Avacyn at the beginning of the next upkeep.'
+        face1.colors.length == 1
+        face1.colors[0] == 'W'
+        face1.power == 4
+        face1.toughness == 4
+        face1.imageUris.png.toString() == 'https://img.scryfall.com/cards/png/en/soi/5a.png?1518204266'
+        face1.imageUris.artCrop.toString() == 'https://img.scryfall.com/cards/art_crop/en/soi/5a.jpg?1518204266'
+
+        CardFaceDTO face2 = result.cardFaces.get(1)
+        face2.name == 'Avacyn, the Purifier'
+        face2.typeLine == 'Legendary Creature — Angel'
+        face2.manaCost == ''
+        face2.oracleText == 'Flying\nWhen this creature transforms into Avacyn, the Purifier, it deals 3 damage to each other creature and each opponent.'
+        face2.colors.length == 1
+        face2.colors[0] == 'R'
+        face2.power == 6
+        face2.toughness == 5
+        face2.imageUris.png.toString() == 'https://img.scryfall.com/cards/png/en/soi/5b.png?1518204266'
+        face2.imageUris.artCrop.toString() == 'https://img.scryfall.com/cards/art_crop/en/soi/5b.jpg?1518204266'
+    }
 }

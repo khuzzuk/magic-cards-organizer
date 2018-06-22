@@ -5,10 +5,6 @@ import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.Event;
 import pl.khuzzuk.mtg.organizer.extractor.SkillExtractor;
 import pl.khuzzuk.mtg.organizer.extractor.TypeExtractor;
-import pl.khuzzuk.mtg.organizer.extractor.rest.CardDTO;
-import pl.khuzzuk.mtg.organizer.extractor.rest.CardMapper;
-import pl.khuzzuk.mtg.organizer.extractor.rest.CreatureCardMapper;
-import pl.khuzzuk.mtg.organizer.extractor.rest.RegularCardMapper;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 import pl.khuzzuk.mtg.organizer.model.card.Card;
 import pl.khuzzuk.mtg.organizer.model.type.BasicType;
@@ -31,13 +27,15 @@ public class CardJSONConverter implements Loadable {
         SkillExtractor skillExtractor = new SkillExtractor(predefinedSkillRepo);
         mappers = Map.of(
                 BasicType.Land, new RegularCardMapper(skillExtractor),
-                BasicType.Creature, new CreatureCardMapper(skillExtractor)
+                BasicType.Creature, new CreatureCardMapper(skillExtractor),
+                BasicType.TransformableCreature, new TransformableCreatureMapper(skillExtractor)
         );
+
         bus.subscribingFor(Event.CARD_DTO_JSON).accept(this::toCard).subscribe();
     }
 
     private void toCard(CardDTO cardDTO) {
-        Type type = TypeExtractor.from(cardDTO.getTypeLine());
+        Type type = TypeExtractor.from(cardDTO);
         Card card = mappers.get(type.getBasicType()).toCard(cardDTO, type);
         bus.message(Event.CARD_DATA).withContent(card).send();
     }

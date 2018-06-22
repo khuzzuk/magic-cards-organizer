@@ -11,6 +11,7 @@ import pl.khuzzuk.mtg.organizer.model.Rarity
 import pl.khuzzuk.mtg.organizer.model.card.Card
 import pl.khuzzuk.mtg.organizer.model.card.CreatureCard
 import pl.khuzzuk.mtg.organizer.model.card.LandCard
+import pl.khuzzuk.mtg.organizer.model.card.TransformableCreatureCard
 import pl.khuzzuk.mtg.organizer.model.type.BasicType
 import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo
 import spock.lang.Shared
@@ -158,5 +159,70 @@ class CardJSONConverterSpec extends Specification implements BusTest {
 
         result.attack == 8
         result.defense == 8
+    }
+
+    def "convert transformable creature card"() {
+        given:
+        URL url = new URL('https://api.scryfall.com/cards/soi/5?format=json&pretty=true')
+
+        when:
+        bus.message(CARD_FROM_URL).withContent(url).send()
+        await().atMost(2, SECONDS).until({card.hasValue()})
+        TransformableCreatureCard result = card.get() as TransformableCreatureCard
+
+        then:
+        result.name == 'Archangel Avacyn'
+        result.rarity == Rarity.MYTHIC_RARE
+        result.front.toString() == 'https://img.scryfall.com/cards/png/en/soi/5a.png?1518204266'
+        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/soi/5a.jpg?1518204266'
+        result.source.toString() == 'https://api.scryfall.com/cards/soi/5'
+        result.skills.size() == 5
+        result.skills.get(0).text == 'Flash'
+        result.skills.get(1).text == 'Flying'
+        result.skills.get(2).text == 'Vigilance'
+        result.skills.get(3).text == 'When Archangel Avacyn enters the battlefield, creatures you control gain indestructible until end of turn.'
+        result.skills.get(4).text == 'When a non-Angel creature you control dies, transform Archangel Avacyn at the beginning of the next upkeep.'
+        result.printRef == 'soi'
+        result.printFullName == 'Shadows over Innistrad'
+        result.printOrder == 5
+        result.edhrecRank == 3460
+        result.text == '"Wings that once bore hope are now stained with blood. She is our guardian no longer.\" —Grete, cathar apostate'
+
+        def type = result.type
+        type.basicType == BasicType.TransformableCreature
+        type.primaryTypes.size() == 1
+        'Legendary' in type.primaryTypes
+        type.secondaryTypes.size() == 1
+        'Angel' in type.secondaryTypes
+        type.colors.size() == 1
+        ManaType.WHITE in type.colors
+
+        ManaCost manaCost = result.manaCost
+        manaCost.generic.value == 3
+        manaCost.white.value == 2
+        manaCost.green.value == 0
+        manaCost.blue.value == 0
+        manaCost.red.value == 0
+        manaCost.black.value == 0
+        manaCost.colorless.value == 0
+
+        result.attack == 4
+        result.defense == 4
+
+        result.transformedName == "Avacyn, the Purifier"
+        result.transformedSkills.size() == 2
+        result.transformedSkills.get(0).text == 'Flying'
+        result.transformedSkills.get(1).text == 'When this creature transforms into Avacyn, the Purifier, it deals 3 damage to each other creature and each opponent.'
+        result.transformedAttack == 6
+        result.transformedDefense == 5
+
+        def transformedType = result.transformedType
+        transformedType.basicType == BasicType.TransformableCreature
+        transformedType.primaryTypes.size() == 1
+        'Legendary' in transformedType.primaryTypes
+        transformedType.secondaryTypes.size() == 1
+        'Angel' in transformedType.secondaryTypes
+        transformedType.colors.size() == 1
+        ManaType.RED in transformedType.colors
     }
 }

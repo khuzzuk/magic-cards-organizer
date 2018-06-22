@@ -1,12 +1,12 @@
 package pl.khuzzuk.mtg.organizer.model.card;
 
-import java.net.URL;
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 import pl.khuzzuk.mtg.organizer.model.skill.Skill;
 import pl.khuzzuk.mtg.organizer.model.type.Type;
+
+import java.net.URL;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,4 +17,5 @@ public class TransformableCreatureCard extends CreatureCard {
    private int transformedAttack;
    private int transformedDefense;
    private URL back;
+   private URL backArt;
 }

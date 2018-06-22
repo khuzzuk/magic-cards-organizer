@@ -14,8 +14,12 @@ public abstract class SpellCardMapper<T extends SpellCard> extends RegularCardMa
     @Override
     public T toCard(CardDTO cardDTO, Type type) {
         T card = super.toCard(cardDTO, type);
-        card.setManaCost(manaCostFrom(cardDTO.getManaCost()));
+        applyManaCost(cardDTO, card);
         return card;
+    }
+
+    void applyManaCost(CardDTO cardDTO, T card) {
+        card.setManaCost(manaCostFrom(cardDTO.getManaCost()));
     }
 
     ManaCost manaCostFrom(String manaCost) {

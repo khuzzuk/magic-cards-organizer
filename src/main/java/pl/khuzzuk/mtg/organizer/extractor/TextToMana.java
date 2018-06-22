@@ -1,11 +1,13 @@
 package pl.khuzzuk.mtg.organizer.extractor;
 
+import lombok.experimental.UtilityClass;
 import pl.khuzzuk.mtg.organizer.model.Mana;
 import pl.khuzzuk.mtg.organizer.model.ManaCost;
 import pl.khuzzuk.mtg.organizer.model.ManaType;
 
 import java.util.Arrays;
 
+@UtilityClass
 public class TextToMana {
     public static ManaCost from(String text) {
         ManaCost manaCost = new ManaCost();
