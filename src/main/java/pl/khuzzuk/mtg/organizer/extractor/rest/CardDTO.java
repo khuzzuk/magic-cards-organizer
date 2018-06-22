@@ -1,5 +1,6 @@
 package pl.khuzzuk.mtg.organizer.extractor.rest;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -35,6 +36,8 @@ public class CardDTO {
     private URI setUri;
     @JsonProperty("rulings_uri")
     private URI rulingsUri;
+    @JsonIgnore
+    private RulingsDTO rulings;
     @JsonProperty("collector_number")
     private int collectorNumber;
     private boolean digital;

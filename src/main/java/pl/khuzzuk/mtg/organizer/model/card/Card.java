@@ -6,6 +6,8 @@ import pl.khuzzuk.mtg.organizer.model.Rarity;
 import pl.khuzzuk.mtg.organizer.model.type.Type;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,4 +22,5 @@ public abstract class Card {
     private int printOrder;
     private URL source;
     private int edhrecRank;
+    private List<Rule> rulings = new ArrayList<>();
 }

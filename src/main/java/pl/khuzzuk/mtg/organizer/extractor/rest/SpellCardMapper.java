@@ -6,8 +6,8 @@ import pl.khuzzuk.mtg.organizer.model.ManaCost;
 import pl.khuzzuk.mtg.organizer.model.card.SpellCard;
 import pl.khuzzuk.mtg.organizer.model.type.Type;
 
-public abstract class SpellCardMapper<T extends SpellCard> extends RegularCardMapper<T> {
-    public SpellCardMapper(SkillExtractor skillExtractor) {
+public class SpellCardMapper<T extends SpellCard> extends RegularCardMapper<T> {
+    SpellCardMapper(SkillExtractor skillExtractor) {
         super(skillExtractor);
     }
 

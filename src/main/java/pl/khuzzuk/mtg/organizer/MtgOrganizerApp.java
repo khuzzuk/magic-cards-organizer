@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.extractor.rest.CardJSONConverter;
+import pl.khuzzuk.mtg.organizer.extractor.rest.ScryfallClient;
 import pl.khuzzuk.mtg.organizer.gui.MainWindow;
 import pl.khuzzuk.mtg.organizer.gui.MainWindowInitializer;
 import pl.khuzzuk.mtg.organizer.gui.card.CardViewer;
@@ -54,6 +55,7 @@ public class MtgOrganizerApp extends Application {
 
     private static void createCardDownloaders(Container container, Bus<Event> bus) {
         container.prepare(new CardJSONConverter(bus));
+        container.prepare(new ScryfallClient(bus));
     }
 
     private static void createSerialization(Container container, Bus<Event> bus) {

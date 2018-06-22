@@ -9,8 +9,7 @@ import pl.khuzzuk.mtg.organizer.Event;
 import pl.khuzzuk.mtg.organizer.gui.form.*;
 import pl.khuzzuk.mtg.organizer.initialize.Identification;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
-import pl.khuzzuk.mtg.organizer.model.card.Card;
-import pl.khuzzuk.mtg.organizer.model.card.CreatureCard;
+import pl.khuzzuk.mtg.organizer.model.card.*;
 
 import static pl.khuzzuk.mtg.organizer.Event.BINDER;
 import static pl.khuzzuk.mtg.organizer.Event.CARD_DATA;
@@ -89,6 +88,11 @@ public class CardViewer extends GridPane implements Loadable {
         bus.subscribingFor(BINDER).<Binder>accept(b -> {
             binder = b;
             binder.bind(CreatureCard.class, CardViewer.class);
+            binder.bind(TransformableCreatureCard.class, CardViewer.class);
+            binder.bind(EnchantmentCard.class, CardViewer.class);
+            binder.bind(ArtifactCard.class, CardViewer.class);
+            binder.bind(LandCard.class, CardViewer.class);
+            binder.bind(SorceryCard.class, CardViewer.class);
             bus.subscribingFor(CARD_DATA).onFXThread().accept(this::loadCard).subscribe();
         }).subscribe();
 

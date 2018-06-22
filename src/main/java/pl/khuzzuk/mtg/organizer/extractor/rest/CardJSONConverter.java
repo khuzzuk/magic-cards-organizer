@@ -27,6 +27,9 @@ public class CardJSONConverter implements Loadable {
         SkillExtractor skillExtractor = new SkillExtractor(predefinedSkillRepo);
         mappers = Map.of(
                 BasicType.Land, new RegularCardMapper(skillExtractor),
+                BasicType.Sorcery, new SpellCardMapper(skillExtractor),
+                BasicType.Enchantment, new SpellCardMapper(skillExtractor),
+                BasicType.Artifact, new SpellCardMapper(skillExtractor),
                 BasicType.Creature, new CreatureCardMapper(skillExtractor),
                 BasicType.TransformableCreature, new TransformableCreatureMapper(skillExtractor)
         );

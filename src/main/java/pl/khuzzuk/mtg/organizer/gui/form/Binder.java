@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.keyvalue.MultiKey;
 import org.apache.commons.lang3.StringUtils;
 import pl.khuzzuk.mtg.organizer.Event;
@@ -18,17 +17,14 @@ import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 
 import java.lang.reflect.Field;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 @Identification(Event.BINDER)
 public class Binder implements Loadable {
     private Map<Class<? extends Node>, BiConsumer<?, ?>> setters;
-    private Map<Class<? extends Node>, List<PropertyController>> controllers;
+    private Map<MultiKey<Class<?>>, List<PropertyController>> controllers;
     private Map<MultiKey<Class<?>>, ValueConverter<?, ?, String>> converters;
 
     @Override
@@ -39,7 +35,6 @@ public class Binder implements Loadable {
         setters.put(ImageView.class, (BiConsumer<ImageView, Image>) ImageView::setImage);
 
         controllers = new HashMap<>();
-        Factory<ValueConverter<?, ?, String>> factory = () -> ValueConverter.DEFAULT_CONVERTER;
         converters = new HashMap();
         converters.put(new MultiKey(String.class, Label.class), ValueConverter.DEFAULT_CONVERTER);
         converters.put(new MultiKey(Integer.class, Label.class), new ValueConverter<>(Object::toString, Integer::valueOf, "0"));
@@ -54,7 +49,8 @@ public class Binder implements Loadable {
 
     @SuppressWarnings("unchecked")
     public void bind(Class<?> beanClass, Class<? extends Node> formClass) {
-        List<PropertyController> formHandlers = controllers.computeIfAbsent(formClass, k -> new ArrayList<>());
+        List<PropertyController> formHandlers = controllers
+                .computeIfAbsent(new MultiKey<>(formClass, beanClass), k -> new ArrayList<>());
         Map<String, List<Field>> hideCheckFields = getHideCheckFields(formClass);
 
         for (Field formField : formClass.getDeclaredFields()) {
@@ -81,28 +77,33 @@ public class Binder implements Loadable {
 
     @SuppressWarnings("unchecked")
     public void clearForm(final Node form) {
-        controllers.get(form.getClass()).forEach(controller -> {
-            Node formFieldElement = ReflectionUtils.getValueFromField(controller.formField, form, this::rethrow);
-            if (formFieldElement != null) {
-                formFieldElement.setVisible(!controller.isHide());
-                controller.getHideCheckFields().stream()
-                        .map(field -> mapFieldToNode(field, form))
-                        .forEach(toCheck -> setVisible(toCheck, !controller.isHide()));
+        controllers.keySet().stream().filter(key -> key.getKey(0).equals(form.getClass()))
+                .map(controllers::get)
+                .flatMap(List::stream)
+                .map(PropertyController.class::cast)
+                .forEach(controller -> {
+                    Node formFieldElement = ReflectionUtils.getValueFromField(controller.formField, form, this::rethrow);
+                    if (formFieldElement != null) {
+                        formFieldElement.setVisible(!controller.isHide());
+                        controller.getHideCheckFields().stream()
+                                .map(field -> mapFieldToNode(field, form))
+                                .filter(Objects::nonNull)
+                                .forEach(toCheck -> setVisible(toCheck, !controller.isHide()));
 
-                Object convertedValue;
-                if (StringUtils.isNotBlank(controller.getDefaultValue())) {
-                    convertedValue = controller.getConverter().getFormConverter().apply(controller.getDefaultValue());
-                } else {
-                    convertedValue = controller.getConverter().getFormDefaultValue();
-                }
-                controller.getFormSetter().accept(formFieldElement, convertedValue);
-            }
-        });
+                        Object convertedValue;
+                        if (StringUtils.isNotBlank(controller.getDefaultValue())) {
+                            convertedValue = controller.getConverter().getFormConverter().apply(controller.getDefaultValue());
+                        } else {
+                            convertedValue = controller.getConverter().getFormDefaultValue();
+                        }
+                        controller.getFormSetter().accept(formFieldElement, convertedValue);
+                    }
+                });
     }
 
     @SuppressWarnings("unchecked")
     public void fillForm(final Node form, Object bean) {
-        for (PropertyController controller : controllers.get(form.getClass())) {
+        for (PropertyController controller : controllers.get(new MultiKey<>(form.getClass(), bean.getClass()))) {
             Object beanFieldValue = controller.getBeanGetter().apply(bean);
             if (beanFieldValue != null) {
                 Node formFieldElement = ReflectionUtils.getValueFromField(controller.formField, form, this::rethrow);
@@ -158,6 +159,7 @@ public class Binder implements Loadable {
     private <T> T rethrow(Exception e) {
         throw new BinderException(e);
     }
+
     private class BinderException extends RuntimeException {
         private BinderException(Throwable cause) {
             super(cause);

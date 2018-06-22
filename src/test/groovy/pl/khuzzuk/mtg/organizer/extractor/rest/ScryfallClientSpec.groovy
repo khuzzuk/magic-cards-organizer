@@ -122,6 +122,24 @@ class ScryfallClientSpec extends Specification implements BusTest {
         result.rarity == 'mythic'
         result.flavorText == null
 
+        def rulings = result.rulings.data
+        rulings.size() == 3
+        rulings.get(0).comment == 'For more information on double-faced cards, see the Shadows over Innistrad mechanics article (http://magic.wizards.com/en/articles/archive/feature/shadows-over-innistrad-mechanics).'
+        rulings.get(0).source == 'wotc'
+        rulings.get(0).publishedAt[Calendar.YEAR] == 2016
+        rulings.get(0).publishedAt[Calendar.MONTH] == 6
+        rulings.get(0).publishedAt[Calendar.DAY_OF_MONTH] == 13
+        rulings.get(1).comment == 'Archangel Avacyn’s delayed triggered ability triggers at the beginning of the next upkeep regardless of whose turn it is.'
+        rulings.get(1).source == 'wotc'
+        rulings.get(1).publishedAt[Calendar.YEAR] == 2016
+        rulings.get(1).publishedAt[Calendar.MONTH] == 3
+        rulings.get(1).publishedAt[Calendar.DAY_OF_MONTH] == 8
+        rulings.get(2).comment == 'Archangel Avacyn’s delayed triggered ability won’t cause it to transform back into Archangel Avacyn if it has already transformed into Avacyn, the Purifier, perhaps because several creatures died in one turn.'
+        rulings.get(2).source == 'wotc'
+        rulings.get(2).publishedAt[Calendar.YEAR] == 2016
+        rulings.get(2).publishedAt[Calendar.MONTH] == 3
+        rulings.get(2).publishedAt[Calendar.DAY_OF_MONTH] == 8
+
         result.cardFaces.size() == 2
         CardFaceDTO face1 = result.cardFaces.get(0)
         face1.name == 'Archangel Avacyn'

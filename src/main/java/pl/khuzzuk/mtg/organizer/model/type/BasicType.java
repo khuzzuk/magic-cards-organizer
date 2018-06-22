@@ -13,7 +13,8 @@ public enum BasicType {
     TransformableCreature(TransformableCreatureCard::new),
     Sorcery(SorceryCard::new),
     Enchantment(EnchantmentCard::new),
-    Instant(InstantCard::new);
+    Instant(InstantCard::new),
+    Artifact(ArtifactCard::new);
 
     private Supplier<? extends Card> cardSupplier;
 

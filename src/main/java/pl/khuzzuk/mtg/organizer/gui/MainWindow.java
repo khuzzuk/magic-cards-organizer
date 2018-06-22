@@ -73,7 +73,7 @@ public class MainWindow extends Stage {
         try {
             errorMessage.setText(null);
             URL link = new URL(url.getText());
-            bus.message(Event.CARD_FROM_URL).withContent(link.toString()).send();
+            bus.message(Event.CARD_FROM_URL).withContent(link).send();
         } catch (MalformedURLException e) {
             errorMessage.setText(e.getMessage());
         }

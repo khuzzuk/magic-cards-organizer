@@ -3,6 +3,7 @@ package pl.khuzzuk.mtg.organizer.extractor.rest;
 import lombok.SneakyThrows;
 import pl.khuzzuk.mtg.organizer.model.Rarity;
 import pl.khuzzuk.mtg.organizer.model.card.Card;
+import pl.khuzzuk.mtg.organizer.model.card.Rule;
 import pl.khuzzuk.mtg.organizer.model.type.Type;
 
 import java.net.MalformedURLException;
@@ -24,6 +25,7 @@ public abstract class CardMapper<T extends Card> {
         card.setPrintOrder(cardDTO.getCollectorNumber());
         card.setEdhrecRank(cardDTO.getEdhrecRank());
         applyImageUris(cardDTO, card);
+        cardDTO.getRulings().getData().stream().map(this::mapRule).forEach(card.getRulings()::add);
 
         return card;
     }
@@ -44,5 +46,13 @@ public abstract class CardMapper<T extends Card> {
         if ("uncommon".equals(rarity)) return UNCOMMON;
         if ("common".equals(rarity)) return COMMON;
         throw new IllegalArgumentException(rarity);
+    }
+
+    private Rule mapRule(RulingsDTO.RuleDTO ruleDTO) {
+        Rule rule = new Rule();
+        rule.setText(ruleDTO.getComment());
+        rule.setPublished(ruleDTO.getPublishedAt());
+        rule.setSource(ruleDTO.getSource());
+        return rule;
     }
 }
