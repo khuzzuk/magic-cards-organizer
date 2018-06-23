@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SettingsData {
-    private String repoDirectory = "";
+    private String cardsRepoDirectory = "";
 }

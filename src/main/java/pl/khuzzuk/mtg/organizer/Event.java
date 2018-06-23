@@ -14,6 +14,9 @@ public enum Event {
     CARD_INDEX,
     CARD_FIND,
 
+    //SETTINGS
+    SET_REPO_LOCATION,
+
     //CONTAINER
     LEFT_PANE_FILTER,
     MAIN_VIEW_SELECTOR,
@@ -22,6 +25,7 @@ public enum Event {
     ORGANIZER_MENU,
     BINDER,
     PREDEFINED_SKILLS,
+    SETTINGS_MANAGER,
 
     ERROR,
     CLOSE

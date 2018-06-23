@@ -17,6 +17,7 @@ import pl.khuzzuk.mtg.organizer.initialize.Container;
 import pl.khuzzuk.mtg.organizer.serialization.JsonCardSerializer;
 import pl.khuzzuk.mtg.organizer.serialization.JsonRepoSerializer;
 import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo;
+import pl.khuzzuk.mtg.organizer.settings.SettingsService;
 
 public class MtgOrganizerApp extends Application {
     private static Bus<Event> bus;
@@ -57,11 +58,12 @@ public class MtgOrganizerApp extends Application {
     private static void createCardDownloaders(Container container, Bus<Event> bus) {
         container.prepare(new CardJSONConverter(bus));
         container.prepare(new ScryfallClient(bus));
-        container.prepare(new JsonRepoSerializer(bus));
     }
 
     private static void createSerialization(Container container, Bus<Event> bus) {
         container.prepare(new JsonCardSerializer(bus));
+        container.prepare(new JsonRepoSerializer(bus));
+        container.prepare(new SettingsService(bus));
         container.prepare(new PredefinedSkillRepo(bus));
     }
 }
