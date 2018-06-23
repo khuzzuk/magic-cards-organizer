@@ -14,7 +14,8 @@ public enum BasicType {
     Sorcery(SorceryCard::new),
     Enchantment(EnchantmentCard::new),
     Instant(InstantCard::new),
-    Artifact(ArtifactCard::new);
+    Artifact(ArtifactCard::new),
+    Planeswalker(PlaneswalkerCard::new);
 
     private Supplier<? extends Card> cardSupplier;
 

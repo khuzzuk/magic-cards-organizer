@@ -30,6 +30,7 @@ public class CardJSONConverter implements Loadable {
                 BasicType.Sorcery, new SpellCardMapper(skillExtractor),
                 BasicType.Enchantment, new SpellCardMapper(skillExtractor),
                 BasicType.Artifact, new SpellCardMapper(skillExtractor),
+                BasicType.Planeswalker, new PlaneswalkerCardMapper(skillExtractor),
                 BasicType.Creature, new CreatureCardMapper(skillExtractor),
                 BasicType.TransformableCreature, new TransformableCreatureMapper(skillExtractor)
         );

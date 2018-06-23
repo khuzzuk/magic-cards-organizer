@@ -31,6 +31,7 @@ class TypeExtractorSpec extends Specification {
         'Artifact'                                                 | null                         | BasicType.Artifact              | [] as List<String>              | [] as List<String>
         'Legendary Creature — Angel'                               | null                         | BasicType.Creature              | ['Legendary'] as List<String>   | ['Angel'] as List<String>
         'Legendary Creature — Angel // Legendary Creature — Angel' | 'Legendary Creature — Angel' | BasicType.TransformableCreature | ['Legendary'] as List<String>   | ['Angel'] as List<String>
+        'Legendary Planeswalker — Ajani'                           | null                         | BasicType.Planeswalker          | ['Legendary'] as List<String>   | ['Ajani'] as List<String>
 
 
 

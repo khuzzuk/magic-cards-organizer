@@ -93,6 +93,7 @@ public class CardViewer extends GridPane implements Loadable {
             binder.bind(ArtifactCard.class, CardViewer.class);
             binder.bind(LandCard.class, CardViewer.class);
             binder.bind(SorceryCard.class, CardViewer.class);
+            binder.bind(PlaneswalkerCard.class, CardViewer.class);
             bus.subscribingFor(CARD_DATA).onFXThread().accept(this::loadCard).subscribe();
         }).subscribe();
 

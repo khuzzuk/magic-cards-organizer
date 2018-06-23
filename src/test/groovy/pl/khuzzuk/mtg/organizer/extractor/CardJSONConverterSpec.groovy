@@ -13,6 +13,7 @@ import pl.khuzzuk.mtg.organizer.model.card.Card
 import pl.khuzzuk.mtg.organizer.model.card.CreatureCard
 import pl.khuzzuk.mtg.organizer.model.card.EnchantmentCard
 import pl.khuzzuk.mtg.organizer.model.card.LandCard
+import pl.khuzzuk.mtg.organizer.model.card.PlaneswalkerCard
 import pl.khuzzuk.mtg.organizer.model.card.SorceryCard
 import pl.khuzzuk.mtg.organizer.model.card.TransformableCreatureCard
 import pl.khuzzuk.mtg.organizer.model.type.BasicType
@@ -485,5 +486,50 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         type.secondaryTypes.size() == 1
         'Equipment' in type.secondaryTypes
         type.colors.size() == 0
+    }
+
+    def "convert planeswalker card"() {
+        given:
+        URL url = new URL('https://api.scryfall.com/cards/m19/3?format=json&pretty=true')
+
+        when:
+        bus.message(CARD_FROM_URL).withContent(url).send()
+        await().atMost(2, SECONDS).until({card.hasValue()})
+        PlaneswalkerCard result = card.get() as PlaneswalkerCard
+
+        then:
+        result.name == 'Ajani, Adversary of Tyrants'
+        result.rarity == Rarity.MYTHIC_RARE
+        result.front.toString() == 'https://img.scryfall.com/cards/png/en/m19/3.png?1529160847'
+        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/m19/3.jpg?1529160847'
+        result.source.toString() == 'https://api.scryfall.com/cards/m19/3'
+        result.skills.size() == 3
+        result.skills.get(0).text == '+1: Put a +1/+1 counter on each of up to two target creatures.'
+        result.skills.get(1).text == '−2: Return target creature card with converted mana cost 2 or less from your graveyard to the battlefield.'
+        result.skills.get(2).text == '−7: You get an emblem with "At the beginning of your end step, create three 1/1 white Cat creature tokens with lifelink."'
+        result.printRef == 'm19'
+        result.printFullName == 'Core Set 2019'
+        result.printOrder == 3
+        result.edhrecRank == 0
+        result.text == null
+        ManaCost manaCost = result.manaCost
+        manaCost.generic.value == 2
+        manaCost.white.value == 2
+        manaCost.green.value == 0
+        manaCost.blue.value == 0
+        manaCost.red.value == 0
+        manaCost.black.value == 0
+        manaCost.colorless.value == 0
+
+        def type = result.type
+        type.basicType == BasicType.Planeswalker
+        type.primaryTypes.size() == 1
+        'Legendary' in type.primaryTypes
+        type.secondaryTypes.size() == 1
+        'Ajani' in type.secondaryTypes
+        type.colors.size() == 1
+        ManaType.WHITE in type.colors
+
+        result.loyalty == 4
     }
 }

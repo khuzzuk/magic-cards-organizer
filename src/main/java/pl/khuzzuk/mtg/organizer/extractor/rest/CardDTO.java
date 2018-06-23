@@ -50,4 +50,5 @@ public class CardDTO {
     private int edhrecRank;
     @JsonProperty("card_faces")
     private List<CardFaceDTO> cardFaces = new ArrayList<>();
+    private int loyalty;
 }
