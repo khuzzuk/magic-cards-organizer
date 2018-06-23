@@ -1,0 +1,146 @@
+{
+  "cards" : [ {
+    "object" : "pl.khuzzuk.mtg.organizer.model.card.CreatureCard",
+    "name" : "Avacyn, Angel of Hope",
+    "rarity" : "MYTHIC_RARE",
+    "front" : "https://img.scryfall.com/cards/png/en/ima/11.png?1517813031",
+    "art" : "https://img.scryfall.com/cards/art_crop/en/ima/11.jpg?1517813031",
+    "type" : {
+      "basicType" : "Creature",
+      "colors" : [ "WHITE" ],
+      "primaryTypes" : [ "Legendary" ],
+      "secondaryTypes" : [ "Angel" ]
+    },
+    "printRef" : "ima",
+    "printFullName" : "Iconic Masters",
+    "printOrder" : 11,
+    "source" : "https://api.scryfall.com/cards/ima/11",
+    "edhrecRank" : 812,
+    "rulings" : [ {
+      "text" : "A permanent with indestructible can’t be destroyed, but it can still be sacrificed, exiled, put into a graveyard, and so on. Notably, a permanent with indestructible can be put into its owner’s graveyard due to the “legend rule.”",
+      "published" : 1510876800000,
+      "source" : "wotc"
+    }, {
+      "text" : "Creatures with indestructible still have damage marked on them, even though that damage won’t destroy them. If Avacyn leaves the battlefield, creatures that lose indestructible and have lethal damage marked on them will be destroyed.",
+      "published" : 1510876800000,
+      "source" : "wotc"
+    }, {
+      "text" : "A creature with 0 toughness is put into its owner’s graveyard even if it has indestructible.",
+      "published" : 1510876800000,
+      "source" : "wotc"
+    }, {
+      "text" : "A planeswalker with indestructible still loses loyalty as it’s dealt damage. It is put into its owner’s graveyard if its loyalty becomes 0.",
+      "published" : 1510876800000,
+      "source" : "wotc"
+    } ],
+    "text" : "A golden helix streaked skyward from the Helvault. A thunderous explosion shattered the silver monolith and Avacyn emerged, free from her prison at last.",
+    "skills" : [ {
+      "object" : "pl.khuzzuk.mtg.organizer.model.skill.PredefinedSkill",
+      "text" : "Flying",
+      "info" : "Flying (This creature can't be blocked except by creatures with flying and/or reach.)"
+    }, {
+      "object" : "pl.khuzzuk.mtg.organizer.model.skill.PredefinedSkill",
+      "text" : "Vigilance",
+      "info" : "Vigilance (Attacking doesn't cause this creature to tap.)"
+    }, {
+      "object" : "pl.khuzzuk.mtg.organizer.model.skill.PredefinedSkill",
+      "text" : "Indestructible",
+      "info" : "Indestructible (Effects that say \"destroy\" don’t destroy this.)"
+    }, {
+      "object" : "pl.khuzzuk.mtg.organizer.model.skill.Skill",
+      "text" : "Other permanents you control have indestructible."
+    } ],
+    "manaCost" : {
+      "generic" : {
+        "value" : 5,
+        "type" : "GENERIC"
+      },
+      "white" : {
+        "value" : 3,
+        "type" : "WHITE"
+      },
+      "green" : {
+        "value" : 0,
+        "type" : "GREEN"
+      },
+      "blue" : {
+        "value" : 0,
+        "type" : "BLUE"
+      },
+      "red" : {
+        "value" : 0,
+        "type" : "RED"
+      },
+      "black" : {
+        "value" : 0,
+        "type" : "BLACK"
+      },
+      "colorless" : {
+        "value" : 0,
+        "type" : "COLORLESS"
+      }
+    },
+    "attack" : 8,
+    "defense" : 8
+  }, {
+    "object" : "pl.khuzzuk.mtg.organizer.model.card.PlaneswalkerCard",
+    "name" : "Ajani, Adversary of Tyrants",
+    "rarity" : "MYTHIC_RARE",
+    "front" : "https://img.scryfall.com/cards/png/en/m19/3.png?1529160847",
+    "art" : "https://img.scryfall.com/cards/art_crop/en/m19/3.jpg?1529160847",
+    "type" : {
+      "basicType" : "Planeswalker",
+      "colors" : [ "WHITE" ],
+      "primaryTypes" : [ "Legendary" ],
+      "secondaryTypes" : [ "Ajani" ]
+    },
+    "printRef" : "m19",
+    "printFullName" : "Core Set 2019",
+    "printOrder" : 3,
+    "source" : "https://api.scryfall.com/cards/m19/3",
+    "edhrecRank" : 0,
+    "rulings" : [ ],
+    "text" : null,
+    "skills" : [ {
+      "object" : "pl.khuzzuk.mtg.organizer.model.skill.Skill",
+      "text" : "+1: Put a +1/+1 counter on each of up to two target creatures."
+    }, {
+      "object" : "pl.khuzzuk.mtg.organizer.model.skill.Skill",
+      "text" : "−2: Return target creature card with converted mana cost 2 or less from your graveyard to the battlefield."
+    }, {
+      "object" : "pl.khuzzuk.mtg.organizer.model.skill.Skill",
+      "text" : "−7: You get an emblem with \"At the beginning of your end step, create three 1/1 white Cat creature tokens with lifelink.\""
+    } ],
+    "manaCost" : {
+      "generic" : {
+        "value" : 2,
+        "type" : "GENERIC"
+      },
+      "white" : {
+        "value" : 2,
+        "type" : "WHITE"
+      },
+      "green" : {
+        "value" : 0,
+        "type" : "GREEN"
+      },
+      "blue" : {
+        "value" : 0,
+        "type" : "BLUE"
+      },
+      "red" : {
+        "value" : 0,
+        "type" : "RED"
+      },
+      "black" : {
+        "value" : 0,
+        "type" : "BLACK"
+      },
+      "colorless" : {
+        "value" : 0,
+        "type" : "COLORLESS"
+      }
+    },
+    "loyalty" : 4
+  } ]
+}

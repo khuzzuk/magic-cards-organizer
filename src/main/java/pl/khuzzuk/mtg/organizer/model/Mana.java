@@ -1,15 +1,15 @@
 package pl.khuzzuk.mtg.organizer.model;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @RequiredArgsConstructor
 public class Mana {
     private int value;
-    private final ManaType type;
+    @NonNull
+    private ManaType type;
 
     public Mana plus(Mana toAdd) {
         if (!type.equals(toAdd.type)) {

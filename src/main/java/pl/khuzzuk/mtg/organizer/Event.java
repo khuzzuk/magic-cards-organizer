@@ -11,6 +11,8 @@ public enum Event {
     CARD_FROM_URL,
     CARD_DTO_JSON,
     CARD_DATA,
+    CARD_INDEX,
+    CARD_FIND,
 
     //CONTAINER
     LEFT_PANE_FILTER,

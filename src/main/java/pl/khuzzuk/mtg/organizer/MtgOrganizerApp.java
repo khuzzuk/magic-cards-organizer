@@ -14,7 +14,8 @@ import pl.khuzzuk.mtg.organizer.gui.menu.OrganizerMenuBar;
 import pl.khuzzuk.mtg.organizer.gui.selector.MainViewSelector;
 import pl.khuzzuk.mtg.organizer.gui.selector.TableSelector;
 import pl.khuzzuk.mtg.organizer.initialize.Container;
-import pl.khuzzuk.mtg.organizer.serialization.JsonSerializer;
+import pl.khuzzuk.mtg.organizer.serialization.JsonCardSerializer;
+import pl.khuzzuk.mtg.organizer.serialization.JsonRepoSerializer;
 import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo;
 
 public class MtgOrganizerApp extends Application {
@@ -56,10 +57,11 @@ public class MtgOrganizerApp extends Application {
     private static void createCardDownloaders(Container container, Bus<Event> bus) {
         container.prepare(new CardJSONConverter(bus));
         container.prepare(new ScryfallClient(bus));
+        container.prepare(new JsonRepoSerializer(bus));
     }
 
     private static void createSerialization(Container container, Bus<Event> bus) {
-        container.prepare(new JsonSerializer(bus));
+        container.prepare(new JsonCardSerializer(bus));
         container.prepare(new PredefinedSkillRepo(bus));
     }
 }

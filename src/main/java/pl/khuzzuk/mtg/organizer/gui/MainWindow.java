@@ -6,6 +6,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.controlsfx.control.NotificationPane;
 import org.controlsfx.control.StatusBar;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.Event;
@@ -16,12 +17,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import static pl.khuzzuk.mtg.organizer.Event.CARD_DATA;
+import static pl.khuzzuk.mtg.organizer.Event.ERROR;
 
 public class MainWindow extends Stage {
     private Bus<Event> bus;
     private BorderPane root;
     private SplitPane mainPane;
-    private Label errorMessage;
+    private NotificationPane notificationPane;
     private TextField url;
     private ProgressIndicator progressIndicator;
 
@@ -44,7 +46,9 @@ public class MainWindow extends Stage {
         root = new BorderPane();
         mainPane = new SplitPane();
         mainPane.setDividerPositions(0.3);
-        root.setCenter(mainPane);
+        notificationPane = new NotificationPane();
+        notificationPane.setContent(mainPane);
+        root.setCenter(notificationPane);
 
         StatusBar statusBar = new StatusBar();
         url = new TextField();
@@ -57,12 +61,13 @@ public class MainWindow extends Stage {
 
         progressIndicator = new ProgressIndicator();
         progressIndicator.setVisible(false);
-        errorMessage = new Label();
-        statusBar.getLeftItems().addAll(progressIndicator, errorMessage);
+        statusBar.getLeftItems().addAll(progressIndicator);
         statusBar.getRightItems().addAll(this.url, importUrl);
+        statusBar.setText(null);
         root.setBottom(statusBar);
 
         bus.subscribingFor(CARD_DATA).accept(card -> progressIndicator.setVisible(false)).subscribe();
+        bus.subscribingFor(ERROR).onFXThread().accept(this::showMessage).subscribe();
     }
 
     void addLeftPaneFilter(LeftPaneFilter leftPaneFilter) {
@@ -83,7 +88,6 @@ public class MainWindow extends Stage {
                 importFromUrl();
                 break;
             case ESCAPE:
-                errorMessage.setText(null);
                 url.setText(null);
                 break;
         }
@@ -91,12 +95,16 @@ public class MainWindow extends Stage {
 
     private void importFromUrl() {
         try {
-            errorMessage.setText(null);
             URL link = new URL(url.getText());
             bus.message(Event.CARD_FROM_URL).withContent(link).send();
             progressIndicator.setVisible(true);
         } catch (MalformedURLException e) {
-            errorMessage.setText(e.getMessage());
+            showMessage(e.getMessage());
         }
+    }
+
+    private void showMessage(String message) {
+        notificationPane.setText(message);
+        notificationPane.show();
     }
 }
