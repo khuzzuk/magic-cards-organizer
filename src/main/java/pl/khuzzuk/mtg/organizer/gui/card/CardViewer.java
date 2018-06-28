@@ -11,8 +11,7 @@ import pl.khuzzuk.mtg.organizer.initialize.Identification;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 import pl.khuzzuk.mtg.organizer.model.card.*;
 
-import static pl.khuzzuk.mtg.organizer.Event.BINDER;
-import static pl.khuzzuk.mtg.organizer.Event.CARD_DATA;
+import static pl.khuzzuk.mtg.organizer.Event.*;
 
 @RequiredArgsConstructor
 @Identification(Event.CARD_VIEWER)
@@ -90,11 +89,13 @@ public class CardViewer extends GridPane implements Loadable {
             binder.bind(CreatureCard.class, CardViewer.class);
             binder.bind(TransformableCreatureCard.class, CardViewer.class);
             binder.bind(EnchantmentCard.class, CardViewer.class);
+            binder.bind(InstantCard.class, CardViewer.class);
             binder.bind(ArtifactCard.class, CardViewer.class);
             binder.bind(LandCard.class, CardViewer.class);
             binder.bind(SorceryCard.class, CardViewer.class);
             binder.bind(PlaneswalkerCard.class, CardViewer.class);
             bus.subscribingFor(CARD_DATA).onFXThread().accept(this::loadCard).subscribe();
+            bus.subscribingFor(CARD_SHOW).onFXThread().accept(this::loadCard).subscribe();
         }).subscribe();
 
         getStyleClass().add("card-viewer");

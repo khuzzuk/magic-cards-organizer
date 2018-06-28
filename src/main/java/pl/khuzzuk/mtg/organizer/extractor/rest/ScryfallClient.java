@@ -19,11 +19,27 @@ public class ScryfallClient implements Loadable {
     public void load() {
         restTemplate = new RestTemplate();
         bus.subscribingFor(Event.CARD_FROM_URL).accept(this::downloadCard).subscribe();
+        bus.subscribingFor(Event.SET_FROM_URL).accept(this::downloadSet).subscribe();
     }
 
     @SneakyThrows(URISyntaxException.class)
     private void downloadCard(URL url) {
         CardDTO cardDTO = restTemplate.getForObject(url.toURI(), CardDTO.class);
+        sendCard(cardDTO);
+    }
+
+    @SneakyThrows(URISyntaxException.class)
+    private void downloadSet(URL url) {
+        SetDTO setPage = restTemplate.getForObject(url.toURI(), SetDTO.class);
+        setPage.getData().forEach(this::sendCard);
+
+        while (setPage.isMore()) {
+            setPage = restTemplate.getForObject(setPage.getNextPage(), SetDTO.class);
+            setPage.getData().forEach(this::sendCard);
+        }
+    }
+
+    private void sendCard(CardDTO cardDTO) {
         RulingsDTO rulingsDTO = restTemplate.getForObject(cardDTO.getRulingsUri(), RulingsDTO.class);
         cardDTO.setRulings(rulingsDTO);
         bus.message(Event.CARD_DTO_JSON).withContent(cardDTO).send();

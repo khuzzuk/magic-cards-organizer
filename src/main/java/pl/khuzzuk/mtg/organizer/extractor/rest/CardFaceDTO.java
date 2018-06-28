@@ -17,8 +17,8 @@ public class CardFaceDTO {
     @JsonProperty("oracle_text")
     private String oracleText;
     private String[] colors;
-    private int power;
-    private int toughness;
+    private String power;
+    private String toughness;
     @JsonProperty("flavor_text")
     private String flavorText;
     @JsonProperty("image_uris")

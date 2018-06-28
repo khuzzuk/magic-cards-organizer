@@ -3,6 +3,7 @@ package pl.khuzzuk.mtg.organizer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import pl.khuzzuk.messaging.Bus;
+import pl.khuzzuk.mtg.organizer.extractor.UrlProxy;
 import pl.khuzzuk.mtg.organizer.extractor.rest.CardJSONConverter;
 import pl.khuzzuk.mtg.organizer.extractor.rest.ScryfallClient;
 import pl.khuzzuk.mtg.organizer.gui.MainWindow;
@@ -14,9 +15,7 @@ import pl.khuzzuk.mtg.organizer.gui.menu.OrganizerMenuBar;
 import pl.khuzzuk.mtg.organizer.gui.selector.MainViewSelector;
 import pl.khuzzuk.mtg.organizer.gui.selector.TableSelector;
 import pl.khuzzuk.mtg.organizer.initialize.Container;
-import pl.khuzzuk.mtg.organizer.serialization.JsonCardSerializer;
-import pl.khuzzuk.mtg.organizer.serialization.JsonRepoSerializer;
-import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo;
+import pl.khuzzuk.mtg.organizer.serialization.*;
 import pl.khuzzuk.mtg.organizer.settings.SettingsService;
 
 public class MtgOrganizerApp extends Application {
@@ -47,10 +46,10 @@ public class MtgOrganizerApp extends Application {
 
     private static void createGui(Container container, Bus<Event> bus) {
         container.prepare(new MainWindowInitializer(bus));
-        container.prepare(new LeftPaneFilter());
+        container.prepare(new LeftPaneFilter(bus));
         container.prepare(new MainViewSelector(bus));
         container.prepare(new CardViewer(bus));
-        container.prepare(new TableSelector());
+        container.prepare(new TableSelector(bus));
         container.prepare(new OrganizerMenuBar(bus));
         container.prepare(new Binder());
     }
@@ -58,12 +57,15 @@ public class MtgOrganizerApp extends Application {
     private static void createCardDownloaders(Container container, Bus<Event> bus) {
         container.prepare(new CardJSONConverter(bus));
         container.prepare(new ScryfallClient(bus));
+        container.prepare(new UrlProxy(bus));
     }
 
     private static void createSerialization(Container container, Bus<Event> bus) {
+        container.prepare(new PredefinedSkillRepo(bus));
         container.prepare(new JsonCardSerializer(bus));
         container.prepare(new JsonRepoSerializer(bus));
+        container.prepare(new JsonCardService(bus));
         container.prepare(new SettingsService(bus));
-        container.prepare(new PredefinedSkillRepo(bus));
+        container.prepare(new ReindexingService(bus));
     }
 }

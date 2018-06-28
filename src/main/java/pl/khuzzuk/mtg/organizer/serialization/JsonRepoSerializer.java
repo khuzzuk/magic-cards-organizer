@@ -2,28 +2,30 @@ package pl.khuzzuk.mtg.organizer.serialization;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.initialize.Identification;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
-import pl.khuzzuk.mtg.organizer.model.CardQuery;
 import pl.khuzzuk.mtg.organizer.model.card.Card;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT;
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static pl.khuzzuk.mtg.organizer.Event.*;
 
 @RequiredArgsConstructor
+@Identification(JSON_REPO_SERIALIZER)
 public class JsonRepoSerializer implements Loadable {
     private final Bus<Event> bus;
     private ObjectMapper objectMapper;
+    @Getter(AccessLevel.PACKAGE)
     private CardsContainer cardsContainer;
     private Path repoFile;
 
@@ -36,7 +38,6 @@ public class JsonRepoSerializer implements Loadable {
 
         bus.subscribingFor(CARD_DATA).accept(this::saveCard).subscribe();
         bus.subscribingFor(CARD_INDEX).accept(this::saveCard).subscribe();
-        bus.subscribingFor(CARD_FIND).mapResponse(this::queryCards).subscribe();
     }
 
     private void loadRepo() {
@@ -53,11 +54,7 @@ public class JsonRepoSerializer implements Loadable {
         }
     }
 
-    private Set<Card> queryCards(CardQuery cardQuery) {
-        return cardsContainer.getCards().stream().filter(cardQuery.getCheck()).collect(Collectors.toSet());
-    }
-
-    private void saveCard(Card card) {
+    private synchronized void saveCard(Card card) {
         cardsContainer.getCards().add(card);
         syncRepo();
     }

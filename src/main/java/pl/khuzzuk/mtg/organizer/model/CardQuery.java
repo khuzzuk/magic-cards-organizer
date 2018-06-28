@@ -16,4 +16,16 @@ public class CardQuery {
         cardQuery.check = this.check.and(card -> card.getName().equalsIgnoreCase(name));
         return cardQuery;
     }
+
+    public CardQuery withSetName(String setName) {
+        CardQuery cardQuery = new CardQuery();
+        cardQuery.check = this.check.and(card -> card.getPrintFullName().equalsIgnoreCase(setName));
+        return cardQuery;
+    }
+
+    public CardQuery withSetNumber(int setNumber) {
+        CardQuery cardQuery = new CardQuery();
+        cardQuery.check = this.check.and(card -> card.getPrintOrder() == setNumber);
+        return cardQuery;
+    }
 }

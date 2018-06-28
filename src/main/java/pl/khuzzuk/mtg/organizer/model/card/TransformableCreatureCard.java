@@ -14,8 +14,8 @@ public class TransformableCreatureCard extends CreatureCard {
    private String transformedName;
    private Type transformedType;
    private List<Skill> transformedSkills;
-   private int transformedAttack;
-   private int transformedDefense;
+   private String transformedAttack;
+   private String transformedDefense;
    private URL back;
    private URL backArt;
 }

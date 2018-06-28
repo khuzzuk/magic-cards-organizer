@@ -1,7 +1,6 @@
 package pl.khuzzuk.mtg.organizer
 
 import javafx.application.Platform
-import javafx.scene.control.Label
 import javafx.scene.input.KeyCode
 import javafx.stage.Stage
 import pl.khuzzuk.messaging.Bus
@@ -40,7 +39,7 @@ class MtgOrganizerAppSpec extends JavaFxSpecification {
 
     def 'check Import button for CreatureCard'() {
         given:
-        MainWindowProperties.mainWindowUrl.text = 'https://scryfall.com/card/soi/5'
+        MainWindowProperties.mainWindowUrl.text = 'https://api.scryfall.com/cards/soi/5?format=json&pretty=true'
         CardViewerProperties.resetBindingNotification()
 
         when:
@@ -49,7 +48,7 @@ class MtgOrganizerAppSpec extends JavaFxSpecification {
 
         then:
         CardViewerProperties.name.text == 'Archangel Avacyn'
-        CardViewerProperties.text.text == '“Wings that once bore hope are now stained with blood. She is our guardian no longer.” —Grete, cathar apostate'
-        CardViewerProperties.front.image.url == 'https://img.scryfall.com/cards/large/en/soi/5a.jpg?1518204266'
+        CardViewerProperties.text.text == '"Wings that once bore hope are now stained with blood. She is our guardian no longer." —Grete, cathar apostate'
+        CardViewerProperties.front.image.url == 'https://img.scryfall.com/cards/png/en/soi/5a.png?1518204266'
     }
 }

@@ -44,8 +44,8 @@ public class CardDTO {
     private String rarity;
     @JsonProperty("flavor_text")
     private String flavorText;
-    private int power;
-    private int toughness;
+    private String power;
+    private String toughness;
     @JsonProperty("edhrec_rank")
     private int edhrecRank;
     @JsonProperty("card_faces")

@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreatureCard extends SpellCard {
-    private int attack;
-    private int defense;
+    private String attack;
+    private String defense;
 }

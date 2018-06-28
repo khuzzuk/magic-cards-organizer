@@ -26,6 +26,15 @@ public class TextToMana {
         } else if ("G".equals(text)) {
             mana = new Mana(ManaType.GREEN);
             mana.setValue(1);
+        } else if ("U".equals(text)) {
+            mana = new Mana(ManaType.BLUE);
+            mana.setValue(1);
+        } else if ("R".equals(text)) {
+            mana = new Mana(ManaType.RED);
+            mana.setValue(1);
+        } else if ("B".equals(text)) {
+            mana = new Mana(ManaType.BLACK);
+            mana.setValue(1);
         } else {
             mana = new Mana(ManaType.GENERIC);
             mana.setValue(Integer.parseInt(text));

@@ -71,6 +71,7 @@ public class MainWindow extends Stage {
     }
 
     void addLeftPaneFilter(LeftPaneFilter leftPaneFilter) {
+        leftPaneFilter.setMaxWidth(500);
         mainPane.getItems().add(0, leftPaneFilter);
     }
 
@@ -96,7 +97,7 @@ public class MainWindow extends Stage {
     private void importFromUrl() {
         try {
             URL link = new URL(url.getText());
-            bus.message(Event.CARD_FROM_URL).withContent(link).send();
+            bus.message(Event.URL_TO_IMPORT).withContent(link).send();
             progressIndicator.setVisible(true);
         } catch (MalformedURLException e) {
             showMessage(e.getMessage());

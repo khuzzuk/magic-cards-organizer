@@ -44,6 +44,7 @@ public class JsonCardSerializer implements Loadable {
         bus.subscribingFor(SET_REPO_LOCATION).<String>accept(path -> {
             cardsPath.set(Paths.get(path));
             initialize.run();
+            bus.message(REINDEX_REPO).withContent(cardsPath.get()).send();
         }).subscribe();
     }
 
@@ -51,7 +52,6 @@ public class JsonCardSerializer implements Loadable {
         objectMapper = new ObjectMapper();
         objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.JAVA_LANG_OBJECT);
 
         imageDownloader = new ImageDownloader();
 
@@ -86,9 +86,7 @@ public class JsonCardSerializer implements Loadable {
 
         } catch (JsonProcessingException e) {
             bus.message(ERROR).withContent("Cannot serialize card to JSON").send();
-        } catch (ImageDownloader.DownloadException e) {
-            bus.message(ERROR).withContent(e.getCause().getMessage()).send();
-        } catch (IOException e) {
+        } catch (ImageDownloader.DownloadException | IOException e) {
             bus.message(ERROR).withContent(e.getMessage()).send();
         }
     }
