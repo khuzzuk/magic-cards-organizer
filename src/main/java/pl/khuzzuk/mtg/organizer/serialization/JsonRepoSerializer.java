@@ -1,5 +1,16 @@
 package pl.khuzzuk.mtg.organizer.serialization;
 
+import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT;
+import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
+import static pl.khuzzuk.mtg.organizer.Event.CARD_DATA;
+import static pl.khuzzuk.mtg.organizer.Event.CARD_INDEX;
+import static pl.khuzzuk.mtg.organizer.Event.ERROR;
+import static pl.khuzzuk.mtg.organizer.Event.JSON_REPO_SERIALIZER;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
@@ -11,23 +22,14 @@ import pl.khuzzuk.mtg.organizer.initialize.Identification;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 import pl.khuzzuk.mtg.organizer.model.card.Card;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT;
-import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
-import static pl.khuzzuk.mtg.organizer.Event.*;
-
 @RequiredArgsConstructor
 @Identification(JSON_REPO_SERIALIZER)
 public class JsonRepoSerializer implements Loadable {
     private final Bus<Event> bus;
+    private final Path repoFile;
     private ObjectMapper objectMapper;
     @Getter(AccessLevel.PACKAGE)
     private CardsContainer cardsContainer;
-    private Path repoFile;
 
     @Override
     public void load() {
@@ -42,7 +44,6 @@ public class JsonRepoSerializer implements Loadable {
 
     private void loadRepo() {
         try {
-            repoFile = Paths.get("repo.json");
             if (Files.exists(repoFile)) {
                 cardsContainer = objectMapper.readValue(repoFile.toFile(), CardsContainer.class);
             } else {
@@ -61,7 +62,7 @@ public class JsonRepoSerializer implements Loadable {
 
     private synchronized void syncRepo() {
         try {
-            Path tempRepoFile = Paths.get("tempRepo.json");
+            Path tempRepoFile = repoFile.getParent().resolve("tempRepo.json");
             if (Files.exists(tempRepoFile)) {
                 bus.message(ERROR).withContent("index may be corrupted").send();
                 return;

@@ -1,5 +1,8 @@
 package pl.khuzzuk.mtg.organizer;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import pl.khuzzuk.messaging.Bus;
@@ -24,7 +27,7 @@ public class MtgOrganizerApp extends Application {
     public static void main(String[] args) {
         bus = Bus.initializeBus(Event.class, System.out, true);
         bus.subscribingFor(Event.CLOSE).then(bus::closeBus).subscribe();
-        Container container = createContainer(bus);
+        Container container = createContainer(bus, Paths.get("repo.json"));
         bus.subscribingFor(Event.FX_THREAD_STARTED).then(container::sealContainer).subscribe();
         bus.subscribingFor(Event.WINDOW_TO_SHOW).onFXThread().accept(MainWindow::show).subscribe();
         Application.launch(MtgOrganizerApp.class, args);
@@ -36,10 +39,10 @@ public class MtgOrganizerApp extends Application {
         bus.message(Event.FX_THREAD_STARTED).send();
     }
 
-    public static Container createContainer(Bus<Event> bus) {
+    public static Container createContainer(Bus<Event> bus, Path repoFile) {
         Container container = new Container(bus);
         createCardDownloaders(container, bus);
-        createSerialization(container, bus);
+        createSerialization(container, bus, repoFile);
         createGui(container, bus);
         return container;
     }
@@ -60,10 +63,10 @@ public class MtgOrganizerApp extends Application {
         container.prepare(new UrlProxy(bus));
     }
 
-    private static void createSerialization(Container container, Bus<Event> bus) {
+    private static void createSerialization(Container container, Bus<Event> bus, Path repoFile) {
         container.prepare(new PredefinedSkillRepo(bus));
         container.prepare(new JsonCardSerializer(bus));
-        container.prepare(new JsonRepoSerializer(bus));
+        container.prepare(new JsonRepoSerializer(bus, repoFile));
         container.prepare(new JsonCardService(bus));
         container.prepare(new SettingsService(bus));
         container.prepare(new ReindexingService(bus));
