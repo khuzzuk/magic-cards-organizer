@@ -1,15 +1,15 @@
 package pl.khuzzuk.mtg.organizer;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.extractor.UrlProxy;
 import pl.khuzzuk.mtg.organizer.extractor.rest.CardJSONConverter;
 import pl.khuzzuk.mtg.organizer.extractor.rest.ScryfallClient;
-import pl.khuzzuk.mtg.organizer.gui.MainWindow;
 import pl.khuzzuk.mtg.organizer.gui.MainWindowInitializer;
 import pl.khuzzuk.mtg.organizer.gui.card.CardViewer;
 import pl.khuzzuk.mtg.organizer.gui.filter.LeftPaneFilter;
@@ -18,19 +18,28 @@ import pl.khuzzuk.mtg.organizer.gui.menu.OrganizerMenuBar;
 import pl.khuzzuk.mtg.organizer.gui.selector.MainViewSelector;
 import pl.khuzzuk.mtg.organizer.gui.selector.TableSelector;
 import pl.khuzzuk.mtg.organizer.initialize.Container;
-import pl.khuzzuk.mtg.organizer.serialization.*;
+import pl.khuzzuk.mtg.organizer.serialization.JsonCardSerializer;
+import pl.khuzzuk.mtg.organizer.serialization.JsonCardService;
+import pl.khuzzuk.mtg.organizer.serialization.JsonRepoSerializer;
+import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo;
+import pl.khuzzuk.mtg.organizer.serialization.ReindexingService;
 import pl.khuzzuk.mtg.organizer.settings.SettingsService;
 
+@SpringBootApplication
 public class MtgOrganizerApp extends Application {
     private static Bus<Event> bus;
 
     public static void main(String[] args) {
+        SpringApplication.run(MtgOrganizerApp.class, args);
+
+/*
         bus = Bus.initializeBus(Event.class, System.out, true);
         bus.subscribingFor(Event.CLOSE).then(bus::closeBus).subscribe();
         Container container = createContainer(bus, Paths.get("repo.json"));
         bus.subscribingFor(Event.FX_THREAD_STARTED).then(container::sealContainer).subscribe();
         bus.subscribingFor(Event.WINDOW_TO_SHOW).onFXThread().accept(MainWindow::show).subscribe();
         Application.launch(MtgOrganizerApp.class, args);
+*/
     }
 
     @Override

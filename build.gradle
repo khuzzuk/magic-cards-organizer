@@ -1,13 +1,24 @@
-plugins {
-    id 'java'
-    id 'groovy'
-    id 'com.github.johnrengelman.shadow' version('2.0.4')
+buildscript {
+    ext {
+        springBootVersion = '2.0.3.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 group 'pl.khuzzuk'
 version '1.0.0-SNAPSHOT'
 
-sourceCompatibility = 9
+sourceCompatibility = 10
 
 repositories {
     maven { url "http://repo1.maven.org/maven2" }
@@ -15,19 +26,6 @@ repositories {
     maven { url "https://raw.github.com/khuzzuk/functional-logic/mvn-repo/" }
 }
 
-compileJava {
-    doLast {
-        ant.taskdef(resource: "org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties", classpath: configurations.compile.asPath)
-        ant.iajc(
-                source: "1.9", target: "1.9", maxmem: "512m", fork: "true",
-                inpath: sourceSets.main.output.classesDir.toPath(),
-                destDir: sourceSets.main.output.classesDir.absolutePath,
-                aspectPath: sourceSets.main.output.classesDir.absolutePath, //project.getBuildDir().getAbsolutePath() + "/classes/java/main/net/kyma/initialization",
-                sourceRootCopyFilter: "**/*.java",
-                classpath: "${configurations.compile.asPath}") {
-        }
-    }
-}
 compileTestJava {
     doLast {
         ant.taskdef(resource: "org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties", classpath: configurations.compile.asPath)
@@ -43,6 +41,9 @@ compileTestJava {
     }
 }
 
+ext {
+    vaadinVersion = '8.4.4'
+}
 
 dependencies {
     compile group: 'org.aspectj', name: 'aspectjrt', version: '1.9.1'
@@ -56,27 +57,16 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
     compile group: 'org.controlsfx', name: 'controlsfx', version:'9.0.0'
     compile group: 'org.springframework', name: 'spring-web', version: '5.0.7.RELEASE'
+    compile group: 'com.vaadin', name:'vaadin-spring-boot-starter'
     compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.13'
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
     testCompile group: 'org.awaitility', name: 'awaitility', version: '3.1.0'
     testCompile group: 'org.testfx', name: 'testfx-spock', version: '4.0.13-alpha'
-    compileOnly group: 'org.projectlombok', name: 'lombok', version:'1.16.20'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version:'1.18.0'
 }
 
-task bootJar(type: Jar) {
-    manifest {
-        attributes 'Main-class': 'net.kyma.Manager'
+dependencyManagement {
+    imports {
+        mavenBom "com.vaadin:vaadin-bom:${vaadinVersion}"
     }
 }
-
-shadowJar {
-    baseName = 'kyma'
-    classifier = null
-    version = null
-    manifest {
-        inheritFrom project.tasks.bootJar.manifest
-    }
-    mergeServiceFiles()
-}
-
-project.tasks.bootJar.dependsOn project.tasks.shadowJar
