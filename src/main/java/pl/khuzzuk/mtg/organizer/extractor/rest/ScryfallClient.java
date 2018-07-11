@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.web.client.RestTemplate;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 
 import java.net.URISyntaxException;

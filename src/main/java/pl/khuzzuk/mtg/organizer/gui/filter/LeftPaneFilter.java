@@ -3,14 +3,14 @@ package pl.khuzzuk.mtg.organizer.gui.filter;
 import javafx.scene.control.ListView;
 import lombok.RequiredArgsConstructor;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.initialize.Identification;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 import pl.khuzzuk.mtg.organizer.model.CardQuery;
 
 import java.util.SortedSet;
 
-import static pl.khuzzuk.mtg.organizer.Event.*;
+import static pl.khuzzuk.mtg.organizer.events.Event.*;
 
 @RequiredArgsConstructor
 @Identification(LEFT_PANE_FILTER)

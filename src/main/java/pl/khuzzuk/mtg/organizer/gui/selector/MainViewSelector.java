@@ -1,13 +1,13 @@
 package pl.khuzzuk.mtg.organizer.gui.selector;
 
-import static pl.khuzzuk.mtg.organizer.Event.MAIN_VIEW_SELECTOR;
+import static pl.khuzzuk.mtg.organizer.events.Event.MAIN_VIEW_SELECTOR;
 
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import lombok.AllArgsConstructor;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.initialize.Identification;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 

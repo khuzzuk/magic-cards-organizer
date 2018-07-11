@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.RequiredArgsConstructor;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 import pl.khuzzuk.mtg.organizer.model.card.Card;
 
@@ -14,7 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-import static pl.khuzzuk.mtg.organizer.Event.*;
+import static pl.khuzzuk.mtg.organizer.events.Event.*;
 
 @RequiredArgsConstructor
 public class ReindexingService implements Loadable {

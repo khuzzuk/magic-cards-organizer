@@ -5,12 +5,12 @@ import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import pl.khuzzuk.functions.ForceGate;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.gui.filter.LeftPaneFilter;
 import pl.khuzzuk.mtg.organizer.gui.selector.MainViewSelector;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 
-import static pl.khuzzuk.mtg.organizer.Event.*;
+import static pl.khuzzuk.mtg.organizer.events.Event.*;
 
 @RequiredArgsConstructor
 public class MainWindowInitializer implements Loadable {

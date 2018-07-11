@@ -2,7 +2,7 @@ package pl.khuzzuk.mtg.organizer.serialization;
 
 import lombok.RequiredArgsConstructor;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 import pl.khuzzuk.mtg.organizer.model.CardQuery;
 import pl.khuzzuk.mtg.organizer.model.card.Card;
@@ -12,8 +12,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import static pl.khuzzuk.mtg.organizer.Event.CARD_FIND;
-import static pl.khuzzuk.mtg.organizer.Event.CARD_SETS;
+import static pl.khuzzuk.mtg.organizer.events.Event.CARD_FIND;
+import static pl.khuzzuk.mtg.organizer.events.Event.CARD_SETS;
 
 @RequiredArgsConstructor
 public class JsonCardService implements Loadable {

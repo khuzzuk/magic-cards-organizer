@@ -1,7 +1,7 @@
 package pl.khuzzuk.mtg.organizer.extractor
 
 import pl.khuzzuk.mtg.organizer.BusTest
-import pl.khuzzuk.mtg.organizer.Event
+import pl.khuzzuk.mtg.organizer.events.Event
 import pl.khuzzuk.mtg.organizer.PropertyContainer
 import pl.khuzzuk.mtg.organizer.extractor.rest.CardJSONConverter
 import pl.khuzzuk.mtg.organizer.extractor.rest.ScryfallClient
@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 import static java.util.concurrent.TimeUnit.SECONDS
 import static org.awaitility.Awaitility.await
-import static pl.khuzzuk.mtg.organizer.Event.CARD_FROM_URL
+import static pl.khuzzuk.mtg.organizer.events.Event.CARD_FROM_URL
 
 class CardJSONConverterSpec extends Specification implements BusTest {
     @Shared

@@ -4,6 +4,7 @@ import javafx.application.Platform
 import javafx.scene.input.KeyCode
 import javafx.stage.Stage
 import pl.khuzzuk.messaging.Bus
+import pl.khuzzuk.mtg.organizer.events.Event
 import pl.khuzzuk.mtg.organizer.gui.MainWindowProperties
 import pl.khuzzuk.mtg.organizer.gui.card.CardViewer
 import pl.khuzzuk.mtg.organizer.gui.card.CardViewerProperties

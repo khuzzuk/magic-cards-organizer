@@ -6,7 +6,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import lombok.RequiredArgsConstructor;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.initialize.Identification;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 import pl.khuzzuk.mtg.organizer.model.CardQuery;
@@ -15,7 +15,7 @@ import pl.khuzzuk.mtg.organizer.model.card.Card;
 import java.util.Collection;
 import java.util.function.Function;
 
-import static pl.khuzzuk.mtg.organizer.Event.*;
+import static pl.khuzzuk.mtg.organizer.events.Event.*;
 
 @RequiredArgsConstructor
 @Identification(TABLE_SELECTOR)

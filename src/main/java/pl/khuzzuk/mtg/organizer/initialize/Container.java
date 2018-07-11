@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import lombok.RequiredArgsConstructor;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.events.Event;
 
 @RequiredArgsConstructor
 public class Container

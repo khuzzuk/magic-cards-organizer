@@ -9,15 +9,15 @@ import javafx.stage.StageStyle;
 import org.controlsfx.control.NotificationPane;
 import org.controlsfx.control.StatusBar;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.gui.filter.LeftPaneFilter;
 import pl.khuzzuk.mtg.organizer.gui.selector.MainViewSelector;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static pl.khuzzuk.mtg.organizer.Event.CARD_DATA;
-import static pl.khuzzuk.mtg.organizer.Event.ERROR;
+import static pl.khuzzuk.mtg.organizer.events.Event.CARD_DATA;
+import static pl.khuzzuk.mtg.organizer.events.Event.ERROR;
 
 public class MainWindow extends Stage {
     private Bus<Event> bus;

@@ -2,10 +2,10 @@ package pl.khuzzuk.mtg.organizer.serialization;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT;
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
-import static pl.khuzzuk.mtg.organizer.Event.CARD_DATA;
-import static pl.khuzzuk.mtg.organizer.Event.CARD_INDEX;
-import static pl.khuzzuk.mtg.organizer.Event.ERROR;
-import static pl.khuzzuk.mtg.organizer.Event.JSON_REPO_SERIALIZER;
+import static pl.khuzzuk.mtg.organizer.events.Event.CARD_DATA;
+import static pl.khuzzuk.mtg.organizer.events.Event.CARD_INDEX;
+import static pl.khuzzuk.mtg.organizer.events.Event.ERROR;
+import static pl.khuzzuk.mtg.organizer.events.Event.JSON_REPO_SERIALIZER;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,7 +17,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.initialize.Identification;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 import pl.khuzzuk.mtg.organizer.model.card.Card;

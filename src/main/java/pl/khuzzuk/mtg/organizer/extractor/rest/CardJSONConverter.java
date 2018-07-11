@@ -2,7 +2,7 @@ package pl.khuzzuk.mtg.organizer.extractor.rest;
 
 import lombok.RequiredArgsConstructor;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.extractor.SkillExtractor;
 import pl.khuzzuk.mtg.organizer.extractor.TypeExtractor;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;

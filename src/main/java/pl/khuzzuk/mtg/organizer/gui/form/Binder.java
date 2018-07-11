@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections4.keyvalue.MultiKey;
 import org.apache.commons.lang3.StringUtils;
-import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.common.ReflectionUtils;
 import pl.khuzzuk.mtg.organizer.common.UrlUtil;
 import pl.khuzzuk.mtg.organizer.initialize.Identification;

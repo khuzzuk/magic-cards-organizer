@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.RequiredArgsConstructor;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.mtg.organizer.Event;
+import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 import pl.khuzzuk.mtg.organizer.model.card.Card;
 import pl.khuzzuk.mtg.organizer.model.card.TransformableCreatureCard;
@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static java.nio.file.Paths.get;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
-import static pl.khuzzuk.mtg.organizer.Event.*;
+import static pl.khuzzuk.mtg.organizer.events.Event.*;
 
 @RequiredArgsConstructor
 public class JsonCardSerializer implements Loadable {

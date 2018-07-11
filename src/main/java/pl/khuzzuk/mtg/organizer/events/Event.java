@@ -1,4 +1,4 @@
-package pl.khuzzuk.mtg.organizer;
+package pl.khuzzuk.mtg.organizer.events;
 
 public enum Event {
     //GUI

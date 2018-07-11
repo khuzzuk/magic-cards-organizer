@@ -3,6 +3,7 @@ package pl.khuzzuk.mtg.organizer
 import pl.khuzzuk.messaging.Bus
 import pl.khuzzuk.messaging.BusPublisher
 import pl.khuzzuk.messaging.BusSubscriber
+import pl.khuzzuk.mtg.organizer.events.Event
 
 import java.util.concurrent.TimeUnit
 

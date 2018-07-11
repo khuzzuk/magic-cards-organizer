@@ -1,7 +1,7 @@
 package pl.khuzzuk.mtg.organizer.extractor.rest
 
 import pl.khuzzuk.mtg.organizer.BusTest
-import pl.khuzzuk.mtg.organizer.Event
+import pl.khuzzuk.mtg.organizer.events.Event
 import pl.khuzzuk.mtg.organizer.PropertyContainer
 import spock.lang.Shared
 import spock.lang.Specification

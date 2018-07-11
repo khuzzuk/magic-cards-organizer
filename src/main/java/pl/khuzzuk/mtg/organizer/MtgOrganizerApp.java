@@ -1,12 +1,11 @@
 package pl.khuzzuk.mtg.organizer;
 
-import java.nio.file.Path;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pl.khuzzuk.messaging.Bus;
+import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.extractor.UrlProxy;
 import pl.khuzzuk.mtg.organizer.extractor.rest.CardJSONConverter;
 import pl.khuzzuk.mtg.organizer.extractor.rest.ScryfallClient;
@@ -18,12 +17,10 @@ import pl.khuzzuk.mtg.organizer.gui.menu.OrganizerMenuBar;
 import pl.khuzzuk.mtg.organizer.gui.selector.MainViewSelector;
 import pl.khuzzuk.mtg.organizer.gui.selector.TableSelector;
 import pl.khuzzuk.mtg.organizer.initialize.Container;
-import pl.khuzzuk.mtg.organizer.serialization.JsonCardSerializer;
-import pl.khuzzuk.mtg.organizer.serialization.JsonCardService;
-import pl.khuzzuk.mtg.organizer.serialization.JsonRepoSerializer;
-import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo;
-import pl.khuzzuk.mtg.organizer.serialization.ReindexingService;
+import pl.khuzzuk.mtg.organizer.serialization.*;
 import pl.khuzzuk.mtg.organizer.settings.SettingsService;
+
+import java.nio.file.Path;
 
 @SpringBootApplication
 public class MtgOrganizerApp extends Application {
