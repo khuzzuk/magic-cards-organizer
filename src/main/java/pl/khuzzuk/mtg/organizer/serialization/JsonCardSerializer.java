@@ -1,15 +1,13 @@
 package pl.khuzzuk.mtg.organizer.serialization;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.events.Event;
-import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 import pl.khuzzuk.mtg.organizer.model.card.Card;
 import pl.khuzzuk.mtg.organizer.model.card.TransformableCreatureCard;
 import pl.khuzzuk.mtg.organizer.settings.SettingsService;
@@ -20,7 +18,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static pl.khuzzuk.mtg.organizer.events.Event.*;
 
 @RequiredArgsConstructor
@@ -28,33 +25,18 @@ import static pl.khuzzuk.mtg.organizer.events.Event.*;
 public class JsonCardSerializer implements InitializingBean {
     private final Bus<Event> bus;
     private final ObjectMapper objectMapper;
-    private final ImageDownloader imageDownloader;
     private final SettingsService settingsService;
     private AtomicReference<Path> cardsPath = new AtomicReference<>();
-    private Runnable initialize;
 
     @Override
     public void afterPropertiesSet() {
         cardsPath.set(Paths.get(settingsService.getData().getCardsRepoDirectory()));
-        initialize = this::afterRepoSettings;
+        bus.subscribingFor(Event.CARD_DATA).accept(this::serializeCard).subscribe();
 
         bus.subscribingFor(SET_REPO_LOCATION).<String>accept(path -> {
             cardsPath.set(Paths.get(path));
-            initialize.run();
             bus.message(REINDEX_REPO).withContent(cardsPath.get()).send();
         }).subscribe();
-    }
-
-    private synchronized void afterRepoSettings() {
-        objectMapper = new ObjectMapper();
-        objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-        imageDownloader = new ImageDownloader();
-
-        bus.subscribingFor(Event.CARD_DATA).accept(this::serializeCard).subscribe();
-        initialize = () -> {
-        };
     }
 
     private void serializeCard(Card card) {
@@ -66,16 +48,22 @@ public class JsonCardSerializer implements InitializingBean {
             }
 
             Path pngPath = Paths.get(cardDir.toString(), getFileName(card, ".png"));
-            card.setFront(imageDownloader.downloadImage(card.getFront(), pngPath));
+            bus.message(DOWNLOAD_IMAGE).withContent(Pair.of(card.getFront(), pngPath)).send();
+            card.setFront(pngPath.toUri().toURL());
+
             Path artPath = Paths.get(cardDir.toString(), getFileName(card, "_art.jpg"));
-            card.setFront(imageDownloader.downloadImage(card.getFront(), artPath));
+            bus.message(DOWNLOAD_IMAGE).withContent(Pair.of(card.getArt(), artPath)).send();
+            card.setArt(artPath.toUri().toURL());
 
             if (card instanceof TransformableCreatureCard) {
                 TransformableCreatureCard transformableCard = (TransformableCreatureCard) card;
                 Path backPngPath = Paths.get(cardDir.toString(), getFileName(card, "_back.png"));
-                transformableCard.setBack(imageDownloader.downloadImage(transformableCard.getBack(), backPngPath));
+                bus.message(DOWNLOAD_IMAGE).withContent(Pair.of(transformableCard.getBack(), backPngPath)).send();
+                transformableCard.setBack(backPngPath.toUri().toURL());
+
                 Path backArtPath = Paths.get(cardDir.toString(), getFileName(card, "_back_art.jpg"));
-                transformableCard.setBackArt(imageDownloader.downloadImage(transformableCard.getBackArt(), backArtPath));
+                bus.message(DOWNLOAD_IMAGE).withContent(Pair.of(transformableCard.getBackArt(), backArtPath)).send();
+                transformableCard.setBackArt(backArtPath.toUri().toURL());
             }
 
             Path jsonPath = Paths.get(cardDir.toString(), getFileName(card, ".json"));
@@ -83,8 +71,8 @@ public class JsonCardSerializer implements InitializingBean {
 
         } catch (JsonProcessingException e) {
             bus.message(ERROR).withContent("Cannot serialize card to JSON").send();
-        } catch (ImageDownloader.DownloadException | IOException e) {
-            bus.message(ERROR).withContent(e.getMessage()).send();
+        } catch (IOException e) {
+            bus.message(ERROR).withContent(String.format("Exception when serializing cardData: %s, %s", card, e)).send();
         }
     }
 

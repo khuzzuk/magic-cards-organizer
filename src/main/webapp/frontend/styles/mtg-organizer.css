@@ -1,0 +1,15 @@
+#status-bar {
+    position: absolute;
+    bottom: 0;
+    width: 5%;
+}
+
+#status-class {
+    background: blanchedalmond;
+}
+
+div {
+    position: absolute;
+    bottom: 0;
+    width: 5%;
+}

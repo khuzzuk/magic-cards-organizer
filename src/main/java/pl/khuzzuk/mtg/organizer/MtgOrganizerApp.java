@@ -14,11 +14,8 @@ import pl.khuzzuk.mtg.organizer.gui.menu.OrganizerMenuBar;
 import pl.khuzzuk.mtg.organizer.gui.selector.MainViewSelector;
 import pl.khuzzuk.mtg.organizer.gui.selector.TableSelector;
 import pl.khuzzuk.mtg.organizer.initialize.Container;
-import pl.khuzzuk.mtg.organizer.serialization.JsonCardSerializer;
 import pl.khuzzuk.mtg.organizer.serialization.JsonCardService;
-import pl.khuzzuk.mtg.organizer.serialization.JsonRepoSerializer;
 import pl.khuzzuk.mtg.organizer.serialization.ReindexingService;
-import pl.khuzzuk.mtg.organizer.settings.SettingsService;
 
 import java.nio.file.Path;
 
@@ -54,10 +51,7 @@ public class MtgOrganizerApp extends Application {
     }
 
     private static void createSerialization(Container container, Bus<Event> bus, Path repoFile) {
-        container.prepare(new JsonCardSerializer(bus));
-        container.prepare(new JsonRepoSerializer(bus, repoFile));
         container.prepare(new JsonCardService(bus));
-        container.prepare(new SettingsService(bus));
         container.prepare(new ReindexingService(bus));
     }
 }

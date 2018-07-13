@@ -24,6 +24,9 @@ public enum Event {
     CARD_SETS,
     REINDEX_REPO,
 
+    /** accepts {@link java.net.URL}*/
+    DOWNLOAD_IMAGE,
+
     //SETTINGS
     SET_REPO_LOCATION,
 
@@ -35,7 +38,6 @@ public enum Event {
     ORGANIZER_MENU,
     BINDER,
     PREDEFINED_SKILLS,
-    SETTINGS_MANAGER,
     JSON_REPO_SERIALIZER,
 
     ERROR,
