@@ -1,26 +1,27 @@
 package pl.khuzzuk.mtg.organizer.settings;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.events.Event;
-import pl.khuzzuk.mtg.organizer.initialize.Identification;
-import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 
 import java.io.File;
 import java.io.IOException;
 
 @RequiredArgsConstructor
-@Identification(Event.SETTINGS_MANAGER)
-public class SettingsService implements Loadable {
+@Component
+public class SettingsService implements InitializingBean {
     private final Bus<Event> bus;
+    private final ObjectMapper objectMapper;
+    @Getter
     private SettingsData data;
-    private ObjectMapper objectMapper;
     private File settingsFile;
 
     @Override
-    public void load() {
-        objectMapper = new ObjectMapper();
+    public void afterPropertiesSet() {
         settingsFile = new File("app.json");
         data = new SettingsData();
         bus.subscribingFor(Event.SET_REPO_LOCATION).accept(this::setCardsPathSettings).subscribe();

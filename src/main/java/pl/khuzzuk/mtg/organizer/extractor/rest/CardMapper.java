@@ -1,6 +1,8 @@
 package pl.khuzzuk.mtg.organizer.extractor.rest;
 
 import lombok.SneakyThrows;
+import pl.khuzzuk.mtg.organizer.extractor.rest.data.CardDTO;
+import pl.khuzzuk.mtg.organizer.extractor.rest.data.RulingsDTO;
 import pl.khuzzuk.mtg.organizer.model.Rarity;
 import pl.khuzzuk.mtg.organizer.model.card.Card;
 import pl.khuzzuk.mtg.organizer.model.card.Rule;

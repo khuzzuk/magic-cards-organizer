@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.events.Event;
-import pl.khuzzuk.mtg.organizer.initialize.Identification;
-import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 import pl.khuzzuk.mtg.organizer.model.skill.PredefinedSkill;
 
 import java.io.IOException;
@@ -22,13 +22,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Identification(Event.PREDEFINED_SKILLS)
-public class PredefinedSkillRepo implements Loadable {
+@Component
+public class PredefinedSkillRepo implements InitializingBean {
     private final Bus<Event> bus;
     private Map<String, PredefinedSkill> predefinedSkills;
 
     @Override
-    public void load() {
+    public void afterPropertiesSet() {
         try {
             Path jsonFilePath = Paths.get(getClass().getClassLoader().getResource("predefinedSkills.json").toURI());
             String json = Files.readAllLines(jsonFilePath).stream().collect(Collectors.joining());

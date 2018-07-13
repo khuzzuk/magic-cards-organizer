@@ -1,6 +1,7 @@
 package pl.khuzzuk.mtg.organizer.extractor.rest;
 
 import pl.khuzzuk.mtg.organizer.extractor.SkillExtractor;
+import pl.khuzzuk.mtg.organizer.extractor.rest.data.CardDTO;
 import pl.khuzzuk.mtg.organizer.model.card.CreatureCard;
 import pl.khuzzuk.mtg.organizer.model.type.Type;
 

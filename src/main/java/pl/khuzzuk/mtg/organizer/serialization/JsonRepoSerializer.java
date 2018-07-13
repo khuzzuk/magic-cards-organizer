@@ -1,43 +1,32 @@
 package pl.khuzzuk.mtg.organizer.serialization;
 
-import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT;
-import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
-import static pl.khuzzuk.mtg.organizer.events.Event.CARD_DATA;
-import static pl.khuzzuk.mtg.organizer.events.Event.CARD_INDEX;
-import static pl.khuzzuk.mtg.organizer.events.Event.ERROR;
-import static pl.khuzzuk.mtg.organizer.events.Event.JSON_REPO_SERIALIZER;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.InitializingBean;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.events.Event;
-import pl.khuzzuk.mtg.organizer.initialize.Identification;
-import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 import pl.khuzzuk.mtg.organizer.model.card.Card;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import static pl.khuzzuk.mtg.organizer.events.Event.*;
+
 @RequiredArgsConstructor
-@Identification(JSON_REPO_SERIALIZER)
-public class JsonRepoSerializer implements Loadable {
+public class JsonRepoSerializer implements InitializingBean {
     private final Bus<Event> bus;
     private final Path repoFile;
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
     @Getter(AccessLevel.PACKAGE)
     private CardsContainer cardsContainer;
 
     @Override
-    public void load() {
-        objectMapper = new ObjectMapper();
-        objectMapper.enable(ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
-        objectMapper.enable(INDENT_OUTPUT);
+    public void afterPropertiesSet() {
         loadRepo();
-
         bus.subscribingFor(CARD_DATA).accept(this::saveCard).subscribe();
         bus.subscribingFor(CARD_INDEX).accept(this::saveCard).subscribe();
     }

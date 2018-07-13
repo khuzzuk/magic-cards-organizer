@@ -1,30 +1,28 @@
 package pl.khuzzuk.mtg.organizer.extractor.rest;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.extractor.SkillExtractor;
 import pl.khuzzuk.mtg.organizer.extractor.TypeExtractor;
-import pl.khuzzuk.mtg.organizer.initialize.Loadable;
+import pl.khuzzuk.mtg.organizer.extractor.rest.data.CardDTO;
 import pl.khuzzuk.mtg.organizer.model.card.Card;
 import pl.khuzzuk.mtg.organizer.model.type.BasicType;
 import pl.khuzzuk.mtg.organizer.model.type.Type;
-import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo;
 
 import java.util.Map;
 
 @RequiredArgsConstructor
-public class CardJSONConverter implements Loadable {
+@Component
+public class CardJSONConverter implements InitializingBean {
     private final Bus<Event> bus;
+    private final SkillExtractor skillExtractor;
     private Map<BasicType, CardMapper> mappers;
 
     @Override
-    public void load() {
-        bus.subscribingFor(Event.PREDEFINED_SKILLS).accept(this::setPredefinedSkillRepo).subscribe();
-    }
-
-    private void setPredefinedSkillRepo(PredefinedSkillRepo predefinedSkillRepo) {
-        SkillExtractor skillExtractor = new SkillExtractor(predefinedSkillRepo);
+    public void afterPropertiesSet() {
         mappers = Map.of(
                 BasicType.Land, new RegularCardMapper(skillExtractor),
                 BasicType.Sorcery, new SpellCardMapper(skillExtractor),

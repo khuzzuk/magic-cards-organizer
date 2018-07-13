@@ -3,6 +3,7 @@ package pl.khuzzuk.mtg.organizer.extractor.rest;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import pl.khuzzuk.mtg.organizer.extractor.SkillExtractor;
+import pl.khuzzuk.mtg.organizer.extractor.rest.data.CardDTO;
 import pl.khuzzuk.mtg.organizer.model.card.RegularCard;
 import pl.khuzzuk.mtg.organizer.model.skill.Skill;
 import pl.khuzzuk.mtg.organizer.model.type.Type;

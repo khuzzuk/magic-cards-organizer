@@ -1,4 +1,4 @@
-package pl.khuzzuk.mtg.organizer.extractor.rest;
+package pl.khuzzuk.mtg.organizer.extractor.rest.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

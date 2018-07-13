@@ -2,8 +2,8 @@ package pl.khuzzuk.mtg.organizer.extractor;
 
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
-import pl.khuzzuk.mtg.organizer.extractor.rest.CardDTO;
-import pl.khuzzuk.mtg.organizer.extractor.rest.CardFaceDTO;
+import pl.khuzzuk.mtg.organizer.extractor.rest.data.CardDTO;
+import pl.khuzzuk.mtg.organizer.extractor.rest.data.CardFaceDTO;
 import pl.khuzzuk.mtg.organizer.model.ManaType;
 import pl.khuzzuk.mtg.organizer.model.type.BasicType;
 import pl.khuzzuk.mtg.organizer.model.type.Type;

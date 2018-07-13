@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
@@ -18,28 +20,23 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static java.nio.file.Paths.get;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static pl.khuzzuk.mtg.organizer.events.Event.*;
 
 @RequiredArgsConstructor
-public class JsonCardSerializer implements Loadable {
+@Component
+public class JsonCardSerializer implements InitializingBean {
     private final Bus<Event> bus;
-    private ObjectMapper objectMapper;
-    private ImageDownloader imageDownloader;
+    private final ObjectMapper objectMapper;
+    private final ImageDownloader imageDownloader;
+    private final SettingsService settingsService;
     private AtomicReference<Path> cardsPath = new AtomicReference<>();
     private Runnable initialize;
 
     @Override
-    public void load() {
+    public void afterPropertiesSet() {
+        cardsPath.set(Paths.get(settingsService.getData().getCardsRepoDirectory()));
         initialize = this::afterRepoSettings;
-
-        bus.subscribingFor(SETTINGS_MANAGER).<SettingsService>accept(settings -> {
-            if (isNotBlank(settings.getCardsPathSettings())) {
-                cardsPath.set(get(settings.getCardsPathSettings()));
-                initialize.run();
-            }
-        }).subscribe();
 
         bus.subscribingFor(SET_REPO_LOCATION).<String>accept(path -> {
             cardsPath.set(Paths.get(path));

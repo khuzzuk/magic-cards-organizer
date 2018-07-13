@@ -2,6 +2,7 @@ package pl.khuzzuk.mtg.organizer.extractor.rest;
 
 import pl.khuzzuk.mtg.organizer.extractor.SkillExtractor;
 import pl.khuzzuk.mtg.organizer.extractor.TextToMana;
+import pl.khuzzuk.mtg.organizer.extractor.rest.data.CardDTO;
 import pl.khuzzuk.mtg.organizer.model.ManaCost;
 import pl.khuzzuk.mtg.organizer.model.card.SpellCard;
 import pl.khuzzuk.mtg.organizer.model.type.Type;

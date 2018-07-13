@@ -6,9 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.events.Event;
-import pl.khuzzuk.mtg.organizer.extractor.UrlProxy;
-import pl.khuzzuk.mtg.organizer.extractor.rest.CardJSONConverter;
-import pl.khuzzuk.mtg.organizer.extractor.rest.ScryfallClient;
 import pl.khuzzuk.mtg.organizer.gui.MainWindowInitializer;
 import pl.khuzzuk.mtg.organizer.gui.card.CardViewer;
 import pl.khuzzuk.mtg.organizer.gui.filter.LeftPaneFilter;
@@ -17,7 +14,10 @@ import pl.khuzzuk.mtg.organizer.gui.menu.OrganizerMenuBar;
 import pl.khuzzuk.mtg.organizer.gui.selector.MainViewSelector;
 import pl.khuzzuk.mtg.organizer.gui.selector.TableSelector;
 import pl.khuzzuk.mtg.organizer.initialize.Container;
-import pl.khuzzuk.mtg.organizer.serialization.*;
+import pl.khuzzuk.mtg.organizer.serialization.JsonCardSerializer;
+import pl.khuzzuk.mtg.organizer.serialization.JsonCardService;
+import pl.khuzzuk.mtg.organizer.serialization.JsonRepoSerializer;
+import pl.khuzzuk.mtg.organizer.serialization.ReindexingService;
 import pl.khuzzuk.mtg.organizer.settings.SettingsService;
 
 import java.nio.file.Path;
@@ -28,15 +28,6 @@ public class MtgOrganizerApp extends Application {
 
     public static void main(String[] args) {
         SpringApplication.run(MtgOrganizerApp.class, args);
-
-/*
-        bus = Bus.initializeBus(Event.class, System.out, true);
-        bus.subscribingFor(Event.CLOSE).then(bus::closeBus).subscribe();
-        Container container = createContainer(bus, Paths.get("repo.json"));
-        bus.subscribingFor(Event.FX_THREAD_STARTED).then(container::sealContainer).subscribe();
-        bus.subscribingFor(Event.WINDOW_TO_SHOW).onFXThread().accept(MainWindow::show).subscribe();
-        Application.launch(MtgOrganizerApp.class, args);
-*/
     }
 
     @Override
@@ -47,7 +38,6 @@ public class MtgOrganizerApp extends Application {
 
     public static Container createContainer(Bus<Event> bus, Path repoFile) {
         Container container = new Container(bus);
-        createCardDownloaders(container, bus);
         createSerialization(container, bus, repoFile);
         createGui(container, bus);
         return container;
@@ -63,14 +53,7 @@ public class MtgOrganizerApp extends Application {
         container.prepare(new Binder());
     }
 
-    private static void createCardDownloaders(Container container, Bus<Event> bus) {
-        container.prepare(new CardJSONConverter(bus));
-        container.prepare(new ScryfallClient(bus));
-        container.prepare(new UrlProxy(bus));
-    }
-
     private static void createSerialization(Container container, Bus<Event> bus, Path repoFile) {
-        container.prepare(new PredefinedSkillRepo(bus));
         container.prepare(new JsonCardSerializer(bus));
         container.prepare(new JsonRepoSerializer(bus, repoFile));
         container.prepare(new JsonCardService(bus));

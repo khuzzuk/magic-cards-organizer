@@ -1,5 +1,7 @@
 package pl.khuzzuk.mtg.organizer.serialization;
 
+import org.springframework.stereotype.Component;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
+@Component
 class ImageDownloader {
     URL downloadImage(URL url, Path path) throws DownloadException {
         try (InputStream urlStream = new BufferedInputStream(url.openStream())) {

@@ -3,6 +3,8 @@ package pl.khuzzuk.mtg.organizer.extractor.rest
 import pl.khuzzuk.mtg.organizer.BusTest
 import pl.khuzzuk.mtg.organizer.events.Event
 import pl.khuzzuk.mtg.organizer.PropertyContainer
+import pl.khuzzuk.mtg.organizer.extractor.rest.data.CardDTO
+import pl.khuzzuk.mtg.organizer.extractor.rest.data.CardFaceDTO
 import spock.lang.Shared
 import spock.lang.Specification
 
