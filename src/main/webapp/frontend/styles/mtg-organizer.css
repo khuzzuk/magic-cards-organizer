@@ -1,15 +1,14 @@
 #status-bar {
     position: absolute;
     bottom: 0;
-    width: 5%;
-}
-
-#status-class {
+    height: 5%;
+    width: 100%;
     background: blanchedalmond;
 }
+#status-bar button {
+    color: azure;
+}
 
-div {
-    position: absolute;
-    bottom: 0;
-    width: 5%;
+#status-bar button text {
+    fill: #333333;
 }
