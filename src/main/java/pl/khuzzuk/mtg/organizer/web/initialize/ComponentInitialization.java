@@ -2,36 +2,60 @@ package pl.khuzzuk.mtg.organizer.web.initialize;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasComponents;
-import com.vaadin.flow.component.HtmlContainer;
+import com.vaadin.flow.component.HasStyle;
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.jooq.lambda.Seq;
-import org.jooq.lambda.Unchecked;
-import pl.khuzzuk.mtg.organizer.web.CSS;
+
+import java.lang.reflect.Field;
 
 public class ComponentInitialization {
     public static void initializeComponents(HasComponents container) {
-        if (container instanceof HtmlContainer) {
-            componentInitiaclization((HtmlContainer) container);
+        if (container instanceof HasStyle) {
+            componentInitiaclization((HasStyle) container);
         }
 
-        Seq.of(container.getClass().getDeclaredFields())
+        Field[] declaredFields = container.getClass().getDeclaredFields();
+
+        Seq.of(declaredFields)
                 .filter(f -> f.isAnnotationPresent(UIProperty.class))
                 .peek(f -> f.setAccessible(true))
-                .map(Unchecked.function(f -> f.get(container)))
-                .ofType(Component.class)
                 .reverse()
-                .forEach(container::add);
+                .forEach(field -> initializeComponent(field, container));
+
+        Seq.of(declaredFields)
+                .filter(f -> f.isAnnotationPresent(CSS.class))
+                .peek(f -> f.setAccessible(true))
+                .forEach(field -> applyCss(field, container));
     }
 
-    private static void componentInitiaclization(HtmlContainer component) {
+    private static void componentInitiaclization(HasStyle component) {
         if (component.getClass().isAnnotationPresent(CSS.class)) {
             CSS css = component.getClass().getDeclaredAnnotation(CSS.class);
             if (StringUtils.isNotBlank(css.id())) {
-                component.setId(css.id());
+                ((Component) component).setId(css.id());
             }
             if (StringUtils.isNotBlank(css.className())) {
                 component.setClassName(css.className());
             }
+        }
+    }
+
+    @SneakyThrows(IllegalAccessException.class)
+    private static void initializeComponent(Field componentField, HasComponents owner) {
+        Component component = (Component) componentField.get(owner);
+        UIProperty uiProperty = componentField.getDeclaredAnnotation(UIProperty.class);
+        owner.add(component);
+    }
+
+    @SneakyThrows(IllegalAccessException.class)
+    private static void applyCss(Field field, Object owner) {
+        CSS css = field.getDeclaredAnnotation(CSS.class);
+        Component component = (Component) field.get(owner);
+        component.setId(css.id());
+        if (component instanceof HasStyle) {
+            HasStyle styleComponent = (HasStyle) component;
+            styleComponent.setClassName(css.className());
         }
     }
 }

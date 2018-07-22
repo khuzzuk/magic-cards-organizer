@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.web.bottom.StatusBar;
+import pl.khuzzuk.mtg.organizer.web.card.CardViewer;
 
 @Route("")
 @Component
@@ -20,8 +21,9 @@ public class HomeView extends Div implements InitializingBean {
     private final Bus<Event> bus;
 
     @Autowired
-    public HomeView(StatusBar statusBar, Bus<Event> bus) {
+    public HomeView(StatusBar statusBar, CardViewer cardViewer, Bus<Event> bus) {
         this.bus = bus;
+        add(cardViewer);
         add(statusBar);
     }
 

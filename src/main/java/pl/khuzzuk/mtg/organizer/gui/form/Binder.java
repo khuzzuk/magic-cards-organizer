@@ -9,10 +9,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections4.keyvalue.MultiKey;
 import org.apache.commons.lang3.StringUtils;
-import pl.khuzzuk.mtg.organizer.events.Event;
+import org.springframework.stereotype.Component;
 import pl.khuzzuk.mtg.organizer.common.ReflectionUtils;
 import pl.khuzzuk.mtg.organizer.common.UrlUtil;
-import pl.khuzzuk.mtg.organizer.initialize.Identification;
 import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 
 import java.lang.reflect.Field;
@@ -21,7 +20,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-@Identification(Event.BINDER)
+@Component
 public class Binder implements Loadable {
     private Map<Class<? extends Node>, BiConsumer<?, ?>> setters;
     private Map<MultiKey<Class<?>>, List<PropertyController>> controllers;
@@ -48,7 +47,7 @@ public class Binder implements Loadable {
     }
 
     @SuppressWarnings("unchecked")
-    public void bind(Class<?> beanClass, Class<? extends Node> formClass) {
+    public void bind(Class<?> beanClass, Class<?> formClass) {
         List<PropertyController> formHandlers = controllers
                 .computeIfAbsent(new MultiKey<>(formClass, beanClass), k -> new ArrayList<>());
         Map<String, List<Field>> hideCheckFields = getHideCheckFields(formClass);
@@ -111,7 +110,7 @@ public class Binder implements Loadable {
                 controller.getFormSetter().accept(formFieldElement, formFieldValue);
                 formFieldElement.setVisible(true);
                 controller.getHideCheckFields().stream()
-                        .map(hiddenField -> mapFieldToNode(hiddenField, form))
+                        .map(hiddenField -> extract(hiddenField, form))
                         .forEach(node -> node.setVisible(true));
             }
         }
@@ -147,9 +146,9 @@ public class Binder implements Loadable {
         return var1;
     }
 
-    private static Node mapFieldToNode(Field field, Object owner) {
+    private static Object extract(Field field, Object owner) {
         try {
-            return (Node) field.get(owner);
+            return field.get(owner);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
             return null;

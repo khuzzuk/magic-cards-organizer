@@ -3,12 +3,11 @@
     bottom: 0;
     height: 5%;
     width: 100%;
-    background: blanchedalmond;
+    background: #eeeeee;
+    padding: 2px;
 }
-#status-bar button {
-    color: azure;
-}
-
-#status-bar button text {
-    fill: #333333;
+#status-bar .button {
+    background-color: #dddddd;
+    color: #333333;
+    opacity: 1;
 }
