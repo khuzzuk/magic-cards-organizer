@@ -1,5 +1,6 @@
 package pl.khuzzuk.mtg.organizer.web;
 
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,8 @@ class WebConfig {
         ValueConverter<URL, String> urlConverter = ValueConverter.create(Object::toString, UrlUtil::getUrlOrNull,
                 Function.identity(), () -> DEFAULT_IMAGE_PATH);
         binder.addHandling(URL.class, Image.class, urlConverter, Image::setSrc, Image::setVisible);
+
+        binder.addVisibilitySetter(Button.class, Button::setVisible);
 
         return binder;
     }

@@ -15,3 +15,16 @@
 .card-image {
     height: 30vh;
 }
+
+.card-main-flex {
+    padding: 10px;
+}
+
+.card-left-flex {
+    flex-flow: column;
+    padding: 10px;
+}
+
+.card-middle-flex {
+    flex-flow: column;
+}

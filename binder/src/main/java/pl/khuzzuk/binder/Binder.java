@@ -29,6 +29,10 @@ public class Binder {
         visibilitySetters.put(elementType, visibilitySetter);
     }
 
+    public <U> void addVisibilitySetter(Class<U> type, BiConsumer<U, Boolean> visibilitySetter) {
+        visibilitySetters.put(type, visibilitySetter);
+    }
+
     @SuppressWarnings("unchecked") //Should be checked on addHandling generics
     public void bind(Class<?> beanClass, Class<?> formClass) {
         List<PropertyController> formHandlers = controllers
