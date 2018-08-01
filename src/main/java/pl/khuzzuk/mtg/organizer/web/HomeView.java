@@ -1,8 +1,8 @@
 package pl.khuzzuk.mtg.organizer.web;
 
 import com.vaadin.flow.component.dependency.StyleSheet;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.InitializingBean;
@@ -17,7 +17,8 @@ import pl.khuzzuk.mtg.organizer.web.card.CardViewer;
 @Component
 @UIScope
 @StyleSheet("css/main.css")
-public class HomeView extends Div implements InitializingBean {
+@Push
+public class HomeView extends WebComponent implements InitializingBean {
     private final Bus<Event> bus;
 
     @Autowired
@@ -33,6 +34,6 @@ public class HomeView extends Div implements InitializingBean {
     }
 
     private void showNotification(String message) {
-        getUI().get().access(() -> new Notification(message, 3000, Notification.Position.BOTTOM_CENTER).open());
+        execute(() -> new Notification(message, 3000, Notification.Position.BOTTOM_CENTER).open());
     }
 }

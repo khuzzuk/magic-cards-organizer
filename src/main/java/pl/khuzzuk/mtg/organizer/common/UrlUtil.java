@@ -1,13 +1,14 @@
 package pl.khuzzuk.mtg.organizer.common;
 
+import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
+
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.function.Function;
-
-import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class UrlUtil {
@@ -25,5 +26,10 @@ public class UrlUtil {
         } catch (URISyntaxException e) {
             return exceptionConsumer.apply(e);
         }
+    }
+
+    @SneakyThrows(MalformedURLException.class)
+    public static URL getUrlOrNull(String url) {
+        return new URL(url);
     }
 }

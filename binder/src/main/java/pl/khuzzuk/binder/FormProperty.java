@@ -1,4 +1,4 @@
-package pl.khuzzuk.mtg.organizer.gui.form;
+package pl.khuzzuk.binder;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

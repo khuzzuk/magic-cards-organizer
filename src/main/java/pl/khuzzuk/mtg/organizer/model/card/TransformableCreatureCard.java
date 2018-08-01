@@ -18,4 +18,6 @@ public class TransformableCreatureCard extends CreatureCard {
    private String transformedDefense;
    private URL back;
    private URL backArt;
+   private URL downloadedBack;
+   private URL downloadedBackArt;
 }

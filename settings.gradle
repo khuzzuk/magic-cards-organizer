@@ -1,2 +1,3 @@
 rootProject.name = 'magic-cards-organizer'
+include 'binder'
 

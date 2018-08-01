@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+    id 'groovy'
+}
+
+group 'pl.khuzzuk'
+version '1.0.0-SNAPSHOT'
+
+sourceCompatibility = 10
+targetCompatibility = 10
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.13'
+    testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version:'1.18.2'
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version:'1.18.2'
+}

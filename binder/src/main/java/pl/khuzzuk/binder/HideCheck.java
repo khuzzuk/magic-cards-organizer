@@ -1,4 +1,4 @@
-package pl.khuzzuk.mtg.organizer.gui.form;
+package pl.khuzzuk.binder;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,9 +7,11 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface GridField {
-    int column() default 0;
-    int row() default 0;
-    int columnSpan() default 1;
-    int rowSpan() default 1;
+public @interface HideCheck {
+    /**
+     * check other field in form, and if it has default value, this one will be hidden
+     *
+     * @return
+     */
+    String value();
 }

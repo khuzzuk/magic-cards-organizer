@@ -1,9 +1,8 @@
-package pl.khuzzuk.mtg.organizer.gui.form;
+package pl.khuzzuk.binder;
 
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import lombok.experimental.UtilityClass;
-import pl.khuzzuk.mtg.organizer.common.ReflectionUtils;
 
 import java.util.Arrays;
 
@@ -14,7 +13,7 @@ public class GridLayoutController {
                 .filter(field -> field.isAnnotationPresent(GridField.class))
                 .peek(field -> field.setAccessible(true))
                 .forEach(field -> {
-                    Node fieldValue = ReflectionUtils.getValueFromField(field, form, e -> {
+                    Node fieldValue = BeanReflection.getValueFromField(field, form, e -> {
                         e.printStackTrace();
                         return null;
                     });

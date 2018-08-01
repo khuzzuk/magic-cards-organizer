@@ -1,5 +1,6 @@
-package pl.khuzzuk.mtg.organizer.gui.form
+package pl.khuzzuk.binder
 
+import pl.khuzzuk.binder.BeanReflection
 import spock.lang.Specification
 import spock.lang.Unroll
 

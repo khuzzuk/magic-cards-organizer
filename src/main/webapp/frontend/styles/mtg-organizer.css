@@ -11,3 +11,7 @@
     color: #333333;
     opacity: 1;
 }
+
+.card-image {
+    height: 30vh;
+}

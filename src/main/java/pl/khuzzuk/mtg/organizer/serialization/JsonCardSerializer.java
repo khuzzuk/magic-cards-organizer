@@ -49,21 +49,21 @@ public class JsonCardSerializer implements InitializingBean {
 
             Path pngPath = Paths.get(cardDir.toString(), getFileName(card, ".png"));
             bus.message(DOWNLOAD_IMAGE).withContent(Pair.of(card.getFront(), pngPath)).send();
-            card.setFront(pngPath.toUri().toURL());
+            card.setDownloadedFront(pngPath.toUri().toURL());
 
             Path artPath = Paths.get(cardDir.toString(), getFileName(card, "_art.jpg"));
             bus.message(DOWNLOAD_IMAGE).withContent(Pair.of(card.getArt(), artPath)).send();
-            card.setArt(artPath.toUri().toURL());
+            card.setDownloadedArt(artPath.toUri().toURL());
 
             if (card instanceof TransformableCreatureCard) {
                 TransformableCreatureCard transformableCard = (TransformableCreatureCard) card;
                 Path backPngPath = Paths.get(cardDir.toString(), getFileName(card, "_back.png"));
                 bus.message(DOWNLOAD_IMAGE).withContent(Pair.of(transformableCard.getBack(), backPngPath)).send();
-                transformableCard.setBack(backPngPath.toUri().toURL());
+                transformableCard.setDownloadedBack(backPngPath.toUri().toURL());
 
                 Path backArtPath = Paths.get(cardDir.toString(), getFileName(card, "_back_art.jpg"));
                 bus.message(DOWNLOAD_IMAGE).withContent(Pair.of(transformableCard.getBackArt(), backArtPath)).send();
-                transformableCard.setBackArt(backArtPath.toUri().toURL());
+                transformableCard.setDownloadedBackArt(backArtPath.toUri().toURL());
             }
 
             Path jsonPath = Paths.get(cardDir.toString(), getFileName(card, ".json"));

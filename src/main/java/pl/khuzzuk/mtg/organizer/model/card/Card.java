@@ -20,6 +20,8 @@ public abstract class Card {
     private Rarity rarity;
     private URL front;
     private URL art;
+    private URL downloadedFront;
+    private URL downloadedArt;
     private Type type;
     private String printRef;
     private String printFullName;

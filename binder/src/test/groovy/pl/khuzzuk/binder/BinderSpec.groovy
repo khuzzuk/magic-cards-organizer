@@ -1,10 +1,13 @@
-package pl.khuzzuk.mtg.organizer.gui.form
+package pl.khuzzuk.binder
 
 import javafx.application.Platform
 import javafx.scene.Node
 import javafx.scene.control.Label
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import pl.khuzzuk.binder.Binder
+import pl.khuzzuk.binder.FormProperty
+import pl.khuzzuk.binder.HideCheck
 import spock.lang.Specification
 
 class BinderSpec extends Specification {
@@ -26,8 +29,7 @@ class BinderSpec extends Specification {
     }
 
     void setup() {
-        binder = new Binder()
-        binder.load()
+        binder = JavaFxBinder.forJavaFx()
         binder.bind(Bean.class, Form.class)
 
         form = new Form()
@@ -68,7 +70,7 @@ class BinderSpec extends Specification {
         form.noHideLabel.visible = true
 
         when:
-         binder.clearForm(form)
+        binder.clearForm(form)
 
         then:
         form.field1.text == 'default'

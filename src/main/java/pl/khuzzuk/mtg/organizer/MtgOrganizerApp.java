@@ -9,7 +9,6 @@ import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.gui.MainWindowInitializer;
 import pl.khuzzuk.mtg.organizer.gui.card.CardViewer;
 import pl.khuzzuk.mtg.organizer.gui.filter.LeftPaneFilter;
-import pl.khuzzuk.mtg.organizer.gui.form.Binder;
 import pl.khuzzuk.mtg.organizer.gui.menu.OrganizerMenuBar;
 import pl.khuzzuk.mtg.organizer.gui.selector.MainViewSelector;
 import pl.khuzzuk.mtg.organizer.gui.selector.TableSelector;
@@ -47,7 +46,6 @@ public class MtgOrganizerApp extends Application {
         container.prepare(new CardViewer(bus));
         container.prepare(new TableSelector(bus));
         container.prepare(new OrganizerMenuBar(bus));
-        container.prepare(new Binder());
     }
 
     private static void createSerialization(Container container, Bus<Event> bus, Path repoFile) {

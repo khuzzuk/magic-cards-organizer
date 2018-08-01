@@ -1,7 +1,8 @@
-package pl.khuzzuk.mtg.organizer.gui.form;
+package pl.khuzzuk.binder;
 
 import lombok.experimental.UtilityClass;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -100,5 +101,14 @@ public class BeanReflection {
 
     private static String[] getPathElement(String path) {
         return path.contains(".") ? path.split("\\.") : new String[]{path};
+    }
+
+    @SuppressWarnings("unchecked")
+    static <T> T getValueFromField(Field field, Object owner, Function<IllegalAccessException, T> handler) {
+        try {
+            return (T) field.get(owner);
+        } catch (IllegalAccessException e) {
+            return handler.apply(e);
+        }
     }
 }
