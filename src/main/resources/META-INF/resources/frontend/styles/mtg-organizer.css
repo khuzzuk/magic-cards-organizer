@@ -28,3 +28,7 @@
 .card-middle-flex {
     flex-flow: column;
 }
+
+.mana-ico {
+    height: 15px;
+}

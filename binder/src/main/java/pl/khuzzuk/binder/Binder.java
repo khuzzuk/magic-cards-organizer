@@ -67,22 +67,22 @@ public class Binder {
                 .map(controllers::get)
                 .flatMap(List::stream)
                 .map(PropertyController.class::cast)
-                .forEach(propertyController -> handleField(propertyController, form));
+                .forEach(propertyController -> clearField(propertyController, form));
     }
 
     @SuppressWarnings("unchecked") //Should be checked on addHandling generics
-    private void handleField(PropertyController controller, Object form) {
+    private void clearField(PropertyController controller, Object form) {
         Object element = BeanReflection.getValueFromField(controller.formField, form, this::rethrow);
         if (element != null) {
             setVisible(element, controller);
-            controller.getHideCheckFields().forEach(field -> handleHideBoundedSiblingField(field, form, controller));
+            controller.getHideCheckFields().forEach(field -> hideBoundedSiblingField(field, form, controller));
 
             Object convertedValue = controller.getConverter().fromDefaultValue(controller.getDefaultValue());
             controller.getFormSetter().accept(element, convertedValue);
         }
     }
 
-    private void handleHideBoundedSiblingField(Field field, Object form, PropertyController controller) {
+    private void hideBoundedSiblingField(Field field, Object form, PropertyController controller) {
         Object element = BeanReflection.getValueFromField(field, form, this::rethrow);
         if (element != null) {
             setVisible(element, controller);

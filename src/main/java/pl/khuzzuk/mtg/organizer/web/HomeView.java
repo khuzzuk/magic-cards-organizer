@@ -16,7 +16,7 @@ import pl.khuzzuk.mtg.organizer.web.card.CardViewer;
 @Route("")
 @Component
 @UIScope
-@StyleSheet("css/main.css")
+@StyleSheet("css/mtg-organizer.css")
 @Push
 public class HomeView extends WebComponent implements InitializingBean {
     private final Bus<Event> bus;

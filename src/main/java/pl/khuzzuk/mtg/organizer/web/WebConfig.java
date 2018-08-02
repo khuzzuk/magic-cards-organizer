@@ -14,13 +14,15 @@ import java.util.function.Function;
 
 @Configuration
 class WebConfig {
-    private static final String DEFAULT_IMAGE_PATH = WebConfig.class.getClassLoader().getResource("defaultImage.jpg").toString();
+    private static final String DEFAULT_IMAGE_PATH = "images/defaultImage.jpg";
 
     @Bean
     Binder binder() {
         Binder binder = new Binder();
 
         binder.addHandling(String.class, Label.class, ValueConverter.DEFAULT_CONVERTER,
+                Label::setText, Label::setVisible);
+        binder.addHandling(Integer.class, Label.class, ValueConverter.create(Object::toString, Integer::valueOf, "0"),
                 Label::setText, Label::setVisible);
 
         ValueConverter<URL, String> urlConverter = ValueConverter.create(Object::toString, UrlUtil::getUrlOrNull,

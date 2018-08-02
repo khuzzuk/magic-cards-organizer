@@ -35,7 +35,11 @@ public class CardViewer extends WebComponent implements InitializingBean {
 
     @FormProperty
     private Label name = new Label();
-    private Image whiteIco = new Image("Mana_W.png", "W");
+    @CSS(className = "mana-ico")
+    @HideCheck("whiteCost")
+    private Image whiteIco = new Image("images/Mana_W.png", "W");
+    @FormProperty(beanPath = "manaCost.white.value", hideAfterClear = true)
+    private Label whiteCost = new Label();
 
     @UIProperty
     @CSS(className = "card-main-flex")
@@ -64,11 +68,13 @@ public class CardViewer extends WebComponent implements InitializingBean {
         binder.bind(LandCard.class, this.getClass());
         binder.bind(BasicLandCard.class, this.getClass());
         bus.subscribingFor(Event.CARD_DATA).accept(this::showCard).subscribe();
+
+        refreshActions();
     }
 
     private void positionElements() {
         main.add(left, middle);
-        left.add(name);
+        left.add(name, whiteIco);
         middle.add(front, reverse);
         reverse.setVisible(false);
     }
@@ -77,7 +83,6 @@ public class CardViewer extends WebComponent implements InitializingBean {
         bean = card;
         execute(() -> {
             refreshActions();
-            binder.clearForm(this);
             binder.fillForm(this, card);
         });
     }
@@ -98,5 +103,6 @@ public class CardViewer extends WebComponent implements InitializingBean {
     private void refreshActions() {
         reverse.setVisible(bean instanceof TransformableCreatureCard);
         onImageClick = this::reverseImage;
+        binder.clearForm(this);
     }
 }
