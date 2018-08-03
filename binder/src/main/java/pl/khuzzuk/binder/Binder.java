@@ -1,8 +1,5 @@
 package pl.khuzzuk.binder;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,21 +46,23 @@ public class Binder {
             formField.setAccessible(true);
 
             PropertyController controller = new PropertyController();
-            ValueConverter<?, ?> converter = converters.get(new BindId(BeanReflection.getFieldTypeFor(path, beanClass), formField.getType()));
-            controller.setConverter(converter);
-            controller.setFormField(formField);
-            controller.setBeanGetter(BeanReflection.propertyGetterFor(path, beanClass));
-            controller.setFormSetter(setters.get(formField.getType()));
-            controller.setHide(formProperty.hideAfterClear());
-            controller.setDefaultValue(formProperty.defaultValue());
-            controller.setHideCheckFields(hideCheckFields.computeIfAbsent(formField.getName(), k -> new ArrayList<>()));
+            Class<?> beanType = BeanReflection.getFieldTypeFor(path, beanClass);
+            ValueConverter<?, ?> converter = converters.get(new BindId(beanType, formField.getType()));
+            Validator.checkConverter(converter, formField, beanType);
+            controller.converter = converter;
+            controller.formField = formField;
+            controller.beanGetter = BeanReflection.propertyGetterFor(path, beanClass);
+            controller.formSetter = setters.get(formField.getType());
+            controller.hide = formProperty.hideAfterClear();
+            controller.defaultValue = formProperty.defaultValue();
+            controller.hideCheckFields = hideCheckFields.computeIfAbsent(formField.getName(), k -> new ArrayList<>());
             formHandlers.add(controller);
         }
     }
 
     @SuppressWarnings("unchecked") //Should be checked on addHandling generics
     public void clearForm(Object form) {
-        controllers.keySet().stream().filter(key -> key.getLeft().equals(form.getClass()))
+        controllers.keySet().stream().filter(key -> key.left.equals(form.getClass()))
                 .map(controllers::get)
                 .flatMap(List::stream)
                 .map(PropertyController.class::cast)
@@ -75,10 +74,10 @@ public class Binder {
         Object element = BeanReflection.getValueFromField(controller.formField, form, this::rethrow);
         if (element != null) {
             setVisible(element, controller);
-            controller.getHideCheckFields().forEach(field -> hideBoundedSiblingField(field, form, controller));
+            controller.hideCheckFields.forEach(field -> hideBoundedSiblingField(field, form, controller));
 
-            Object convertedValue = controller.getConverter().fromDefaultValue(controller.getDefaultValue());
-            controller.getFormSetter().accept(element, convertedValue);
+            Object convertedValue = controller.converter.fromDefaultValue(controller.defaultValue);
+            controller.formSetter.accept(element, convertedValue);
         }
     }
 
@@ -92,13 +91,13 @@ public class Binder {
     @SuppressWarnings("unchecked") //Should be checked on addHandling generics
     public void fillForm(Object form, Object bean) {
         for (PropertyController controller : controllers.get(new BindId(form.getClass(), bean.getClass()))) {
-            Object beanFieldValue = controller.getBeanGetter().apply(bean);
+            Object beanFieldValue = controller.beanGetter.apply(bean);
             if (beanFieldValue != null) {
                 Object formFieldElement = BeanReflection.getValueFromField(controller.formField, form, this::rethrow);
-                Object formFieldValue = controller.getConverter().getFormConverter().apply(beanFieldValue);
-                controller.getFormSetter().accept(formFieldElement, formFieldValue);
+                Object formFieldValue = controller.converter.getFormConverter().apply(beanFieldValue);
+                controller.formSetter.accept(formFieldElement, formFieldValue);
                 visibilitySetters.get(formFieldElement.getClass()).accept(formFieldElement, true);
-                controller.getHideCheckFields().stream()
+                controller.hideCheckFields.stream()
                         .map(hiddenField -> BeanReflection.getValueFromField(hiddenField, form, this::rethrow))
                         .forEach(t -> setVisible(t, controller));
             }
@@ -107,7 +106,7 @@ public class Binder {
 
     @SuppressWarnings("unchecked") //Should be checked on addHandling generics
     private void setVisible(Object element, PropertyController controller) {
-        visibilitySetters.get(element.getClass()).accept(element, !controller.isHide());
+        visibilitySetters.get(element.getClass()).accept(element, !controller.hide);
     }
 
     private static Map<String, List<Field>> getHideCheckFields(Class<?> form) {
@@ -123,8 +122,6 @@ public class Binder {
         return checks;
     }
 
-    @Getter
-    @Setter
     private class PropertyController {
         private Field formField;
         private Function beanGetter;

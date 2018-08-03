@@ -1,9 +1,11 @@
 package pl.khuzzuk.binder;
 
-import lombok.Data;
-
-@Data
 class BindId {
-    private final Class<?> left;
-    private final Class<?> right;
+    final Class<?> left;
+    final Class<?> right;
+
+    BindId(Class<?> left, Class<?> right) {
+        this.left = left;
+        this.right = right;
+    }
 }

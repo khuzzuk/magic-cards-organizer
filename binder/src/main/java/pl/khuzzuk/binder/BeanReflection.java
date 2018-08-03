@@ -1,7 +1,5 @@
 package pl.khuzzuk.binder;
 
-import lombok.experimental.UtilityClass;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -10,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-@UtilityClass
 public class BeanReflection {
     private static final List<Class<?>> BASIC_TYPES = List.of(
             boolean.class,

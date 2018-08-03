@@ -1,7 +1,8 @@
 package pl.khuzzuk.mtg.organizer
 
+import javafx.util.Pair
+import org.springframework.beans.factory.annotation.Autowired
 import pl.khuzzuk.messaging.Bus
-import pl.khuzzuk.messaging.BusPublisher
 import pl.khuzzuk.messaging.BusSubscriber
 import pl.khuzzuk.mtg.organizer.events.Event
 
@@ -10,10 +11,19 @@ import java.util.concurrent.TimeUnit
 import static org.awaitility.Awaitility.await
 
 trait BusTest {
+    static boolean initialized
     static Bus<Event> bus
+    static List<Pair<Event, PropertyContainer<?>>> listeners = new ArrayList<>()
 
-    void setupBus() {
-        bus = Bus.initializeBus(Event.class, System.out, true)
+    @Autowired
+    void setBus(Bus<Event> bus) {
+        if (!initialized) {
+            initialized = true
+            this.bus = bus
+            listeners.forEach({ pair ->
+                bus.subscribingFor(pair.key).accept({ pair.value.put(it) }).subscribe()
+            })
+        }
     }
 
     void closeBus() {
@@ -21,18 +31,14 @@ trait BusTest {
     }
 
     void busGetter(Event event, PropertyContainer<?> property) {
-        bus.subscribingFor(event).accept({property.put(it)}).subscribe()
+        listeners.add(new Pair<Event, PropertyContainer<?>>(event, property))
     }
 
-    void checkProperty(PropertyContainer<?> propertyContainer) {
-        await().atMost(1, TimeUnit.SECONDS).until({propertyContainer.hasValue()})
+    void checkProperty(PropertyContainer<?> propertyContainer, int timeout) {
+        await().atMost(timeout, TimeUnit.SECONDS).until({propertyContainer.hasValue()})
     }
 
     BusSubscriber<Event> subscribingFor(Event event) {
         bus.subscribingFor(event)
-    }
-
-    BusPublisher<Event> message(Event event) {
-        bus.message(event)
     }
 }

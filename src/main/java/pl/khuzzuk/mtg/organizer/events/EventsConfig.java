@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import pl.khuzzuk.messaging.Bus;
 
 @Configuration
-class EventsConfig {
+public class EventsConfig {
     @Bean
     Bus<Event> bus() {
         return Bus.initializeBus(Event.class, System.out, true, 3);

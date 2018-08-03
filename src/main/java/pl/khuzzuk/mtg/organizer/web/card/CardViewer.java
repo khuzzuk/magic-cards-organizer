@@ -40,14 +40,17 @@ public class CardViewer extends WebComponent implements InitializingBean {
     private Image whiteIco = new Image("images/Mana_W.png", "W");
     @FormProperty(beanPath = "manaCost.white.value", hideAfterClear = true)
     private Label whiteCost = new Label();
+    @CSS(className = "composite-field")
+    private FlexLayout whiteMana = new FlexLayout(whiteIco, whiteCost);
 
+    @CSS(className = "card-left-flex")
+    private FlexLayout left = new FlexLayout(name, whiteMana);
+    @CSS(className = "card-middle-flex")
+    private FlexLayout middle = new FlexLayout(front, reverse);
     @UIProperty
     @CSS(className = "card-main-flex")
-    private FlexLayout main = new FlexLayout();
-    @CSS(className = "card-left-flex")
-    private FlexLayout left = new FlexLayout();
-    @CSS(className = "card-middle-flex")
-    private FlexLayout middle = new FlexLayout();
+    private FlexLayout main = new FlexLayout(left, middle);
+
     private Card bean;
 
     private Runnable onImageClick;
@@ -55,7 +58,7 @@ public class CardViewer extends WebComponent implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         ComponentInitialization.initializeComponents(this);
-        positionElements();
+        reverse.setVisible(false);
         reverse.addClickListener(event -> onImageClick.run());
 
         binder.bind(CreatureCard.class, this.getClass());
@@ -70,13 +73,6 @@ public class CardViewer extends WebComponent implements InitializingBean {
         bus.subscribingFor(Event.CARD_DATA).accept(this::showCard).subscribe();
 
         refreshActions();
-    }
-
-    private void positionElements() {
-        main.add(left, middle);
-        left.add(name, whiteIco);
-        middle.add(front, reverse);
-        reverse.setVisible(false);
     }
 
     private void showCard(Card card) {

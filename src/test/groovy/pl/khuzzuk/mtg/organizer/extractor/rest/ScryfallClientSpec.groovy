@@ -1,25 +1,28 @@
 package pl.khuzzuk.mtg.organizer.extractor.rest
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.Import
 import pl.khuzzuk.mtg.organizer.BusTest
-import pl.khuzzuk.mtg.organizer.events.Event
+import pl.khuzzuk.mtg.organizer.MtgOrganizerApp
 import pl.khuzzuk.mtg.organizer.PropertyContainer
+import pl.khuzzuk.mtg.organizer.events.Event
 import pl.khuzzuk.mtg.organizer.extractor.rest.data.CardDTO
 import pl.khuzzuk.mtg.organizer.extractor.rest.data.CardFaceDTO
 import spock.lang.Shared
 import spock.lang.Specification
 
-import java.util.concurrent.TimeUnit
-
-import static org.awaitility.Awaitility.await
-
+@SpringBootTest
+@Import(MtgOrganizerApp)
 class ScryfallClientSpec extends Specification implements BusTest {
+    @Autowired
+    ScryfallClient scryfallClient
+
     @Shared
     PropertyContainer<CardDTO> card = new PropertyContainer<>()
 
     void setupSpec() {
-        setupBus()
-        new ScryfallClient(bus).load()
-        subscribingFor(Event.CARD_DTO_JSON).accept({ card.put(it as CardDTO) }).subscribe()
+        busGetter(Event.CARD_DTO_JSON, card)
     }
 
     void setup() {
@@ -36,7 +39,7 @@ class ScryfallClientSpec extends Specification implements BusTest {
 
         when:
         bus.message(Event.CARD_FROM_URL).withContent(uri).send()
-        await().atMost(3, TimeUnit.SECONDS).until({card.hasValue()})
+        checkProperty(card, 3)
         CardDTO result = card.get()
 
         then:
@@ -68,7 +71,7 @@ class ScryfallClientSpec extends Specification implements BusTest {
 
         when:
         bus.message(Event.CARD_FROM_URL).withContent(uri).send()
-        await().atMost(3, TimeUnit.SECONDS).until({card.hasValue()})
+        checkProperty(card, 3)
         CardDTO result = card.get()
 
         then:
@@ -101,7 +104,7 @@ class ScryfallClientSpec extends Specification implements BusTest {
 
         when:
         bus.message(Event.CARD_FROM_URL).withContent(url).send()
-        await().atMost(3, TimeUnit.SECONDS).until({card.hasValue()})
+        checkProperty(card, 3)
         CardDTO result = card.get()
 
         then:
@@ -150,8 +153,8 @@ class ScryfallClientSpec extends Specification implements BusTest {
         face1.oracleText == 'Flash\nFlying, vigilance\nWhen Archangel Avacyn enters the battlefield, creatures you control gain indestructible until end of turn.\nWhen a non-Angel creature you control dies, transform Archangel Avacyn at the beginning of the next upkeep.'
         face1.colors.length == 1
         face1.colors[0] == 'W'
-        face1.power == 4
-        face1.toughness == 4
+        face1.power == '4'
+        face1.toughness == '4'
         face1.imageUris.png.toString() == 'https://img.scryfall.com/cards/png/en/soi/5a.png?1518204266'
         face1.imageUris.artCrop.toString() == 'https://img.scryfall.com/cards/art_crop/en/soi/5a.jpg?1518204266'
 
@@ -162,8 +165,8 @@ class ScryfallClientSpec extends Specification implements BusTest {
         face2.oracleText == 'Flying\nWhen this creature transforms into Avacyn, the Purifier, it deals 3 damage to each other creature and each opponent.'
         face2.colors.length == 1
         face2.colors[0] == 'R'
-        face2.power == 6
-        face2.toughness == 5
+        face2.power == '6'
+        face2.toughness == '5'
         face2.imageUris.png.toString() == 'https://img.scryfall.com/cards/png/en/soi/5b.png?1518204266'
         face2.imageUris.artCrop.toString() == 'https://img.scryfall.com/cards/art_crop/en/soi/5b.jpg?1518204266'
     }

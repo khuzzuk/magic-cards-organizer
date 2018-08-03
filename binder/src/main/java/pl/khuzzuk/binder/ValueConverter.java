@@ -1,17 +1,9 @@
 package pl.khuzzuk.binder;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 @SuppressWarnings("unchecked")
-@Getter
-@Setter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValueConverter<T, U> {
     public static final Supplier EMPTY_SUPPLIER = () -> null;
     public static final ValueConverter DEFAULT_CONVERTER = new ValueConverter(Function.identity(), Function.identity(), Function.identity(), EMPTY_SUPPLIER);
@@ -20,6 +12,13 @@ public class ValueConverter<T, U> {
     private Function<U, T> beanConverter;
     private Function<String, U> fromDefaultValue;
     private Supplier<U> fromEmpty;
+
+    private ValueConverter(Function<T, U> formConverter, Function<U, T> beanConverter, Function<String, U> fromDefaultValue, Supplier<U> fromEmpty) {
+        this.formConverter = formConverter;
+        this.beanConverter = beanConverter;
+        this.fromDefaultValue = fromDefaultValue;
+        this.fromEmpty = fromEmpty;
+    }
 
     public static <T, U> ValueConverter<T, U> create(
             Function<T, U> formConverter,
@@ -52,5 +51,9 @@ public class ValueConverter<T, U> {
     U fromDefaultValue(String defaultValue) {
         if (fromDefaultValue == null || defaultValue == null || defaultValue.length() == 0) return fromEmpty.get();
         return fromDefaultValue.apply(defaultValue);
+    }
+
+    Function<T, U> getFormConverter() {
+        return formConverter;
     }
 }

@@ -29,6 +29,11 @@
     flex-flow: column;
 }
 
+.composite-field {
+    flex-flow: row;
+    justify-content: center;
+}
+
 .mana-ico {
     height: 15px;
 }

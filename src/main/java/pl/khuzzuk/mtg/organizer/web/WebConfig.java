@@ -24,6 +24,8 @@ class WebConfig {
                 Label::setText, Label::setVisible);
         binder.addHandling(Integer.class, Label.class, ValueConverter.create(Object::toString, Integer::valueOf, "0"),
                 Label::setText, Label::setVisible);
+        binder.addHandling(int.class, Label.class, ValueConverter.create(Object::toString, Integer::valueOf, "0"),
+                Label::setText, Label::setVisible);
 
         ValueConverter<URL, String> urlConverter = ValueConverter.create(Object::toString, UrlUtil::getUrlOrNull,
                 Function.identity(), () -> DEFAULT_IMAGE_PATH);

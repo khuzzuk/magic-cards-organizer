@@ -1,21 +1,13 @@
 package pl.khuzzuk.mtg.organizer.extractor
 
-import pl.khuzzuk.mtg.organizer.BusTest
-import pl.khuzzuk.mtg.organizer.events.Event
 import pl.khuzzuk.mtg.organizer.PropertyContainer
+import pl.khuzzuk.mtg.organizer.events.Event
 import pl.khuzzuk.mtg.organizer.extractor.rest.CardJSONConverter
 import pl.khuzzuk.mtg.organizer.extractor.rest.ScryfallClient
 import pl.khuzzuk.mtg.organizer.model.ManaCost
 import pl.khuzzuk.mtg.organizer.model.ManaType
 import pl.khuzzuk.mtg.organizer.model.Rarity
-import pl.khuzzuk.mtg.organizer.model.card.ArtifactCard
-import pl.khuzzuk.mtg.organizer.model.card.Card
-import pl.khuzzuk.mtg.organizer.model.card.CreatureCard
-import pl.khuzzuk.mtg.organizer.model.card.EnchantmentCard
-import pl.khuzzuk.mtg.organizer.model.card.LandCard
-import pl.khuzzuk.mtg.organizer.model.card.PlaneswalkerCard
-import pl.khuzzuk.mtg.organizer.model.card.SorceryCard
-import pl.khuzzuk.mtg.organizer.model.card.TransformableCreatureCard
+import pl.khuzzuk.mtg.organizer.model.card.*
 import pl.khuzzuk.mtg.organizer.model.type.BasicType
 import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo
 import spock.lang.Shared
@@ -27,7 +19,7 @@ import static java.util.concurrent.TimeUnit.SECONDS
 import static org.awaitility.Awaitility.await
 import static pl.khuzzuk.mtg.organizer.events.Event.CARD_FROM_URL
 
-class CardJSONConverterSpec extends Specification implements BusTest {
+class CardJSONConverterSpec extends Specification {
     @Shared
     PropertyContainer<Card> card = new PropertyContainer<>()
 
