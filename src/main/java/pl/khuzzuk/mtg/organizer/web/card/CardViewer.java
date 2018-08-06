@@ -35,16 +35,52 @@ public class CardViewer extends WebComponent implements InitializingBean {
 
     @FormProperty
     private Label name = new Label();
+
     @CSS(className = "mana-ico")
     @HideCheck("whiteCost")
     private Image whiteIco = new Image("images/Mana_W.png", "W");
-    @FormProperty(beanPath = "manaCost.white.value", hideAfterClear = true)
+    @FormProperty(beanPath = "manaCost.white.value", hideAfterClear = true, defaultValue = "0")
     private Label whiteCost = new Label();
     @CSS(className = "composite-field")
     private FlexLayout whiteMana = new FlexLayout(whiteIco, whiteCost);
+    @CSS(className = "mana-ico")
+    @HideCheck("greenCost")
+    private Image greenIco = new Image("images/Mana_G.png", "G");
+    @FormProperty(beanPath = "manaCost.green.value", hideAfterClear = true, defaultValue = "0")
+    private Label greenCost = new Label();
+    @CSS(className = "composite-field")
+    private FlexLayout greenMana = new FlexLayout(greenIco, greenCost);
+    @CSS(className = "mana-ico")
+    @HideCheck("blueCost")
+    private Image blueIco = new Image("images/Mana_U.png", "G");
+    @FormProperty(beanPath = "manaCost.blue.value", hideAfterClear = true, defaultValue = "0")
+    private Label blueCost = new Label();
+    @CSS(className = "composite-field")
+    private FlexLayout blueMana = new FlexLayout(blueIco, blueCost);
+    @CSS(className = "mana-ico")
+    @HideCheck("redCost")
+    private Image redIco = new Image("images/Mana_R.png", "G");
+    @FormProperty(beanPath = "manaCost.red.value", hideAfterClear = true, defaultValue = "0")
+    private Label redCost = new Label();
+    @CSS(className = "composite-field")
+    private FlexLayout redMana = new FlexLayout(redIco, redCost);
+    @CSS(className = "mana-ico")
+    @HideCheck("blackCost")
+    private Image blackIco = new Image("images/Mana_B.png", "G");
+    @FormProperty(beanPath = "manaCost.black.value", hideAfterClear = true, defaultValue = "0")
+    private Label blackCost = new Label();
+    @CSS(className = "composite-field")
+    private FlexLayout blackMana = new FlexLayout(blackIco, blackCost);
+    @CSS(className = "mana-ico")
+    @HideCheck("genericCost")
+    private Image genericIco = new Image("images/Mana_N.png", "G");
+    @FormProperty(beanPath = "manaCost.generic.value", hideAfterClear = true, defaultValue = "0")
+    private Label genericCost = new Label();
+    @CSS(className = "composite-field")
+    private FlexLayout genericMana = new FlexLayout(genericIco, genericCost);
 
     @CSS(className = "card-left-flex")
-    private FlexLayout left = new FlexLayout(name, whiteMana);
+    private FlexLayout left = new FlexLayout(name, whiteMana, greenMana, blueMana, redMana, blackMana, genericMana);
     @CSS(className = "card-middle-flex")
     private FlexLayout middle = new FlexLayout(front, reverse);
     @UIProperty
@@ -72,13 +108,13 @@ public class CardViewer extends WebComponent implements InitializingBean {
         binder.bind(BasicLandCard.class, this.getClass());
         bus.subscribingFor(Event.CARD_DATA).accept(this::showCard).subscribe();
 
-        refreshActions();
+        refreshView();
     }
 
     private void showCard(Card card) {
         bean = card;
         execute(() -> {
-            refreshActions();
+            refreshView();
             binder.fillForm(this, card);
         });
     }
@@ -92,11 +128,11 @@ public class CardViewer extends WebComponent implements InitializingBean {
     private void unReverseImage() {
         execute(() -> {
             front.setSrc(bean.getFront().toString());
-            refreshActions();
+            onImageClick = this::reverseImage;
         });
     }
 
-    private void refreshActions() {
+    private void refreshView() {
         reverse.setVisible(bean instanceof TransformableCreatureCard);
         onImageClick = this::reverseImage;
         binder.clearForm(this);

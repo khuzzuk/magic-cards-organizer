@@ -95,18 +95,24 @@ public class Binder {
             if (beanFieldValue != null) {
                 Object formFieldElement = BeanReflection.getValueFromField(controller.formField, form, this::rethrow);
                 Object formFieldValue = controller.converter.getFormConverter().apply(beanFieldValue);
+                boolean shouldShow = !formFieldValue.toString().equals(controller.defaultValue) || !controller.hide;
                 controller.formSetter.accept(formFieldElement, formFieldValue);
-                visibilitySetters.get(formFieldElement.getClass()).accept(formFieldElement, true);
+                visibilitySetters.get(formFieldElement.getClass()).accept(formFieldElement, shouldShow);
                 controller.hideCheckFields.stream()
                         .map(hiddenField -> BeanReflection.getValueFromField(hiddenField, form, this::rethrow))
-                        .forEach(t -> setVisible(t, controller));
+                        .peek(t -> setVisible(t, true))
+                        .forEach(t -> setVisible(t, shouldShow));
             }
         }
     }
 
-    @SuppressWarnings("unchecked") //Should be checked on addHandling generics
     private void setVisible(Object element, PropertyController controller) {
-        visibilitySetters.get(element.getClass()).accept(element, !controller.hide);
+        setVisible(element, !controller.hide);
+    }
+
+    @SuppressWarnings("unchecked") //Should be checked on addHandling generics
+    private void setVisible(Object element, boolean visible) {
+        visibilitySetters.get(element.getClass()).accept(element, visible);
     }
 
     private static Map<String, List<Field>> getHideCheckFields(Class<?> form) {
