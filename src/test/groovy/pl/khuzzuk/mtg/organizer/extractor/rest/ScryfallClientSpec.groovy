@@ -104,7 +104,7 @@ class ScryfallClientSpec extends Specification implements BusTest {
 
         when:
         bus.message(Event.CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 3)
+        checkProperty(card, 4)
         CardDTO result = card.get()
 
         then:

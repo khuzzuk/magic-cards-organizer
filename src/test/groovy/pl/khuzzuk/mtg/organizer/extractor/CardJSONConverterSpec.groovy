@@ -1,38 +1,31 @@
 package pl.khuzzuk.mtg.organizer.extractor
 
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.Import
+import pl.khuzzuk.mtg.organizer.BusTest
+import pl.khuzzuk.mtg.organizer.MtgOrganizerApp
 import pl.khuzzuk.mtg.organizer.PropertyContainer
-import pl.khuzzuk.mtg.organizer.events.Event
-import pl.khuzzuk.mtg.organizer.extractor.rest.CardJSONConverter
-import pl.khuzzuk.mtg.organizer.extractor.rest.ScryfallClient
 import pl.khuzzuk.mtg.organizer.model.ManaCost
 import pl.khuzzuk.mtg.organizer.model.ManaType
 import pl.khuzzuk.mtg.organizer.model.Rarity
 import pl.khuzzuk.mtg.organizer.model.card.*
 import pl.khuzzuk.mtg.organizer.model.type.BasicType
-import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo
 import spock.lang.Shared
 import spock.lang.Specification
 
-import java.util.concurrent.atomic.AtomicBoolean
-
 import static java.util.concurrent.TimeUnit.SECONDS
 import static org.awaitility.Awaitility.await
+import static pl.khuzzuk.mtg.organizer.events.Event.CARD_DATA
 import static pl.khuzzuk.mtg.organizer.events.Event.CARD_FROM_URL
 
-class CardJSONConverterSpec extends Specification {
+@SpringBootTest
+@Import(MtgOrganizerApp)
+class CardJSONConverterSpec extends Specification implements BusTest {
     @Shared
     PropertyContainer<Card> card = new PropertyContainer<>()
 
     void setupSpec() {
-        setupBus()
-        new ScryfallClient(bus).load()
-        new CardJSONConverter(bus).load()
-        def predefinedSkillRepo = new PredefinedSkillRepo(bus)
-        predefinedSkillRepo.load()
-        AtomicBoolean preparationFinished = new AtomicBoolean(false)
-        bus.message(Event.PREDEFINED_SKILLS).withContent(predefinedSkillRepo).onResponse({preparationFinished.set(true)}).send()
-        subscribingFor(Event.CARD_DATA).accept({ card.put(it as Card) }).subscribe()
-        await().atMost(3, SECONDS).until({preparationFinished.get()})
+        busGetter(CARD_DATA, card)
     }
 
     void setup() {
@@ -48,7 +41,8 @@ class CardJSONConverterSpec extends Specification {
         def url = new URL('https://api.scryfall.com/cards/md1/19?format=json&pretty=true')
 
         when:
-        message(CARD_FROM_URL).withContent(url).send()
+        bus.message(CARD_FROM_URL).withContent(url).send()
+        checkProperty(card, 3)
         await().atMost(2, SECONDS).until({card.hasValue()})
         def result = card.get() as LandCard
 

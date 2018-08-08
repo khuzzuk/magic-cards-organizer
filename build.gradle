@@ -28,25 +28,7 @@ repositories {
     maven { url "http://maven.vaadin.com/vaadin-addons" }
 }
 
-compileTestJava {
-    doLast {
-        ant.taskdef(resource: "org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties", classpath: configurations.compile.asPath)
-        ant.iajc(
-                source: "1.9", target: "1.9", maxmem: "512m", fork: "true",
-                sourceRoots: sourceSets.test.java.srcDirs[0],
-                inpath: sourceSets.main.output.classesDir.toPath(),
-                destDir: sourceSets.test.output.classesDir.absolutePath,
-                aspectPath: sourceSets.test.output.classesDir.absolutePath,
-                sourceRootCopyFilter: "**/*.java",
-                classpath: "${configurations.compile.asPath}") {
-        }
-    }
-}
-
 dependencies {
-    compile group: 'org.aspectj', name: 'aspectjrt', version: '1.9.1'
-    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.1' // -javaagent:lib/aspectjweaver-1.9.1.jar
-    compile group: 'org.aspectj', name: 'aspectjtools', version: '1.9.1'
     compile project('binder')
     compile group: 'pl.khuzzuk', name: 'message-bus', version:'2.0.1'
     compile group: 'pl.khuzzuk', name: 'functional-logic', version:'0.2.0'
