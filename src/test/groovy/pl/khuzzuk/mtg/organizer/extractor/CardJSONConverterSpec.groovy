@@ -49,8 +49,8 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         then:
         result.rarity == Rarity.COMMON
         result.name == 'Plains'
-        result.front.toString() == 'https://img.scryfall.com/cards/png/en/md1/19.png?1517813031'
-        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/md1/19.jpg?1517813031'
+        result.front.toString().contains('https://img.scryfall.com/cards/png/en/md1/19.png?')
+        result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/md1/19.jpg?')
         result.source.toString() == 'https://api.scryfall.com/cards/md1/19'
         result.skills.size() == 1
         result.skills.get(0).text == '({T}: Add {W}.)'
@@ -75,15 +75,15 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         def url = new URL('https://api.scryfall.com/cards/bbd/254?format=json&pretty=true')
 
         when:
-        message(CARD_FROM_URL).withContent(url).send()
-        await().atMost(2, SECONDS).until({card.hasValue()})
+        bus.message(CARD_FROM_URL).withContent(url).send()
+        checkProperty(card, 3)
         def result = card.get() as LandCard
 
         then:
         result.rarity == Rarity.COMMON
         result.name == 'Forest'
-        result.front.toString() == 'https://img.scryfall.com/cards/png/en/bbd/254.png?1529063680'
-        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/bbd/254.jpg?1529063680'
+        result.front.toString().contains('https://img.scryfall.com/cards/png/en/bbd/254.png?')
+        result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/bbd/254.jpg?')
         result.source.toString() == 'https://api.scryfall.com/cards/bbd/254'
         result.skills.size() == 1
         result.skills.get(0).text == '({T}: Add {G}.)'
@@ -108,15 +108,15 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         def url = new URL('https://api.scryfall.com/cards/bbd/251?format=json&pretty=true')
 
         when:
-        message(CARD_FROM_URL).withContent(url).send()
-        await().atMost(2, SECONDS).until({card.hasValue()})
+        bus.message(CARD_FROM_URL).withContent(url).send()
+        checkProperty(card, 3)
         def result = card.get() as LandCard
 
         then:
         result.rarity == Rarity.COMMON
         result.name == 'Island'
-        result.front.toString() == 'https://img.scryfall.com/cards/png/en/bbd/251.png?1529063653'
-        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/bbd/251.jpg?1529063653'
+        result.front.toString().contains('https://img.scryfall.com/cards/png/en/bbd/251.png?')
+        result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/bbd/251.jpg?')
         result.source.toString() == 'https://api.scryfall.com/cards/bbd/251'
         result.skills.size() == 1
         result.skills.get(0).text == '({T}: Add {U}.)'
@@ -141,15 +141,15 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         def url = new URL('https://api.scryfall.com/cards/bbd/253?format=json&pretty=true')
 
         when:
-        message(CARD_FROM_URL).withContent(url).send()
-        await().atMost(2, SECONDS).until({card.hasValue()})
+        bus.message(CARD_FROM_URL).withContent(url).send()
+        checkProperty(card, 3)
         def result = card.get() as LandCard
 
         then:
         result.rarity == Rarity.COMMON
         result.name == 'Mountain'
-        result.front.toString() == 'https://img.scryfall.com/cards/png/en/bbd/253.png?1529063672'
-        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/bbd/253.jpg?1529063672'
+        result.front.toString().contains('https://img.scryfall.com/cards/png/en/bbd/253.png?')
+        result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/bbd/253.jpg?')
         result.source.toString() == 'https://api.scryfall.com/cards/bbd/253'
         result.skills.size() == 1
         result.skills.get(0).text == '({T}: Add {R}.)'
@@ -174,15 +174,15 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         def url = new URL('https://api.scryfall.com/cards/bbd/252?format=json&pretty=true')
 
         when:
-        message(CARD_FROM_URL).withContent(url).send()
-        await().atMost(2, SECONDS).until({card.hasValue()})
+        bus.message(CARD_FROM_URL).withContent(url).send()
+        checkProperty(card, 3)
         def result = card.get() as LandCard
 
         then:
         result.rarity == Rarity.COMMON
         result.name == 'Swamp'
-        result.front.toString() == 'https://img.scryfall.com/cards/png/en/bbd/252.png?1529063663'
-        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/bbd/252.jpg?1529063663'
+        result.front.toString().contains('https://img.scryfall.com/cards/png/en/bbd/252.png?')
+        result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/bbd/252.jpg?')
         result.source.toString() == 'https://api.scryfall.com/cards/bbd/252'
         result.skills.size() == 1
         result.skills.get(0).text == '({T}: Add {B}.)'
@@ -208,14 +208,14 @@ class CardJSONConverterSpec extends Specification implements BusTest {
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        await().atMost(2, SECONDS).until({card.hasValue()})
+        checkProperty(card, 3)
         LandCard result = card.get() as LandCard
 
         then:
         result.name == 'Vault of the Archangel'
         result.rarity == Rarity.RARE
-        result.front.toString() == 'https://img.scryfall.com/cards/png/en/md1/17.png?1517813031'
-        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/md1/17.jpg?1517813031'
+        result.front.toString().contains('https://img.scryfall.com/cards/png/en/md1/17.png?')
+        result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/md1/17.jpg?')
         result.source.toString() == 'https://api.scryfall.com/cards/md1/17'
         result.skills.size() == 2
         result.skills.get(0).text == '{T}: Add {C}.'
@@ -223,7 +223,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.printRef == 'md1'
         result.printFullName == 'Modern Event Deck 2014'
         result.printOrder == 17
-        result.edhrecRank == 542
+        result.edhrecRank > 0
         result.text == '"For centuries my creation kept this world in balance. Now only her shadow remains." —Sorin Markov'
 
         def type = result.type
@@ -241,14 +241,14 @@ class CardJSONConverterSpec extends Specification implements BusTest {
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        await().atMost(2, SECONDS).until({card.hasValue()})
+        checkProperty(card, 3)
         CreatureCard result = card.get() as CreatureCard
 
         then:
         result.name == 'Avacyn, Angel of Hope'
         result.rarity == Rarity.MYTHIC_RARE
-        result.front.toString() == 'https://img.scryfall.com/cards/png/en/ima/11.png?1517813031'
-        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/ima/11.jpg?1517813031'
+        result.front.toString().contains('https://img.scryfall.com/cards/png/en/ima/11.png?')
+        result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/ima/11.jpg?')
         result.source.toString() == 'https://api.scryfall.com/cards/ima/11'
         result.skills.size() == 4
         result.skills.get(0).text == 'Flying'
@@ -258,7 +258,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.printRef == 'ima'
         result.printFullName == 'Iconic Masters'
         result.printOrder == 11
-        result.edhrecRank == 811
+        result.edhrecRank > 0
         result.text == 'A golden helix streaked skyward from the Helvault. A thunderous explosion shattered the silver monolith and Avacyn emerged, free from her prison at last.'
 
         def type = result.type
@@ -279,8 +279,8 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         manaCost.black.value == 0
         manaCost.colorless.value == 0
 
-        result.attack == 8
-        result.defense == 8
+        result.attack == '8'
+        result.defense == '8'
     }
 
     def "convert transformable creature card with rulings"() {
@@ -289,14 +289,14 @@ class CardJSONConverterSpec extends Specification implements BusTest {
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        await().atMost(2, SECONDS).until({card.hasValue()})
+        checkProperty(card, 3)
         TransformableCreatureCard result = card.get() as TransformableCreatureCard
 
         then:
         result.name == 'Archangel Avacyn'
         result.rarity == Rarity.MYTHIC_RARE
-        result.front.toString() == 'https://img.scryfall.com/cards/png/en/soi/5a.png?1518204266'
-        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/soi/5a.jpg?1518204266'
+        result.front.toString().contains('https://img.scryfall.com/cards/png/en/soi/5a.png?')
+        result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/soi/5a.jpg?')
         result.source.toString() == 'https://api.scryfall.com/cards/soi/5'
         result.skills.size() == 5
         result.skills.get(0).text == 'Flash'
@@ -307,7 +307,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.printRef == 'soi'
         result.printFullName == 'Shadows over Innistrad'
         result.printOrder == 5
-        result.edhrecRank == 3460
+        result.edhrecRank > 0
         result.text == '"Wings that once bore hope are now stained with blood. She is our guardian no longer.\" —Grete, cathar apostate'
 
         def rule = result.rulings.get(0)
@@ -333,15 +333,15 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         manaCost.black.value == 0
         manaCost.colorless.value == 0
 
-        result.attack == 4
-        result.defense == 4
+        result.attack == '4'
+        result.defense == '4'
 
         result.transformedName == "Avacyn, the Purifier"
         result.transformedSkills.size() == 2
         result.transformedSkills.get(0).text == 'Flying'
         result.transformedSkills.get(1).text == 'When this creature transforms into Avacyn, the Purifier, it deals 3 damage to each other creature and each opponent.'
-        result.transformedAttack == 6
-        result.transformedDefense == 5
+        result.transformedAttack == '6'
+        result.transformedDefense == '5'
 
         def transformedType = result.transformedType
         transformedType.basicType == BasicType.TransformableCreature
@@ -359,21 +359,21 @@ class CardJSONConverterSpec extends Specification implements BusTest {
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        await().atMost(2, SECONDS).until({card.hasValue()})
+        checkProperty(card, 3)
         SorceryCard result = card.get() as SorceryCard
 
         then:
         result.name == 'Angelic Edict'
         result.rarity == Rarity.COMMON
-        result.front.toString() == 'https://img.scryfall.com/cards/png/en/gtc/2.png?1517813031'
-        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/gtc/2.jpg?1517813031'
+        result.front.toString().contains('https://img.scryfall.com/cards/png/en/gtc/2.png?')
+        result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/gtc/2.jpg?')
         result.source.toString() == 'https://api.scryfall.com/cards/gtc/2'
         result.skills.size() == 1
         result.skills.get(0).text == 'Exile target creature or enchantment.'
         result.printRef == 'gtc'
         result.printFullName == 'Gatecrash'
         result.printOrder == 2
-        result.edhrecRank == 7737
+        result.edhrecRank > 0
         result.text == 'The Boros built a prison in the sky where Azorius statutes couldn\'t restrict their sense of justice.'
         ManaCost manaCost = result.manaCost
         manaCost.generic.value == 4
@@ -398,14 +398,14 @@ class CardJSONConverterSpec extends Specification implements BusTest {
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        await().atMost(2, SECONDS).until({card.hasValue()})
+        checkProperty(card, 3)
         EnchantmentCard result = card.get() as EnchantmentCard
 
         then:
         result.name == 'Angelic Destiny'
         result.rarity == Rarity.MYTHIC_RARE
-        result.front.toString() == 'https://img.scryfall.com/cards/png/en/m12/3.png?1517813031'
-        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/m12/3.jpg?1517813031'
+        result.front.toString().contains('https://img.scryfall.com/cards/png/en/m12/3.png?')
+        result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/m12/3.jpg?')
         result.source.toString() == 'https://api.scryfall.com/cards/m12/3'
         result.skills.size() == 3
         result.skills.get(0).text == 'Enchant creature'
@@ -414,7 +414,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.printRef == 'm12'
         result.printFullName == 'Magic 2012'
         result.printOrder == 3
-        result.edhrecRank == 2238
+        result.edhrecRank > 0
         result.text == null
         ManaCost manaCost = result.manaCost
         manaCost.generic.value == 2
@@ -440,14 +440,14 @@ class CardJSONConverterSpec extends Specification implements BusTest {
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        await().atMost(2, SECONDS).until({card.hasValue()})
+        checkProperty(card, 3)
         ArtifactCard result = card.get() as ArtifactCard
 
         then:
         result.name == 'Angelic Armaments'
         result.rarity == Rarity.UNCOMMON
-        result.front.toString() == 'https://img.scryfall.com/cards/png/en/avr/212.png?1517813031'
-        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/avr/212.jpg?1517813031'
+        result.front.toString().contains('https://img.scryfall.com/cards/png/en/avr/212.png?')
+        result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/avr/212.jpg?')
         result.source.toString() == 'https://api.scryfall.com/cards/avr/212'
         result.skills.size() == 2
         result.skills.get(0).text == 'Equipped creature gets +2/+2, has flying, and is a white Angel in addition to its other colors and types.'
@@ -455,7 +455,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.printRef == 'avr'
         result.printFullName == 'Avacyn Restored'
         result.printOrder == 212
-        result.edhrecRank == 8034
+        result.edhrecRank > 0
         result.text == 'Forged in dark hours from the flame that would not die.'
         ManaCost manaCost = result.manaCost
         manaCost.generic.value == 3
@@ -480,14 +480,14 @@ class CardJSONConverterSpec extends Specification implements BusTest {
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        await().atMost(2, SECONDS).until({card.hasValue()})
+        checkProperty(card, 3)
         PlaneswalkerCard result = card.get() as PlaneswalkerCard
 
         then:
         result.name == 'Ajani, Adversary of Tyrants'
         result.rarity == Rarity.MYTHIC_RARE
-        result.front.toString() == 'https://img.scryfall.com/cards/png/en/m19/3.png?1529160847'
-        result.art.toString() == 'https://img.scryfall.com/cards/art_crop/en/m19/3.jpg?1529160847'
+        result.front.toString().contains('https://img.scryfall.com/cards/png/en/m19/3.png?')
+        result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/m19/3.jpg?')
         result.source.toString() == 'https://api.scryfall.com/cards/m19/3'
         result.skills.size() == 3
         result.skills.get(0).text == '+1: Put a +1/+1 counter on each of up to two target creatures.'
@@ -496,7 +496,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.printRef == 'm19'
         result.printFullName == 'Core Set 2019'
         result.printOrder == 3
-        result.edhrecRank == 0
+        result.edhrecRank > 0
         result.text == null
         ManaCost manaCost = result.manaCost
         manaCost.generic.value == 2

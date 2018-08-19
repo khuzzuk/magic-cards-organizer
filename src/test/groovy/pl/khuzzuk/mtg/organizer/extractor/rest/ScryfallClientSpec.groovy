@@ -49,8 +49,8 @@ class ScryfallClientSpec extends Specification implements BusTest {
         result.typeLine == 'Basic Land — Plains'
         result.oracleText == '({T}: Add {W}.)'
         def imageUris = result.imageUris
-        imageUris.large.toString() == 'https://img.scryfall.com/cards/large/en/bbd/250.jpg?1529063642'
-        imageUris.png.toString() == 'https://img.scryfall.com/cards/png/en/bbd/250.png?1529063642'
+        imageUris.large.toString().contains('https://img.scryfall.com/cards/large/en/bbd/250.jpg?')
+        imageUris.png.toString().contains('https://img.scryfall.com/cards/png/en/bbd/250.png?')
         imageUris.artCrop.toString() == 'https://img.scryfall.com/cards/art_crop/en/bbd/250.jpg?1529063642'
         result.colors.length == 0
         result.colorIdentity.length == 1
@@ -81,8 +81,8 @@ class ScryfallClientSpec extends Specification implements BusTest {
         result.typeLine == 'Land'
         result.oracleText == '{T}: Add {C}.\n{2}{W}{B}, {T}: Creatures you control gain deathtouch and lifelink until end of turn.'
         def imageUris = result.imageUris
-        imageUris.large.toString() == 'https://img.scryfall.com/cards/large/en/md1/17.jpg?1517813031'
-        imageUris.png.toString() == 'https://img.scryfall.com/cards/png/en/md1/17.png?1517813031'
+        imageUris.large.toString().contains('https://img.scryfall.com/cards/large/en/md1/17.jpg?')
+        imageUris.png.toString().contains('https://img.scryfall.com/cards/png/en/md1/17.png?')
         imageUris.artCrop.toString() == 'https://img.scryfall.com/cards/art_crop/en/md1/17.jpg?1517813031'
         result.colors.length == 0
         result.colorIdentity.length == 2

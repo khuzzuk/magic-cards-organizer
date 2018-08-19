@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static pl.khuzzuk.mtg.organizer.events.Event.*;
+import static pl.khuzzuk.mtg.organizer.events.Event.CARD_DATA;
+import static pl.khuzzuk.mtg.organizer.events.Event.CARD_INDEX;
+import static pl.khuzzuk.mtg.organizer.events.Event.ERROR;
 
 @RequiredArgsConstructor
 public class JsonRepoSerializer implements InitializingBean {
@@ -40,7 +42,7 @@ public class JsonRepoSerializer implements InitializingBean {
                 Files.createFile(repoFile);
             }
         } catch (IOException e) {
-            bus.message(ERROR).withContent("Cannot initialize card repository");
+            bus.message(ERROR).withContent("Cannot initialize card repository").send();
         }
     }
 

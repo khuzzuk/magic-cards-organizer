@@ -1,9 +1,10 @@
 package pl.khuzzuk.mtg.organizer.serialization;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.events.Event;
-import pl.khuzzuk.mtg.organizer.initialize.Loadable;
 import pl.khuzzuk.mtg.organizer.model.CardQuery;
 import pl.khuzzuk.mtg.organizer.model.card.Card;
 
@@ -16,15 +17,12 @@ import static pl.khuzzuk.mtg.organizer.events.Event.CARD_FIND;
 import static pl.khuzzuk.mtg.organizer.events.Event.CARD_SETS;
 
 @RequiredArgsConstructor
-public class JsonCardService implements Loadable {
+@Component
+public class JsonCardService {
     private final Bus<Event> bus;
     private CardsContainer cardsContainer;
 
-    @Override
-    public void load() {
-        bus.subscribingFor(Event.JSON_REPO_SERIALIZER).accept(this::onRepoSerializer).subscribe();
-    }
-
+    @Autowired
     private void onRepoSerializer(JsonRepoSerializer serializer) {
         cardsContainer = serializer.getCardsContainer();
 
