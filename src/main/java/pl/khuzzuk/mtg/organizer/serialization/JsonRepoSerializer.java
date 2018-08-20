@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.model.card.Card;
@@ -14,23 +16,23 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static pl.khuzzuk.mtg.organizer.events.Event.CARD_DATA;
-import static pl.khuzzuk.mtg.organizer.events.Event.CARD_INDEX;
-import static pl.khuzzuk.mtg.organizer.events.Event.ERROR;
+import static pl.khuzzuk.mtg.organizer.events.Event.*;
 
-@RequiredArgsConstructor
+@Component
 public class JsonRepoSerializer implements InitializingBean {
-    private final Bus<Event> bus;
-    private final Path repoFile;
-    private final ObjectMapper objectMapper;
+    @Autowired
+    private Bus<Event> bus;
+    @Value("${serialization.repo.location}")
+    private Path repoFile;
+    @Autowired
+    private ObjectMapper objectMapper;
     @Getter(AccessLevel.PACKAGE)
     private CardsContainer cardsContainer;
 
     @Override
     public void afterPropertiesSet() {
+        repoFile = repoFile.toAbsolutePath();
         loadRepo();
-        bus.subscribingFor(CARD_DATA).accept(this::saveCard).subscribe();
-        bus.subscribingFor(CARD_INDEX).accept(this::saveCard).subscribe();
     }
 
     private void loadRepo() {
@@ -41,6 +43,9 @@ public class JsonRepoSerializer implements InitializingBean {
                 cardsContainer = new CardsContainer();
                 Files.createFile(repoFile);
             }
+
+            bus.subscribingFor(CARD_DATA).accept(this::saveCard).subscribe();
+            bus.subscribingFor(CARD_INDEX).accept(this::saveCard).subscribe();
         } catch (IOException e) {
             bus.message(ERROR).withContent("Cannot initialize card repository").send();
         }

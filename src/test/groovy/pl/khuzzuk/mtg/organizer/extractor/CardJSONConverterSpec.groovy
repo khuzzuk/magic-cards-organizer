@@ -10,8 +10,11 @@ import pl.khuzzuk.mtg.organizer.model.ManaType
 import pl.khuzzuk.mtg.organizer.model.Rarity
 import pl.khuzzuk.mtg.organizer.model.card.*
 import pl.khuzzuk.mtg.organizer.model.type.BasicType
+import pl.khuzzuk.mtg.organizer.serialization.RepoTest
 import spock.lang.Shared
 import spock.lang.Specification
+
+import java.nio.file.Files
 
 import static java.util.concurrent.TimeUnit.SECONDS
 import static org.awaitility.Awaitility.await
@@ -20,7 +23,7 @@ import static pl.khuzzuk.mtg.organizer.events.Event.CARD_FROM_URL
 
 @SpringBootTest
 @Import(MtgOrganizerApp)
-class CardJSONConverterSpec extends Specification implements BusTest {
+class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
     @Shared
     PropertyContainer<Card> card = new PropertyContainer<>()
 
@@ -32,7 +35,12 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         card.clear()
     }
 
+    void cleanup() {
+        clearRepo()
+    }
+
     void closeSpec() {
+        Files.deleteIfExists(repoFile)
         closeBus()
     }
 
@@ -43,7 +51,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
         checkProperty(card, 3)
-        await().atMost(2, SECONDS).until({card.hasValue()})
+        await().atMost(2, SECONDS).until({ card.hasValue() })
         def result = card.get() as LandCard
 
         then:
@@ -51,7 +59,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.name == 'Plains'
         result.front.toString().contains('https://img.scryfall.com/cards/png/en/md1/19.png?')
         result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/md1/19.jpg?')
-        result.source.toString() == 'https://api.scryfall.com/cards/md1/19'
+        result.source.toString().contains('https://api.scryfall.com/cards/')
         result.skills.size() == 1
         result.skills.get(0).text == '({T}: Add {W}.)'
         result.printRef == 'md1'
@@ -68,6 +76,9 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         "Plains" in type.secondaryTypes
         type.colors.size() == 1
         ManaType.WHITE in type.colors
+
+        checkIfCardIsOnDisk(result)
+        checkIfCardIsInRepo(result)
     }
 
     def 'convert forest basic land card'() {
@@ -84,7 +95,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.name == 'Forest'
         result.front.toString().contains('https://img.scryfall.com/cards/png/en/bbd/254.png?')
         result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/bbd/254.jpg?')
-        result.source.toString() == 'https://api.scryfall.com/cards/bbd/254'
+        result.source.toString().contains('https://api.scryfall.com/cards/')
         result.skills.size() == 1
         result.skills.get(0).text == '({T}: Add {G}.)'
         result.printRef == 'bbd'
@@ -117,7 +128,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.name == 'Island'
         result.front.toString().contains('https://img.scryfall.com/cards/png/en/bbd/251.png?')
         result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/bbd/251.jpg?')
-        result.source.toString() == 'https://api.scryfall.com/cards/bbd/251'
+        result.source.toString().contains('https://api.scryfall.com/cards/')
         result.skills.size() == 1
         result.skills.get(0).text == '({T}: Add {U}.)'
         result.printRef == 'bbd'
@@ -150,7 +161,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.name == 'Mountain'
         result.front.toString().contains('https://img.scryfall.com/cards/png/en/bbd/253.png?')
         result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/bbd/253.jpg?')
-        result.source.toString() == 'https://api.scryfall.com/cards/bbd/253'
+        result.source.toString().contains('https://api.scryfall.com/cards/')
         result.skills.size() == 1
         result.skills.get(0).text == '({T}: Add {R}.)'
         result.printRef == 'bbd'
@@ -183,7 +194,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.name == 'Swamp'
         result.front.toString().contains('https://img.scryfall.com/cards/png/en/bbd/252.png?')
         result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/bbd/252.jpg?')
-        result.source.toString() == 'https://api.scryfall.com/cards/bbd/252'
+        result.source.toString().contains('https://api.scryfall.com/cards/')
         result.skills.size() == 1
         result.skills.get(0).text == '({T}: Add {B}.)'
         result.printRef == 'bbd'
@@ -216,7 +227,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.rarity == Rarity.RARE
         result.front.toString().contains('https://img.scryfall.com/cards/png/en/md1/17.png?')
         result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/md1/17.jpg?')
-        result.source.toString() == 'https://api.scryfall.com/cards/md1/17'
+        result.source.toString().contains('https://api.scryfall.com/cards/')
         result.skills.size() == 2
         result.skills.get(0).text == '{T}: Add {C}.'
         result.skills.get(1).text == '{2}{W}{B}, {T}: Creatures you control gain deathtouch and lifelink until end of turn.'
@@ -249,7 +260,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.rarity == Rarity.MYTHIC_RARE
         result.front.toString().contains('https://img.scryfall.com/cards/png/en/ima/11.png?')
         result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/ima/11.jpg?')
-        result.source.toString() == 'https://api.scryfall.com/cards/ima/11'
+        result.source.toString().contains('https://api.scryfall.com/cards/')
         result.skills.size() == 4
         result.skills.get(0).text == 'Flying'
         result.skills.get(1).text == 'Vigilance'
@@ -297,7 +308,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.rarity == Rarity.MYTHIC_RARE
         result.front.toString().contains('https://img.scryfall.com/cards/png/en/soi/5a.png?')
         result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/soi/5a.jpg?')
-        result.source.toString() == 'https://api.scryfall.com/cards/soi/5'
+        result.source.toString().contains('https://api.scryfall.com/cards/')
         result.skills.size() == 5
         result.skills.get(0).text == 'Flash'
         result.skills.get(1).text == 'Flying'
@@ -367,7 +378,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.rarity == Rarity.COMMON
         result.front.toString().contains('https://img.scryfall.com/cards/png/en/gtc/2.png?')
         result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/gtc/2.jpg?')
-        result.source.toString() == 'https://api.scryfall.com/cards/gtc/2'
+        result.source.toString().contains('https://api.scryfall.com/cards/')
         result.skills.size() == 1
         result.skills.get(0).text == 'Exile target creature or enchantment.'
         result.printRef == 'gtc'
@@ -406,7 +417,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.rarity == Rarity.MYTHIC_RARE
         result.front.toString().contains('https://img.scryfall.com/cards/png/en/m12/3.png?')
         result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/m12/3.jpg?')
-        result.source.toString() == 'https://api.scryfall.com/cards/m12/3'
+        result.source.toString().contains('https://api.scryfall.com/cards/')
         result.skills.size() == 3
         result.skills.get(0).text == 'Enchant creature'
         result.skills.get(1).text == 'Enchanted creature gets +4/+4, has flying and first strike, and is an Angel in addition to its other types.'
@@ -448,7 +459,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.rarity == Rarity.UNCOMMON
         result.front.toString().contains('https://img.scryfall.com/cards/png/en/avr/212.png?')
         result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/avr/212.jpg?')
-        result.source.toString() == 'https://api.scryfall.com/cards/avr/212'
+        result.source.toString().contains('https://api.scryfall.com/cards/')
         result.skills.size() == 2
         result.skills.get(0).text == 'Equipped creature gets +2/+2, has flying, and is a white Angel in addition to its other colors and types.'
         result.skills.get(1).text == 'Equip {4}'
@@ -488,7 +499,7 @@ class CardJSONConverterSpec extends Specification implements BusTest {
         result.rarity == Rarity.MYTHIC_RARE
         result.front.toString().contains('https://img.scryfall.com/cards/png/en/m19/3.png?')
         result.art.toString().contains('https://img.scryfall.com/cards/art_crop/en/m19/3.jpg?')
-        result.source.toString() == 'https://api.scryfall.com/cards/m19/3'
+        result.source.toString().contains('https://api.scryfall.com/cards/')
         result.skills.size() == 3
         result.skills.get(0).text == '+1: Put a +1/+1 counter on each of up to two target creatures.'
         result.skills.get(1).text == '−2: Return target creature card with converted mana cost 2 or less from your graveyard to the battlefield.'

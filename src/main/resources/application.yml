@@ -1,2 +1,6 @@
 server:
   port: 1080
+
+serialization:
+  repo:
+    location: repo.json
