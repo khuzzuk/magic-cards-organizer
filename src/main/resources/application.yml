@@ -4,3 +4,5 @@ server:
 serialization:
   repo:
     location: repo.json
+  settings:
+    location: app.json

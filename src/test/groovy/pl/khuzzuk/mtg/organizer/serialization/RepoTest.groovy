@@ -7,6 +7,7 @@ import pl.khuzzuk.mtg.organizer.model.card.Card
 
 import java.nio.file.Files
 import java.nio.file.Path
+import java.nio.file.Paths
 
 trait RepoTest {
     @Value('${serialization.repo.location}')
@@ -35,5 +36,9 @@ trait RepoTest {
         } catch (Exception e) {
             e.printStackTrace()
         }
+    }
+
+    void deleteRepo() {
+        Files.delete(Paths.get("testRepo.json"))
     }
 }

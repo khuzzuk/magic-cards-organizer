@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static pl.khuzzuk.mtg.organizer.events.Event.*;
 
@@ -26,22 +25,15 @@ public class JsonCardSerializer implements InitializingBean {
     private final Bus<Event> bus;
     private final ObjectMapper objectMapper;
     private final SettingsService settingsService;
-    private AtomicReference<Path> cardsPath = new AtomicReference<>();
 
     @Override
     public void afterPropertiesSet() {
-        cardsPath.set(Paths.get(settingsService.getData().getCardsRepoDirectory()));
         bus.subscribingFor(Event.CARD_DATA).accept(this::serializeCard).subscribe();
-
-        bus.subscribingFor(SET_REPO_LOCATION).<String>accept(path -> {
-            cardsPath.set(Paths.get(path));
-            bus.message(REINDEX_REPO).withContent(cardsPath.get()).send();
-        }).subscribe();
     }
 
     private void serializeCard(Card card) {
         try {
-            Path currentCardsPath = cardsPath.get();
+            Path currentCardsPath = Paths.get(settingsService.getCardsPathSettings());
             Path cardDir = Paths.get(currentCardsPath.toString(), card.getPrintRef());
             if (!Files.exists(cardDir)) {
                 Files.createDirectory(cardDir);
@@ -76,7 +68,7 @@ public class JsonCardSerializer implements InitializingBean {
         }
     }
 
-    private String getFileName(Card card, String suffix) {
+    static String getFileName(Card card, String suffix) {
         return String.format("%04d_%s%s", card.getPrintOrder(), card.getName(), suffix);
     }
 }

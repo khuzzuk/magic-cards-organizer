@@ -4,12 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.events.Event;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @RequiredArgsConstructor
 @Component
@@ -18,15 +20,15 @@ public class SettingsService implements InitializingBean {
     private final ObjectMapper objectMapper;
     @Getter
     private SettingsData data;
-    private File settingsFile;
+    @Value("${serialization.settings.location}")
+    private Path settingsFile;
 
     @Override
     public void afterPropertiesSet() {
-        settingsFile = new File("app.json");
         data = new SettingsData();
         bus.subscribingFor(Event.SET_REPO_LOCATION).accept(this::setCardsPathSettings).subscribe();
 
-        if (settingsFile.exists()) {
+        if (Files.exists(settingsFile)) {
             loadSettings();
         }
     }
@@ -42,7 +44,7 @@ public class SettingsService implements InitializingBean {
 
     private void loadSettings() {
         try {
-            data = objectMapper.readValue(settingsFile, SettingsData.class);
+            data = objectMapper.readValue(settingsFile.toFile(), SettingsData.class);
         } catch (IOException e) {
             bus.message(Event.ERROR).withContent("Cannot read settings file").send();
         }
@@ -50,7 +52,7 @@ public class SettingsService implements InitializingBean {
 
     private synchronized void syncSettings() {
         try {
-            objectMapper.writeValue(settingsFile, data);
+            objectMapper.writeValue(settingsFile.toFile(), data);
         } catch (IOException e) {
             bus.message(Event.ERROR).withContent("Cannot save settings").send();
         }

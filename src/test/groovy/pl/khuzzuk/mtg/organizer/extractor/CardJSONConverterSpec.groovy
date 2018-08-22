@@ -10,11 +10,10 @@ import pl.khuzzuk.mtg.organizer.model.ManaType
 import pl.khuzzuk.mtg.organizer.model.Rarity
 import pl.khuzzuk.mtg.organizer.model.card.*
 import pl.khuzzuk.mtg.organizer.model.type.BasicType
+import pl.khuzzuk.mtg.organizer.serialization.ImageDownloaderTest
 import pl.khuzzuk.mtg.organizer.serialization.RepoTest
 import spock.lang.Shared
 import spock.lang.Specification
-
-import java.nio.file.Files
 
 import static java.util.concurrent.TimeUnit.SECONDS
 import static org.awaitility.Awaitility.await
@@ -23,7 +22,7 @@ import static pl.khuzzuk.mtg.organizer.events.Event.CARD_FROM_URL
 
 @SpringBootTest
 @Import(MtgOrganizerApp)
-class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
+class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, ImageDownloaderTest {
     @Shared
     PropertyContainer<Card> card = new PropertyContainer<>()
 
@@ -32,15 +31,13 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
     }
 
     void setup() {
+        clearRepo()
         card.clear()
     }
 
-    void cleanup() {
-        clearRepo()
-    }
-
-    void closeSpec() {
-        Files.deleteIfExists(repoFile)
+    void cleanupSpec() {
+        deleteRepo()
+        deleteTestFiles()
         closeBus()
     }
 
@@ -79,6 +76,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
 
         checkIfCardIsOnDisk(result)
         checkIfCardIsInRepo(result)
+        checkImageForCard(result)
     }
 
     def 'convert forest basic land card'() {
@@ -112,6 +110,10 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
         "Forest" in type.secondaryTypes
         type.colors.size() == 1
         ManaType.GREEN in type.colors
+
+        checkIfCardIsOnDisk(result)
+        checkIfCardIsInRepo(result)
+        checkImageForCard(result)
     }
 
     def 'convert island basic land card'() {
@@ -145,6 +147,10 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
         "Island" in type.secondaryTypes
         type.colors.size() == 1
         ManaType.BLUE in type.colors
+
+        checkIfCardIsOnDisk(result)
+        checkIfCardIsInRepo(result)
+        checkImageForCard(result)
     }
 
     def 'convert mountains basic land card'() {
@@ -178,6 +184,10 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
         "Mountain" in type.secondaryTypes
         type.colors.size() == 1
         ManaType.RED in type.colors
+
+        checkIfCardIsOnDisk(result)
+        checkIfCardIsInRepo(result)
+        checkImageForCard(result)
     }
 
     def 'convert swamp basic land card'() {
@@ -211,6 +221,10 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
         "Swamp" in type.secondaryTypes
         type.colors.size() == 1
         ManaType.BLACK in type.colors
+
+        checkIfCardIsOnDisk(result)
+        checkIfCardIsInRepo(result)
+        checkImageForCard(result)
     }
 
     def "convert land card"() {
@@ -244,6 +258,10 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
         type.colors.size() == 2
         ManaType.WHITE in type.colors
         ManaType.BLACK in type.colors
+
+        checkIfCardIsOnDisk(result)
+        checkIfCardIsInRepo(result)
+        checkImageForCard(result)
     }
 
     def "convert creature card"() {
@@ -292,6 +310,10 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
 
         result.attack == '8'
         result.defense == '8'
+
+        checkIfCardIsOnDisk(result)
+        checkIfCardIsInRepo(result)
+        checkImageForCard(result)
     }
 
     def "convert transformable creature card with rulings"() {
@@ -362,6 +384,10 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
         'Angel' in transformedType.secondaryTypes
         transformedType.colors.size() == 1
         ManaType.RED in transformedType.colors
+
+        checkIfCardIsOnDisk(result)
+        checkIfCardIsInRepo(result)
+        checkImageForCard(result)
     }
 
     def "convert sorcery card"() {
@@ -401,6 +427,10 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
         type.secondaryTypes.size() == 0
         type.colors.size() == 1
         ManaType.WHITE in type.colors
+
+        checkIfCardIsOnDisk(result)
+        checkIfCardIsInRepo(result)
+        checkImageForCard(result)
     }
 
     def "convert enchantment aura card"() {
@@ -443,6 +473,10 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
         'Aura' in type.secondaryTypes
         type.colors.size() == 1
         ManaType.WHITE in type.colors
+
+        checkIfCardIsOnDisk(result)
+        checkIfCardIsInRepo(result)
+        checkImageForCard(result)
     }
 
     def "convert artifact equipment card"() {
@@ -483,6 +517,10 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
         type.secondaryTypes.size() == 1
         'Equipment' in type.secondaryTypes
         type.colors.size() == 0
+
+        checkIfCardIsOnDisk(result)
+        checkIfCardIsInRepo(result)
+        checkImageForCard(result)
     }
 
     def "convert planeswalker card"() {
@@ -528,5 +566,9 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest {
         ManaType.WHITE in type.colors
 
         result.loyalty == 4
+
+        checkIfCardIsOnDisk(result)
+        checkIfCardIsInRepo(result)
+        checkImageForCard(result)
     }
 }

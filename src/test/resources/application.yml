@@ -1,3 +1,5 @@
 serialization:
   repo:
     location: testRepo.json
+  settings:
+    location: testApp.json
