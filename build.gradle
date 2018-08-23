@@ -47,7 +47,9 @@ dependencies {
     testCompile group: 'org.awaitility', name: 'awaitility', version: '3.1.0'
     testCompile group: 'org.testfx', name: 'testfx-spock', version: '4.0.13-alpha'
     compileOnly group: 'org.projectlombok', name: 'lombok', version:'1.18.2'
+    testCompileOnly group: 'org.projectlombok', name: 'lombok', version:'1.18.2'
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version:'1.18.2'
+    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version:'1.18.2'
 }
 
 dependencyManagement {

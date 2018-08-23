@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import pl.khuzzuk.mtg.organizer.model.Rarity;
 import pl.khuzzuk.mtg.organizer.model.type.Type;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode(of = {"name", "printRef", "printOrder"})
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "object")
+@ToString
 public abstract class Card {
     private String name;
     private Rarity rarity;

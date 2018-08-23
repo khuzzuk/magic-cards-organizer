@@ -28,6 +28,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
     void setupSpec() {
         busGetter(CARD_DATA, card)
+        prepareCardDirectory()
     }
 
     void setup() {
@@ -47,7 +48,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 3)
+        checkProperty(card, 4)
         await().atMost(2, SECONDS).until({ card.hasValue() })
         def result = card.get() as LandCard
 
@@ -85,7 +86,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 3)
+        checkProperty(card, 4)
         def result = card.get() as LandCard
 
         then:
@@ -122,7 +123,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 3)
+        checkProperty(card, 4)
         def result = card.get() as LandCard
 
         then:
@@ -159,7 +160,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 3)
+        checkProperty(card, 4)
         def result = card.get() as LandCard
 
         then:
@@ -196,7 +197,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 3)
+        checkProperty(card, 4)
         def result = card.get() as LandCard
 
         then:
@@ -233,7 +234,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 3)
+        checkProperty(card, 4)
         LandCard result = card.get() as LandCard
 
         then:
@@ -270,7 +271,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 3)
+        checkProperty(card, 4)
         CreatureCard result = card.get() as CreatureCard
 
         then:
@@ -322,7 +323,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 3)
+        checkProperty(card, 4)
         TransformableCreatureCard result = card.get() as TransformableCreatureCard
 
         then:
@@ -396,7 +397,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 3)
+        checkProperty(card, 4)
         SorceryCard result = card.get() as SorceryCard
 
         then:
@@ -439,7 +440,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 3)
+        checkProperty(card, 4)
         EnchantmentCard result = card.get() as EnchantmentCard
 
         then:
@@ -485,7 +486,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 3)
+        checkProperty(card, 4)
         ArtifactCard result = card.get() as ArtifactCard
 
         then:
@@ -529,7 +530,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 3)
+        checkProperty(card, 4)
         PlaneswalkerCard result = card.get() as PlaneswalkerCard
 
         then:
