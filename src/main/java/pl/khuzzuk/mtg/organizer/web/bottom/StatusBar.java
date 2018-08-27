@@ -26,10 +26,10 @@ import java.net.URL;
 public class StatusBar extends Div implements InitializingBean {
     private final Bus<Event> bus;
     @UIProperty
+    private TextField urlField = new TextField();
+    @UIProperty
     @CSS(className = "button")
     private Button importButton = new Button("Import");
-    @UIProperty
-    private TextField urlField = new TextField();
 
     @Override
     public void afterPropertiesSet() {

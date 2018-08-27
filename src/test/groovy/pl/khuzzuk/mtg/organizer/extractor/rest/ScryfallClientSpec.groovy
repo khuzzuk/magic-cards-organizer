@@ -2,19 +2,24 @@ package pl.khuzzuk.mtg.organizer.extractor.rest
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.Import
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.test.annotation.DirtiesContext
 import pl.khuzzuk.mtg.organizer.BusTest
-import pl.khuzzuk.mtg.organizer.MtgOrganizerApp
 import pl.khuzzuk.mtg.organizer.PropertyContainer
 import pl.khuzzuk.mtg.organizer.events.Event
+import pl.khuzzuk.mtg.organizer.events.EventsConfig
 import pl.khuzzuk.mtg.organizer.extractor.rest.data.CardDTO
 import pl.khuzzuk.mtg.organizer.extractor.rest.data.CardFaceDTO
+import pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo
 import spock.lang.Shared
 import spock.lang.Specification
 
-@SpringBootTest
-@Import(MtgOrganizerApp)
+@SpringBootTest(classes = [EventsConfig.class, ScryfallClientSpec.class])
+@ComponentScan(["pl.khuzzuk.mtg.organizer.extractor", "pl.khuzzuk.mtg.organizer.serialization.PredefinedSkillRepo"])
+@DirtiesContext
 class ScryfallClientSpec extends Specification implements BusTest {
+    private static final int connectionTimeout = 10
     @Autowired
     ScryfallClient scryfallClient
 
@@ -29,22 +34,18 @@ class ScryfallClientSpec extends Specification implements BusTest {
         card.clear()
     }
 
-    void closeSpec() {
-        closeBus()
-    }
-
     def 'download plains basic land'() {
         given:
         URL uri = new URL('https://api.scryfall.com/cards/bbd/250?format=json&pretty=true')
 
         when:
         bus.message(Event.CARD_FROM_URL).withContent(uri).send()
-        checkProperty(card, 3)
+        checkProperty(card, connectionTimeout)
         CardDTO result = card.get()
 
         then:
         result.name == 'Plains'
-        result.uri.toString() == 'https://api.scryfall.com/cards/bbd/250'
+        result.uri.toString().startsWith('https://api.scryfall.com/cards/')
         result.hiResImage
         result.typeLine == 'Basic Land — Plains'
         result.oracleText == '({T}: Add {W}.)'
@@ -58,7 +59,7 @@ class ScryfallClientSpec extends Specification implements BusTest {
         result.set == 'bbd'
         result.setName == 'Battlebond'
         result.setUri.toString() == 'https://api.scryfall.com/sets/bbd'
-        result.rulingsUri.toString() == 'https://api.scryfall.com/cards/bbd/250/rulings'
+        result.rulingsUri.toString().startsWith('https://api.scryfall.com/cards/')
         result.collectorNumber == 250
         !result.digital
         result.rarity == 'common'
@@ -71,12 +72,12 @@ class ScryfallClientSpec extends Specification implements BusTest {
 
         when:
         bus.message(Event.CARD_FROM_URL).withContent(uri).send()
-        checkProperty(card, 3)
+        checkProperty(card, connectionTimeout)
         CardDTO result = card.get()
 
         then:
         result.name == 'Vault of the Archangel'
-        result.uri.toString() == 'https://api.scryfall.com/cards/md1/17'
+        result.uri.toString().startsWith('https://api.scryfall.com/cards/')
         result.hiResImage
         result.typeLine == 'Land'
         result.oracleText == '{T}: Add {C}.\n{2}{W}{B}, {T}: Creatures you control gain deathtouch and lifelink until end of turn.'
@@ -91,7 +92,7 @@ class ScryfallClientSpec extends Specification implements BusTest {
         result.set == 'md1'
         result.setName == 'Modern Event Deck 2014'
         result.setUri.toString() == 'https://api.scryfall.com/sets/md1'
-        result.rulingsUri.toString() == 'https://api.scryfall.com/cards/md1/17/rulings'
+        result.rulingsUri.toString().startsWith('https://api.scryfall.com/cards/')
         result.collectorNumber == 17
         !result.digital
         result.rarity == 'rare'
@@ -104,12 +105,12 @@ class ScryfallClientSpec extends Specification implements BusTest {
 
         when:
         bus.message(Event.CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 4)
+        checkProperty(card, connectionTimeout)
         CardDTO result = card.get()
 
         then:
         result.name == 'Archangel Avacyn // Avacyn, the Purifier'
-        result.uri.toString() == 'https://api.scryfall.com/cards/soi/5'
+        result.uri.toString().startsWith('https://api.scryfall.com/cards/')
         result.hiResImage
         result.typeLine == 'Legendary Creature — Angel // Legendary Creature — Angel'
         result.oracleText == null
@@ -121,7 +122,7 @@ class ScryfallClientSpec extends Specification implements BusTest {
         result.set == 'soi'
         result.setName == 'Shadows over Innistrad'
         result.setUri.toString() == 'https://api.scryfall.com/sets/soi'
-        result.rulingsUri.toString() == 'https://api.scryfall.com/cards/soi/5/rulings'
+        result.rulingsUri.toString().startsWith('https://api.scryfall.com/cards/')
         result.collectorNumber == 5
         !result.digital
         result.rarity == 'mythic'
@@ -169,5 +170,10 @@ class ScryfallClientSpec extends Specification implements BusTest {
         face2.toughness == '5'
         face2.imageUris.png.toString() == 'https://img.scryfall.com/cards/png/en/soi/5b.png?1518204266'
         face2.imageUris.artCrop.toString() == 'https://img.scryfall.com/cards/art_crop/en/soi/5b.jpg?1518204266'
+    }
+
+    @Bean
+    PredefinedSkillRepo predefinedSkillRepo() {
+        return Mock(PredefinedSkillRepo)
     }
 }

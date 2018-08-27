@@ -37,3 +37,17 @@
 .mana-ico {
     height: 15px;
 }
+
+.main-page {
+    display: flex;
+}
+
+.set-selector {
+    display: flex;
+    flex-flow: column;
+    width: 30%;
+}
+
+.title {
+    text-align: center;
+}

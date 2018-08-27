@@ -14,6 +14,7 @@ import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
 
 trait ImageDownloaderTest {
+    private static final int downloadWaitingTimeout = 10
     private static final Path cardsDir = Paths.get("Test Cards")
     @Autowired
     SettingsService settingsService
@@ -25,30 +26,25 @@ trait ImageDownloaderTest {
     }
 
     boolean checkImageForCard(Card card) {
-        return checkFrontSideOfCard(card) && checkJsonIndexFile(card)
+        return checkFrontSideOfCard(card)
     }
 
     boolean checkImageForCard(TransformableCreatureCard card) {
-        checkFrontSideOfCard(card) && checkBackSideOfCard(card) && checkJsonIndexFile(card)
+        checkFrontSideOfCard(card) && checkBackSideOfCard(card)
     }
 
     private boolean checkFrontSideOfCard(Card card) {
-        Awaitility.await().atMost(10, TimeUnit.SECONDS).until({
+        Awaitility.await().atMost(downloadWaitingTimeout, TimeUnit.SECONDS).until({
             isFileOnDisk(card.downloadedFront) && isFileOnDisk(card.downloadedArt)
         })
         true
     }
 
     private boolean checkBackSideOfCard(TransformableCreatureCard card) {
-        Awaitility.await().atMost(10, TimeUnit.SECONDS).until({
+        Awaitility.await().atMost(downloadWaitingTimeout, TimeUnit.SECONDS).until({
             isFileOnDisk(card.downloadedBack) && isFileOnDisk(card.downloadedBackArt)
         })
         true
-    }
-
-    private boolean checkJsonIndexFile(Card card) {
-        Files.exists(Paths.get(settingsService.cardsPathSettings, card.printRef,
-                JsonCardSerializer.getFileName(card, '.json')))
     }
 
     void deleteTestFiles() {

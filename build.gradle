@@ -18,7 +18,7 @@ apply plugin: 'io.spring.dependency-management'
 group 'pl.khuzzuk'
 version '1.0.0-SNAPSHOT'
 
-sourceCompatibility = 10
+sourceCompatibility = 9
 
 repositories {
     mavenCentral()

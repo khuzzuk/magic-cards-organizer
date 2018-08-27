@@ -10,7 +10,7 @@ import pl.khuzzuk.mtg.organizer.model.ManaType
 import pl.khuzzuk.mtg.organizer.model.Rarity
 import pl.khuzzuk.mtg.organizer.model.card.*
 import pl.khuzzuk.mtg.organizer.model.type.BasicType
-import pl.khuzzuk.mtg.organizer.serialization.ImageDownloaderTest
+import pl.khuzzuk.mtg.organizer.serialization.CardMetadataTest
 import pl.khuzzuk.mtg.organizer.serialization.RepoTest
 import spock.lang.Shared
 import spock.lang.Specification
@@ -22,7 +22,8 @@ import static pl.khuzzuk.mtg.organizer.events.Event.CARD_FROM_URL
 
 @SpringBootTest
 @Import(MtgOrganizerApp)
-class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, ImageDownloaderTest {
+class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, CardMetadataTest {
+    private static final int timeout = 10
     @Shared
     PropertyContainer<Card> card = new PropertyContainer<>()
 
@@ -39,7 +40,6 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
     void cleanupSpec() {
         deleteRepo()
         deleteTestFiles()
-        closeBus()
     }
 
     def 'convert plains basic land card'() {
@@ -48,7 +48,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 4)
+        checkProperty(card, timeout)
         await().atMost(2, SECONDS).until({ card.hasValue() })
         def result = card.get() as LandCard
 
@@ -78,6 +78,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
         checkIfCardIsOnDisk(result)
         checkIfCardIsInRepo(result)
         checkImageForCard(result)
+        isJsonMetadataPresent(result)
     }
 
     def 'convert forest basic land card'() {
@@ -86,7 +87,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 4)
+        checkProperty(card, timeout)
         def result = card.get() as LandCard
 
         then:
@@ -115,6 +116,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
         checkIfCardIsOnDisk(result)
         checkIfCardIsInRepo(result)
         checkImageForCard(result)
+        isJsonMetadataPresent(result)
     }
 
     def 'convert island basic land card'() {
@@ -123,7 +125,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 4)
+        checkProperty(card, timeout)
         def result = card.get() as LandCard
 
         then:
@@ -152,6 +154,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
         checkIfCardIsOnDisk(result)
         checkIfCardIsInRepo(result)
         checkImageForCard(result)
+        isJsonMetadataPresent(result)
     }
 
     def 'convert mountains basic land card'() {
@@ -160,7 +163,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 4)
+        checkProperty(card, timeout)
         def result = card.get() as LandCard
 
         then:
@@ -189,6 +192,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
         checkIfCardIsOnDisk(result)
         checkIfCardIsInRepo(result)
         checkImageForCard(result)
+        isJsonMetadataPresent(result)
     }
 
     def 'convert swamp basic land card'() {
@@ -197,7 +201,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 4)
+        checkProperty(card, timeout)
         def result = card.get() as LandCard
 
         then:
@@ -226,6 +230,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
         checkIfCardIsOnDisk(result)
         checkIfCardIsInRepo(result)
         checkImageForCard(result)
+        isJsonMetadataPresent(result)
     }
 
     def "convert land card"() {
@@ -234,7 +239,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 4)
+        checkProperty(card, timeout)
         LandCard result = card.get() as LandCard
 
         then:
@@ -263,6 +268,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
         checkIfCardIsOnDisk(result)
         checkIfCardIsInRepo(result)
         checkImageForCard(result)
+        isJsonMetadataPresent(result)
     }
 
     def "convert creature card"() {
@@ -271,7 +277,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 4)
+        checkProperty(card, timeout)
         CreatureCard result = card.get() as CreatureCard
 
         then:
@@ -315,6 +321,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
         checkIfCardIsOnDisk(result)
         checkIfCardIsInRepo(result)
         checkImageForCard(result)
+        isJsonMetadataPresent(result)
     }
 
     def "convert transformable creature card with rulings"() {
@@ -323,7 +330,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 4)
+        checkProperty(card, timeout)
         TransformableCreatureCard result = card.get() as TransformableCreatureCard
 
         then:
@@ -389,6 +396,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
         checkIfCardIsOnDisk(result)
         checkIfCardIsInRepo(result)
         checkImageForCard(result)
+        isJsonMetadataPresent(result)
     }
 
     def "convert sorcery card"() {
@@ -397,7 +405,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 4)
+        checkProperty(card, timeout)
         SorceryCard result = card.get() as SorceryCard
 
         then:
@@ -432,6 +440,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
         checkIfCardIsOnDisk(result)
         checkIfCardIsInRepo(result)
         checkImageForCard(result)
+        isJsonMetadataPresent(result)
     }
 
     def "convert enchantment aura card"() {
@@ -440,7 +449,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 4)
+        checkProperty(card, timeout)
         EnchantmentCard result = card.get() as EnchantmentCard
 
         then:
@@ -478,6 +487,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
         checkIfCardIsOnDisk(result)
         checkIfCardIsInRepo(result)
         checkImageForCard(result)
+        isJsonMetadataPresent(result)
     }
 
     def "convert artifact equipment card"() {
@@ -486,7 +496,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 4)
+        checkProperty(card, timeout)
         ArtifactCard result = card.get() as ArtifactCard
 
         then:
@@ -522,6 +532,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
         checkIfCardIsOnDisk(result)
         checkIfCardIsInRepo(result)
         checkImageForCard(result)
+        isJsonMetadataPresent(result)
     }
 
     def "convert planeswalker card"() {
@@ -530,7 +541,7 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
 
         when:
         bus.message(CARD_FROM_URL).withContent(url).send()
-        checkProperty(card, 4)
+        checkProperty(card, timeout)
         PlaneswalkerCard result = card.get() as PlaneswalkerCard
 
         then:
@@ -571,5 +582,6 @@ class CardJSONConverterSpec extends Specification implements BusTest, RepoTest, 
         checkIfCardIsOnDisk(result)
         checkIfCardIsInRepo(result)
         checkImageForCard(result)
+        isJsonMetadataPresent(result)
     }
 }

@@ -10,15 +10,16 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 trait RepoTest {
+    private static Path repoFile = Paths.get("testRepo.json")
     @Value('${serialization.repo.location}')
-    Path repoFile
+    Path repoFileFromSpring
     @Autowired
     ObjectMapper objectMapper
     @Autowired
     JsonRepoSerializer jsonRepoSerializer
 
     boolean checkIfCardIsOnDisk(Card... cards) {
-        def repo = objectMapper.readValue(repoFile.toFile(), CardsContainer)
+        def repo = objectMapper.readValue(repoFileFromSpring.toFile(), CardsContainer)
         repo.cards.containsAll(cards) &&
                 repo.cards.size() == cards.length
     }
@@ -30,15 +31,15 @@ trait RepoTest {
 
     void clearRepo() {
         try {
-            Files.deleteIfExists(repoFile)
-            objectMapper.writeValue(repoFile.toFile(), new CardsContainer())
             jsonRepoSerializer.cardsContainer.cards.clear()
+            Files.deleteIfExists(repoFileFromSpring)
+            objectMapper.writeValue(repoFileFromSpring.toFile(), new CardsContainer())
         } catch (Exception e) {
             e.printStackTrace()
         }
     }
 
     void deleteRepo() {
-        Files.delete(Paths.get("testRepo.json"))
+        if (Files.exists(repoFile)) Files.delete(repoFile)
     }
 }

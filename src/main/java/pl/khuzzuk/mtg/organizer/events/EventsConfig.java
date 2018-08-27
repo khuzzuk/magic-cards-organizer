@@ -6,7 +6,7 @@ import pl.khuzzuk.messaging.Bus;
 
 @Configuration
 public class EventsConfig {
-    @Bean
+    @Bean(destroyMethod = "closeBus")
     Bus<Event> bus() {
         return Bus.initializeBus(Event.class, System.out, true, 3);
     }

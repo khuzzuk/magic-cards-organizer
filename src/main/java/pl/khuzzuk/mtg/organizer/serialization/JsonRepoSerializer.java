@@ -41,7 +41,7 @@ public class JsonRepoSerializer implements InitializingBean {
                 cardsContainer = objectMapper.readValue(repoFile.toFile(), CardsContainer.class);
             } else {
                 cardsContainer = new CardsContainer();
-                Files.createFile(repoFile);
+                objectMapper.writeValue(repoFile.toFile(), cardsContainer);
             }
 
             bus.subscribingFor(CARD_DATA).accept(this::saveCard).subscribe();

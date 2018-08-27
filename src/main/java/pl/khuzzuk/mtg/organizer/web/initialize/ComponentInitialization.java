@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
 public class ComponentInitialization {
     public static void initializeComponents(HasComponents container) {
         if (container instanceof HasStyle) {
-            componentInitiaclization((HasStyle) container);
+            componentInitialization((HasStyle) container);
         }
 
         Field[] declaredFields = container.getClass().getDeclaredFields();
@@ -20,7 +20,6 @@ public class ComponentInitialization {
         Seq.of(declaredFields)
                 .filter(f -> f.isAnnotationPresent(UIProperty.class))
                 .peek(f -> f.setAccessible(true))
-                .reverse()
                 .forEach(field -> initializeComponent(field, container));
 
         Seq.of(declaredFields)
@@ -29,7 +28,7 @@ public class ComponentInitialization {
                 .forEach(field -> applyCss(field, container));
     }
 
-    private static void componentInitiaclization(HasStyle component) {
+    private static void componentInitialization(HasStyle component) {
         if (component.getClass().isAnnotationPresent(CSS.class)) {
             CSS css = component.getClass().getDeclaredAnnotation(CSS.class);
             if (StringUtils.isNotBlank(css.id())) {
