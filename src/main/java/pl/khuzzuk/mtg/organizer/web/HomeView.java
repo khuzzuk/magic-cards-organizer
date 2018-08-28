@@ -1,5 +1,6 @@
 package pl.khuzzuk.mtg.organizer.web;
 
+import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
@@ -13,6 +14,7 @@ import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.mtg.organizer.events.Event;
 import pl.khuzzuk.mtg.organizer.web.bottom.StatusBar;
 import pl.khuzzuk.mtg.organizer.web.card.CardViewer;
+import pl.khuzzuk.mtg.organizer.web.find.CardsTable;
 import pl.khuzzuk.mtg.organizer.web.find.SetSelector;
 import pl.khuzzuk.mtg.organizer.web.initialize.CSS;
 import pl.khuzzuk.mtg.organizer.web.initialize.ComponentInitialization;
@@ -24,18 +26,21 @@ import pl.khuzzuk.mtg.organizer.web.initialize.UIProperty;
 @UIScope
 @StyleSheet("css/mtg-organizer.css")
 @Push
+@Tag("HomeView")
 public class HomeView extends WebComponent implements InitializingBean {
     private final Bus<Event> bus;
-    @CSS(className = "set-selector")
-    private final SetSelector setSelector;
-    private final CardViewer cardViewer;
 
     @UIProperty
-    @CSS(className = "main-page")
-    private Div mainPage = new Div();
-
+    private final CardViewer cardViewer;
+    @UIProperty
+    @CSS(className = "selection-section")
+    private Div selectionSection = new Div();
     @UIProperty
     private final StatusBar statusBar;
+
+    private final SetSelector setSelector;
+    private final CardsTable cardsTable;
+
 
     @Override
     public void afterPropertiesSet() {
@@ -45,7 +50,7 @@ public class HomeView extends WebComponent implements InitializingBean {
 
     private void prepareView() {
         ComponentInitialization.initializeComponents(this);
-        mainPage.add(setSelector, cardViewer);
+        selectionSection.add(setSelector, cardsTable);
     }
 
     private void showNotification(String message) {
